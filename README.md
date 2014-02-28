@@ -1,2 +1,3 @@
-android_exercise_project
+android_training_project
 ========================
+In order to better learn Android and Java.
