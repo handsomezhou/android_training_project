@@ -1,0 +1,101 @@
+package com.example.app6;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
+
+public class GameActivity extends Activity implements OnTouchListener {
+
+	public int action = TouchController.ACTION_NOT_DEFINED;
+	public float x;
+	public float y;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		Game.factory(this);
+		setContentView(Game.instance.view);
+		Game.instance.view.setOnTouchListener(this);
+		Game.instance.play();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.game_menu, menu);
+		Game.instance.menu_pause = menu.findItem(R.id.pause);
+		Game.instance.menu_resume = menu.findItem(R.id.resume);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle item selection
+		switch (item.getItemId()) {
+		case R.id.new_game:
+			Game.instance.stop();
+			Game.instance.play();
+			return true;
+		case R.id.pause:
+			Game.instance.pause();
+			return true;
+		case R.id.resume:
+			Game.instance.resume();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	public void onPause() {
+		super.onPause();
+		Game.instance.pause();
+	}
+
+	public void onResume() {
+		super.onResume();
+		Game.instance.resume();
+	}
+
+	public boolean onTouch(View v, MotionEvent event) {
+		x = event.getX();
+		y = event.getY();
+		action = TouchController.ACTION_NOT_DEFINED;
+
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_MOVE: // 镥疱戾龛�			action = Game.instance.touchController.onTouchMove(x, y)
+					//.getDetectedAction();
+
+			switch (action) {
+			case TouchController.ACTION_LEFT:
+				Game.instance.moveLeft();
+				break;
+			case TouchController.ACTION_RIGHT:
+				Game.instance.moveRight();
+				break;
+			case TouchController.ACTION_DOWN:
+				Game.instance.moveDown();
+				break;
+			}
+
+			break;
+		case MotionEvent.ACTION_DOWN: // 磬驵蜩�			Game.instance.touchController.onTouchDown(x, y);
+			break;
+		case MotionEvent.ACTION_UP: // 铗矬耜囗桢
+		case MotionEvent.ACTION_CANCEL:
+			action = Game.instance.touchController.onTouchUp(x, y)
+					.getDetectedAction();
+			if (action == TouchController.ACTION_SHORT_TOUCH) {
+				Game.instance.rotate();
+			}
+			break;
+		}
+
+		return true;
+	}
+}
