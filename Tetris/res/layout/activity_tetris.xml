@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,41 +10,81 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Tetris" >
 
-    <Button
-        android:id="@+id/down_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/down_button_selector" 
-        android:layout_centerInParent="true"/>
-    	
+    <LinearLayout
+        android:id="@+id/back"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top|right"
+        android:orientation="horizontal" >
 
-    <Button
-        android:id="@+id/left_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/left_button_selector" 
-        android:layout_marginLeft="150dp"
-        android:layout_toLeftOf="@id/down_button"
-        android:layout_alignTop="@id/down_button"
-        />
+        <Button
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back_button_selector" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/up_button"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/up_button_selector" 
-        android:layout_marginTop="150dp"
-        android:layout_above="@id/down_button"
-        android:layout_alignLeft="@id/down_button"/>
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/right_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/right_button_selector" 
-        android:layout_marginRight="150dp"
-        android:layout_toRightOf="@id/down_button"
-        android:layout_alignTop="@id/down_button"
-        />
+        <com.example.tetris.view.GameView
+            android:id="@+id/game_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tetris_board" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|right"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/pause_continue_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/up_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="79dp"
+                android:background="@drawable/up_button_selector" />
+
+            <Button
+                android:id="@+id/left_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/up_button"
+                android:background="@drawable/left_button_selector" />
+
+            <Button
+                android:id="@+id/down_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/left_button"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_toRightOf="@id/left_button"
+                android:background="@drawable/down_button_selector" />
+
+            <Button
+                android:id="@+id/right_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/down_button"
+                android:layout_toRightOf="@id/down_button"
+                android:background="@drawable/right_button_selector" />
+        </RelativeLayout>
+    </LinearLayout>
+    <!-- android:layout_centerInParent="true" -->
 
 </RelativeLayout>
