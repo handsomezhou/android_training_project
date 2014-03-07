@@ -1,0 +1,30 @@
+package com.example.tetris.view;
+
+/**
+ * Description: 俄罗斯方块中的方块对象
+ * 
+ * @author ZJQ
+ * @Date: 2014-03-7
+ * @version 1.0
+ */
+public class Block {
+	/* 定义俄罗斯方块7种方块类型 */
+	public enum BlockType {
+		BLOCK_I, BLOCK_J, BLOCK_L, BLOCK_O, BLOCK_S, BLOCK_Z, BLOCK_T
+	}
+
+	/*俄罗斯方块每个方块长和宽*/
+	private static final int BLOCK_WIDTH = 4;
+	private static final int BLOCK_HEIGHT = 4;
+	/*俄罗斯方块每个方块的具体数目*/
+	private static final int BLOCK_I_NUM=2;
+	private static final int BLOCK_J_NUM=4;
+	private static final int BLOCK_L_NUM=4;
+	private static final int BLOCK_O_NUM=1;
+	private static final int BLOCK_S_NUM=2;
+	private static final int BLOCK_Z_NUM=2;
+	private static final int BLOCK_T_NUM=4;
+	private static final int BLOCK_SINGLE_MAX_NUM=4;
+
+	BlockType blockType;
+}

@@ -1,0 +1,13 @@
+package com.example.tetris.view;
+
+public class BlockType {/*俄罗斯方块类型常量定义(7种类型)*/
+	public static final int BLOCK
+	BLOCK_I=0,
+	BLOCK_J,
+	BLOCK_L,
+	BLOCK_O,
+	BLOCK_S,
+	BLOCK_Z,
+	BLOCK_T,
+	BLOCK_TYPE_NUM,
+}

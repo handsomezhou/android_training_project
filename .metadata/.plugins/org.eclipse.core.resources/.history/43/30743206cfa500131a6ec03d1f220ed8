@@ -1,0 +1,47 @@
+package com.example.tetris.view;
+
+/**
+ * Description: 俄罗斯方块中的方块对象
+ * 
+ * @author ZJQ
+ * @Date: 2014-03-7
+ * @version 1.0
+ */
+public class Block {
+	/* 定义俄罗斯方块7种方块类型 */
+	public enum BlockType {
+		BLOCK_I, BLOCK_J, BLOCK_L, BLOCK_O, BLOCK_S, BLOCK_Z, BLOCK_T, /* BLOCK_TYPE_NUM */
+	}
+
+	/* 俄罗斯方块中方块总类型数目 */
+	private static final int BLOCK_TYPE_NUM = 7;
+	/* 俄罗斯方块每个方块长和宽 */
+	private static final int BLOCK_WIDTH = 4;
+	private static final int BLOCK_HEIGHT = 4;
+	/* 俄罗斯方块每个方块的具体数目 */
+	private static final int BLOCK_I_NUM = 2;
+	private static final int BLOCK_J_NUM = 4;
+	private static final int BLOCK_L_NUM = 4;
+	private static final int BLOCK_O_NUM = 1;
+	private static final int BLOCK_S_NUM = 2;
+	private static final int BLOCK_Z_NUM = 2;
+	private static final int BLOCK_T_NUM = 4;
+	private static final int BLOCK_SINGLE_MAX_NUM = 4;
+
+	/* 俄罗斯方块中方块总数目 */
+	private static final int BLOCK_TOTAL_NUM = 19; /*
+													 * BLOCK_I_NUM+...+BLOCK_T_NUM
+													 */
+	/* 将俄罗斯方块中方块编号:BLOCK_X_START_NUM~BLOCK_X_NUM-1 代表X类型的方块所属编号 */
+	private static final int BLOCK_I_START_NUM = 0;
+	private static final int BLOCK_J_START_NUM = (BLOCK_I_START_NUM + BLOCK_I_NUM);
+	private static final int BLOCK_L_START_NUM = (BLOCK_J_START_NUM + BLOCK_J_NUM);
+	private static final int BLOCK_O_START_NUM = (BLOCK_L_START_NUM + BLOCK_L_NUM);
+	private static final int BLOCK_S_START_NUM = (BLOCK_O_START_NUM + BLOCK_O_NUM);
+	private static final int BLOCK_Z_START_NUM = (BLOCK_S_START_NUM + BLOCK_S_NUM);
+	private static final int BLOCK_T_START_NUM = (BLOCK_Z_START_NUM + BLOCK_Z_NUM);
+	
+	private BlockType blockType;/*俄罗斯方块类型*/
+	private int	blockNumber;	/*方块的编码,范围为0~BLOCK_X_NUM-1,用来判断是blockType类型下具体哪个方块*/
+	private char []blck=new char[BLOCK_WIDTH];
+}

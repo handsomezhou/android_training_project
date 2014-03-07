@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
+<fullyQualifiedTypeName name="android.view.MotionEvent"/>
+<fullyQualifiedTypeName name="com.example.tetris.view.BlockType"/>
+<fullyQualifiedTypeName name="com.example.tetris.object.GameConfig.BlockType"/>
 </qualifiedTypeNameHistroy>

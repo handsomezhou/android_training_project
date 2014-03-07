@@ -1,2 +1,2 @@
 eclipse.preferences.version=1
-task-tag-projects-already-scanned=HelloAndroid,MainActivity,BitmapTest,AnimatorTest,Blast,CanvasTest,FatPo,HandDraw,MoveBack,PathTest,PathText,PinBall,GestureFlip,GestureZoom,SharedPreferencesWrite,Link,Tetris
+task-tag-projects-already-scanned=HelloAndroid,MainActivity,BitmapTest,AnimatorTest,Blast,CanvasTest,FatPo,HandDraw,MoveBack,PathTest,PathText,PinBall,GestureFlip,GestureZoom,SharedPreferencesWrite,Link,Tetris,androidtetris

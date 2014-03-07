@@ -1,0 +1,5 @@
+package com.example.tetris.view;
+
+public class BlockType {
+	/*俄罗斯方块类型常量定义(7种类型)*/
+}

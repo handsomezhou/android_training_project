@@ -89,9 +89,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-   		android:gravity="bottom"
+        android:gravity="bottom"
         android:orientation="horizontal" >
-          <!--     android:gravity="bottom|right" -->
+
+        <!-- android:gravity="bottom|right" -->
 
         <Button
             android:id="@+id/pause_continue_button"
@@ -103,7 +104,8 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="3" >
+            android:layout_weight="3"
+            android:gravity="bottom|right" >
 
             <Button
                 android:id="@+id/up_button"

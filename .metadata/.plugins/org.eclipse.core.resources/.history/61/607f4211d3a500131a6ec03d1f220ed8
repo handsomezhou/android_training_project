@@ -1,0 +1,5 @@
+package com.example.tetris.object;
+
+public class GameConfig {
+
+}
