@@ -31,14 +31,20 @@
         android:layout_height="wrap_content"
         android:layout_weight="4"
         android:orientation="horizontal" >
-
+<!--  
         <View
             android:id="@+id/game_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:background="@drawable/tetris_board" />
-
+-->
+		 <com.example.tetris.view.GameView
+            android:id="@+id/game_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:background="@drawable/tetris_board" />
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -4,4 +4,9 @@
 <fullyQualifiedTypeName name="android.view.MotionEvent"/>
 <fullyQualifiedTypeName name="com.example.tetris.view.BlockType"/>
 <fullyQualifiedTypeName name="com.example.tetris.object.GameConfig.BlockType"/>
+<fullyQualifiedTypeName name="com.example.tetris.view.GameView"/>
+<fullyQualifiedTypeName name="android.view.View.OnTouchListener"/>
+<fullyQualifiedTypeName name="android.view.GestureDetector"/>
+<fullyQualifiedTypeName name="android.view.LayoutInflater"/>
+<fullyQualifiedTypeName name="com.example.tetris.R.layout"/>
 </qualifiedTypeNameHistroy>

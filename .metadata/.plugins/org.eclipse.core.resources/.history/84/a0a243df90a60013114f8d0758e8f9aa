@@ -1,0 +1,146 @@
+package com.example.tetris;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.tetris.view.GameView;
+
+public class Tetris extends Activity {
+
+	// 游戏界面
+	GameView gameView;
+
+	// 下一个方块提示区域
+	TextView nextBlock;
+	// 得分显示区域
+	TextView gameScore;
+	// 等级显示区域
+	TextView gameLevel;
+
+	// 等级升级设置按钮
+	Button levelIncreasesButton;
+	// 暂停继续按钮
+	Button pauseContinueButton;
+	// 上下左右按钮
+	Button upButton;
+	Button leftButton;
+	Button downButton;
+	Button rightButton;
+	// 退出按钮
+	Button backButton;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_tetris);
+		init_tetris();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.tetris, menu);
+		return true;
+	}
+
+	/* 初始化游戏 */
+	public void init_tetris() {
+		gameView = (GameView) findViewById(R.id.game_view);
+		nextBlock = (TextView) findViewById(R.id.next_block);
+		gameScore = (TextView) findViewById(R.id.game_score);
+		gameLevel = (TextView) findViewById(R.id.game_level);
+		levelIncreasesButton = (Button) findViewById(R.id.level_increases_button);
+		pauseContinueButton = (Button) findViewById(R.id.pause_continue_button);
+		upButton = (Button) findViewById(R.id.up_button);
+		leftButton = (Button) findViewById(R.id.left_button);
+		downButton = (Button) findViewById(R.id.down_button);
+		rightButton = (Button) findViewById(R.id.right_button);
+		backButton = (Button) findViewById(R.id.back_button);
+
+		// 为游戏区域的触碰事件绑定监听器
+		// gameView.setOnTouchListener();
+		// 为等级升级设置按钮的单击事件绑定监听器
+		levelIncreasesButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Toast.makeText(Tetris.this, "I'm levelIncreasesButton!",
+						Toast.LENGTH_SHORT).show();
+
+			}
+		});
+
+		// 为暂停继续按钮的单击事件绑定监听器
+		pauseContinueButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Toast.makeText(Tetris.this, "I'm pauseContinueButton!",
+						Toast.LENGTH_SHORT).show();
+
+			}
+		});
+
+		// 为上下左右按钮的单击事件绑定监听器
+		upButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Toast.makeText(Tetris.this, "I'm upButton!", Toast.LENGTH_SHORT)
+						.show();
+			}
+		});
+
+		leftButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Toast.makeText(Tetris.this, "I'm leftButton!",
+						Toast.LENGTH_SHORT).show();
+
+			}
+		});
+
+		downButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Toast.makeText(Tetris.this, "I'm downButton!",
+						Toast.LENGTH_SHORT).show();
+
+			}
+		});
+
+		rightButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Toast.makeText(Tetris.this, "I'm rightButton!",
+						Toast.LENGTH_SHORT).show();
+
+			}
+		});
+
+		// 为退出按钮的单击事件绑定监听器
+		backButton.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
+	}
+
+}
