@@ -1,0 +1,29 @@
+package com.example.tetris.board;
+
+public interface GameService {
+	/*
+	 * 游戏开始
+	 * */
+	void start();
+	
+	/*
+	 * 游戏暂停
+	 * */
+	void pause();
+	
+	/*
+	 * 方块左移
+	 * */
+	
+	/*
+	 * 方块右移
+	 * */
+	
+	/*
+	 * 方块快速下落
+	 * */
+	
+	/*
+	 * 方块翻转
+	 * */
+}

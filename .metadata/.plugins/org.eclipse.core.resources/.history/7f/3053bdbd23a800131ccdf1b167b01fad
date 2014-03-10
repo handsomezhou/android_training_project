@@ -1,0 +1,44 @@
+package com.example.tetris.board.implement;
+
+import com.example.tetris.board.GameService;
+import com.example.tetris.view.Block;
+
+public class GameServiceImplement implements GameService{
+	private Block[][] board=null;
+	@Override
+	public void start() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Block move_left_block() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Block move_right_block() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Block fast_down_block() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Block rotate_block() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

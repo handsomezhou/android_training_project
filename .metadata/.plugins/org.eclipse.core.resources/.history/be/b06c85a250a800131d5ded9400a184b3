@@ -1,0 +1,73 @@
+package com.example.tetris.board.implement;
+
+import com.example.tetris.board.GameService;
+import com.example.tetris.object.GameConfig;
+import com.example.tetris.view.Block;
+
+public class GameServiceImplement implements GameService{
+	
+	/*定义一个Block数组保存游戏区域的方块信息*/
+	private Block[][] board=null;
+	
+	/*游戏配置对象*/
+	private GameConfig gameConfig=null;
+	
+	public GameServiceImplement(GameConfig gameConfig) {
+		// TODO Auto-generated constructor stub
+		this.gameConfig=gameConfig;
+		this.board=init_board(this.gameConfig);
+	};
+	
+	private Block[][] init_board(GameConfig gameConfig){
+		Block[][] board=new Block[gameConfig.getYSize()][gameConfig.getXSize()];
+		for(int y=0; y<gameConfig.getYSize(); y++){
+			for(int x=0; x<gameConfig.getBeginImageX(); x++){
+				board[y][x].setIndexYX(y, x);
+			}
+		}
+		return board;
+	}
+	
+	@Override
+	public void start() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Block move_left_block() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Block move_right_block() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Block fast_down_block() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Block rotate_block() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Block[][] getBlocks() {
+		// TODO Auto-generated method stub
+		return this.board;
+	}
+
+}

@@ -13,18 +13,22 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="setCo" key="selection"/>
+		<item value="GameConfig" key="selection"/>
 		<list key="findhistory">
-			<item value="setco"/>
-			<item value="GameConf"/>
-			<item value="PIECE_WIDTH"/>
-			<item value="GameService"/>
+			<item value="gameConfig"/>
+			<item value="GameConfig"/>
+			<item value="selectImage"/>
+			<item value="SelectImage"/>
+			<item value="getPlayImages"/>
 			<item value="gameService"/>
-			<item value="startGame"/>
-			<item value="Timer"/>
-			<item value="timer"/>
+			<item value="GameService"/>
+			<item value="config"/>
 		</list>
 		<list key="replacehistory">
 		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item value="306" key="DIALOG_Y_ORIGIN"/>
+		<item value="361" key="DIALOG_X_ORIGIN"/>
 	</section>
 </section>

@@ -1,0 +1,5 @@
+package com.example.tetris.board.implement;
+
+public class GameServiceImplement {
+
+}

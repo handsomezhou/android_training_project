@@ -1,0 +1,12 @@
+package com.example.tetris.board;
+
+public class GameService {
+	/*
+	 * 游戏开始
+	 * */
+	void start();
+	/*
+	 * 游戏暂停
+	 * */
+	void pause();
+}
