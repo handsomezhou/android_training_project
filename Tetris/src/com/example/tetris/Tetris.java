@@ -80,6 +80,7 @@ public class Tetris extends Activity {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
+				//switch(event.ACTION_DOWN)
 				gameView.onTouchEvent(event);
 				return true;
 			}
