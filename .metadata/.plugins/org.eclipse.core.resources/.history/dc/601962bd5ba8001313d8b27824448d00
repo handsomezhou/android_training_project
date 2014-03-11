@@ -1,0 +1,36 @@
+package bin;
+
+public class Arrays {
+
+	/**
+	 * @param args
+	 */
+	public static int[][] int_arrays()
+	{
+		Games game[][]=new Games[3][4];
+		for(int y=0; y<3; y++){
+			for(int x=0; x<4; x++){
+				game[y][x].setYX(y,x);
+			}
+		}
+		/*
+		int [][] tem=new int[games.x][games.y];
+		for(int i=0;i<games.x;i++)
+		{
+			for(int j=0;j<games.y;j++)
+			{
+				tem[i][j]=i+j;
+			}
+		}
+		*/
+		return tem;
+		
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Games games=new Games(4, 4);
+		System.out.println(int_arrays(games)[1][1]);;
+		
+	}
+	
+}

@@ -58,19 +58,18 @@ public final class R {
         public static final int up_sel=0x7f020022;
     }
     public static final class id {
-        public static final int action_settings=0x7f08000c;
-        public static final int back=0x7f080000;
-        public static final int back_button=0x7f080001;
-        public static final int down_button=0x7f08000a;
-        public static final int game_level=0x7f080005;
-        public static final int game_score=0x7f080004;
-        public static final int game_view=0x7f080002;
-        public static final int left_button=0x7f080009;
-        public static final int level_increases_button=0x7f080006;
-        public static final int next_block=0x7f080003;
-        public static final int pause_continue_button=0x7f080007;
-        public static final int right_button=0x7f08000b;
-        public static final int up_button=0x7f080008;
+        public static final int action_settings=0x7f08000b;
+        public static final int back_button=0x7f080000;
+        public static final int down_button=0x7f080009;
+        public static final int game_level=0x7f080004;
+        public static final int game_score=0x7f080003;
+        public static final int game_view=0x7f080001;
+        public static final int left_button=0x7f080008;
+        public static final int level_increases_button=0x7f080005;
+        public static final int next_block=0x7f080002;
+        public static final int pause_continue_button=0x7f080006;
+        public static final int right_button=0x7f08000a;
+        public static final int up_button=0x7f080007;
     }
     public static final class layout {
         public static final int activity_tetris=0x7f030000;

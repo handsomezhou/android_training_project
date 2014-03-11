@@ -15,6 +15,11 @@ public interface GameService {
 	void pause();
 
 	/*
+	 * 等级设置
+	 */
+	void set_level(int level);
+
+	/*
 	 * 方块左移
 	 */
 	Block move_left_block();
@@ -35,6 +40,7 @@ public interface GameService {
 	Block rotate_block();
 
 	/*
-	 * */
+	 * 获取方块数组
+	 */
 	Block[][] getBlocks();
 }

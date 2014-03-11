@@ -20,8 +20,8 @@ import com.example.tetris.view.GameView;
 
 public class Tetris extends Activity {
 	/* 定义俄罗斯方块游戏界面的高和宽 */
-	private static final int TETRIS_HEIGHT = 20;
-	private static final int TETRIS_WIDTH = 10;
+	private static final int TETRIS_HEIGHT = 17;// 20;
+	private static final int TETRIS_WIDTH = 13;// 10;
 	/* 游戏配置 */
 	GameConfig gameConfig;
 	/* 游戏业务逻辑接口 */
@@ -63,6 +63,7 @@ public class Tetris extends Activity {
 		gameService = new GameServiceImplement(gameConfig);
 		gameView = (GameView) findViewById(R.id.game_view);
 		gameView.setGameService(gameService);
+		// gameView.setGameConfig(gameConfig);
 
 		nextBlock = (TextView) findViewById(R.id.next_block);
 		gameScore = (TextView) findViewById(R.id.game_score);
@@ -93,9 +94,8 @@ public class Tetris extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Toast.makeText(Tetris.this, "I'm levelIncreasesButton!",
-						Toast.LENGTH_SHORT).show();
-
+				// 建议取消级别设置功能
+				gameService.set_level(1);
 			}
 		});
 
@@ -105,9 +105,7 @@ public class Tetris extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Toast.makeText(Tetris.this, "I'm pauseContinueButton!",
-						Toast.LENGTH_SHORT).show();
-
+				gameService.pause();
 			}
 		});
 
@@ -117,8 +115,7 @@ public class Tetris extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Toast.makeText(Tetris.this, "I'm upButton!", Toast.LENGTH_SHORT)
-						.show();
+				gameService.rotate_block();
 			}
 		});
 
@@ -127,9 +124,7 @@ public class Tetris extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Toast.makeText(Tetris.this, "I'm leftButton!",
-						Toast.LENGTH_SHORT).show();
-
+				gameService.move_left_block();
 			}
 		});
 
@@ -138,9 +133,7 @@ public class Tetris extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Toast.makeText(Tetris.this, "I'm downButton!",
-						Toast.LENGTH_SHORT).show();
-
+				gameService.fast_down_block();
 			}
 		});
 
@@ -149,8 +142,8 @@ public class Tetris extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Toast.makeText(Tetris.this, "I'm rightButton!",
-						Toast.LENGTH_SHORT).show();
+
+				gameService.move_right_block();
 
 			}
 		});

@@ -13,16 +13,16 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="GameConfig" key="selection"/>
+		<item value="GameService" key="selection"/>
 		<list key="findhistory">
+			<item value="GameService"/>
+			<item value="gameService"/>
+			<item value="GameView"/>
+			<item value="gameView"/>
 			<item value="gameConfig"/>
 			<item value="GameConfig"/>
-			<item value="selectImage"/>
-			<item value="SelectImage"/>
-			<item value="getPlayImages"/>
-			<item value="gameService"/>
-			<item value="GameService"/>
-			<item value="config"/>
+			<item value="gaConfig"/>
+			<item value="setGameService"/>
 		</list>
 		<list key="replacehistory">
 		</list>

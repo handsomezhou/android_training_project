@@ -1,0 +1,40 @@
+package com.example.tetris.board;
+
+import com.example.tetris.view.Block;
+
+public interface GameService {
+	// Block [][]board=null;
+	/*
+	 * 游戏开始
+	 */
+	void start();
+
+	/*
+	 * 游戏暂停
+	 */
+	void pause();
+
+	/*
+	 * 方块左移
+	 */
+	Block move_left_block();
+
+	/*
+	 * 方块右移
+	 */
+	Block move_right_block();
+
+	/*
+	 * 方块快速下落
+	 */
+	Block fast_down_block();
+
+	/*
+	 * 方块翻转
+	 */
+	Block rotate_block();
+
+	/*
+	 * */
+	Block[][] getBlocks();
+}

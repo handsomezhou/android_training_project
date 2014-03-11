@@ -1,0 +1,22 @@
+package bin;
+
+public class Games {
+	int x,y;
+	public Games(int x,int y) {
+		// TODO Auto-generated constructor stub
+		this.x=x;
+		this.y=y;		
+	}
+	
+	public void  setYX(int y, int x)
+	{
+		this.y=y;
+		this.x=x;
+	}
+	
+	public void showYX()
+	{
+		System.out.printf("this.y=%d;this.x=%d",this.y,this.x);
+	}
+
+}

@@ -2,6 +2,7 @@ package com.example.tetris.view;
 
 import com.example.tetris.R;
 import com.example.tetris.board.GameService;
+import com.example.tetris.object.GameConfig;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,20 +14,24 @@ import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-public class GameView extends View implements OnGestureListener,
+public class GameView extends ImageView implements OnGestureListener,
 		OnTouchListener {
+	private static final int BLOCK_TYPE_NUM = 7;// 7种类型的方块
 	GestureDetector mGestureDetector;
 	// 游戏逻辑的实现类
-	private GameService gameService;
-
+	private GameService gameService = null;
 	// 俄罗斯方块图片
-	// private Bitmap block_color[];
+	private Bitmap[] block_color;
 
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mGestureDetector = new GestureDetector(context, this);
+		init_block_color();
+		System.out.printf("GameView..................\n");
+		// this.setGameService(gameService);
 
 		// TODO Auto-generated constructor stub
 	}
@@ -105,40 +110,65 @@ public class GameView extends View implements OnGestureListener,
 	@Override
 	protected void onDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
-		// super.onDraw(canvas);
+		super.onDraw(canvas);
+		if ((this.gameService == null))
+			return;
+		// /*
 
 		Block[][] block = gameService.getBlocks();
 
-		Bitmap bm = BitmapFactory.decodeResource(this.getResources(),
-				R.drawable.block_blue);
+		// Bitmap bm = BitmapFactory.decodeResource(this.getResources(),
+		// R.drawable.block_blue);
 		// canvas.drawBitmap(bm, 100, 100, null);
+		int[] location = new int[2];
+		this.getLocationInWindow(location);
 		int y = 0;
 		int x = 0;
 		if (null != block) {
-			// canvas.drawBitmap(bm, 200, 100, null);
 			for (int i = 0; i < block.length; i++) {
 				for (int j = 0; j < block[i].length; j++) {
-					canvas.drawBitmap(bm, 0 + block[i][j].getIndexX() * 40,
-							0 + block[i][j].getIndexY() * 40, null);
 
-					// canvas.drawBitmap(bm, block[i][j].getIndexX(),
-					// block[i][j].getIndexY(), null);
-					// canvas.drawBitmap(bm, x+=40, y+=40, null);
-					//
-					// canvas.drawBitmap(BitmapFactory.decodeResource(
-					// this.getResources(), j),
-					// R.drawable.block_blue),0+block[i][j].getIndexX()*40,0+block[i][j].getIndexY()+40
-					// , null);
+					// canvas.drawBitmap(bm, this.getLeft() +
+					// block[i][j].getIndexX() * 38,
+					// this.getTop() + block[i][j].getIndexY() * 38, null);
+
+					canvas.drawBitmap(this.block_color[(i * block.length + j)
+							% this.BLOCK_TYPE_NUM], this.getLeft() + 13
+							+ block[i][j].getIndexX() * 36, this.getTop() + 16
+							+ block[i][j].getIndexY() * 36, null);
+
 				}
 
 			}
 		}
-		// System.out.printf("on Draw++++++++++++++++++++++++++++ block=%p",block);
-		// canvas.drawBitmap(bm, 300, 100, null);
+
+		// */
 		System.out.printf("on Draw++++++++++++++++++++++++++++");
 	}
 
 	public void setGameService(GameService gameService) {
 		this.gameService = gameService;
+	}
+
+	/*
+	 * public void setGameConfig(GameConfig gameConfig) {
+	 * this.gameConfig=gameConfig; }
+	 */
+	public void init_block_color() {
+		this.block_color = new Bitmap[BLOCK_TYPE_NUM];
+		this.block_color[0] = BitmapFactory.decodeResource(this.getResources(),
+				R.drawable.block_blue);
+		this.block_color[1] = BitmapFactory.decodeResource(this.getResources(),
+				R.drawable.block_cyan);
+		this.block_color[2] = BitmapFactory.decodeResource(this.getResources(),
+				R.drawable.block_green);
+		this.block_color[3] = BitmapFactory.decodeResource(this.getResources(),
+				R.drawable.block_magenta);
+		this.block_color[4] = BitmapFactory.decodeResource(this.getResources(),
+				R.drawable.block_purple);
+		this.block_color[5] = BitmapFactory.decodeResource(this.getResources(),
+				R.drawable.block_red);
+		this.block_color[6] = BitmapFactory.decodeResource(this.getResources(),
+				R.drawable.block_yellow);
 	}
 }
