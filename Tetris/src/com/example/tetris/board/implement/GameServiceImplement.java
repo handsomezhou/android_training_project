@@ -10,7 +10,7 @@ import com.example.tetris.object.Grid;
 
 public class GameServiceImplement implements GameService {
 
-	/* 定义一个Block数组保存游戏区域的方块信息 */
+	/* 定义一个Grid数组保存游戏区域的方块信息 */
 	private Grid[][] board = null;
 
 	/* 游戏配置对象 */
