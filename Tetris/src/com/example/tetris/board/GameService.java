@@ -1,6 +1,8 @@
 package com.example.tetris.board;
 
-import com.example.tetris.view.Block;
+import com.example.tetris.object.Block;
+import com.example.tetris.object.GameConfig;
+import com.example.tetris.object.Grid;
 
 public interface GameService {
 	// Block [][]board=null;
@@ -42,5 +44,10 @@ public interface GameService {
 	/*
 	 * 获取方块数组
 	 */
-	Block[][] getBlocks();
+	Grid[][] getGrid();
+
+	/*
+	 * 获取相关配置信息
+	 */
+	public GameConfig getGameConfig();
 }

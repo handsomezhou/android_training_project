@@ -2,7 +2,9 @@ package com.example.tetris.view;
 
 import com.example.tetris.R;
 import com.example.tetris.board.GameService;
+import com.example.tetris.object.Block;
 import com.example.tetris.object.GameConfig;
+import com.example.tetris.object.Grid;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -55,13 +57,6 @@ public class GameView extends ImageView implements OnGestureListener,
 	@Override
 	public boolean onDown(MotionEvent e) {
 		// TODO Auto-generated method stub
-		// TextView test = new TextView(getContext());
-		// st.setText("I'm onDown");
-		// System.out.println("I'm onDown");
-		// TextView test=(TextView) findViewById(R.id.next_block);
-		// .setText("I'm onDown");
-
-		System.out.println("---------------------");
 		Toast.makeText(getContext(), "I'm onDown!", Toast.LENGTH_SHORT).show();
 		return true;
 	}
@@ -115,7 +110,7 @@ public class GameView extends ImageView implements OnGestureListener,
 			return;
 		// /*
 
-		Block[][] block = gameService.getBlocks();
+		Grid[][] block = gameService.getGrid();
 
 		// Bitmap bm = BitmapFactory.decodeResource(this.getResources(),
 		// R.drawable.block_blue);
@@ -131,11 +126,22 @@ public class GameView extends ImageView implements OnGestureListener,
 					// canvas.drawBitmap(bm, this.getLeft() +
 					// block[i][j].getIndexX() * 38,
 					// this.getTop() + block[i][j].getIndexY() * 38, null);
-
-					canvas.drawBitmap(this.block_color[(i * block.length + j)
-							% this.BLOCK_TYPE_NUM], this.getLeft() + 13
-							+ block[i][j].getIndexX() * 36, this.getTop() + 16
-							+ block[i][j].getIndexY() * 36, null);
+					// canvas.drawBitmap(this.block_color[0], 100, 100, null);
+					canvas.drawBitmap(
+							this.block_color[(i * block.length + j)
+									% this.BLOCK_TYPE_NUM],
+							this.getLeft()
+									+ gameService.getGameConfig()
+											.getBeginImageX()
+									+ block[i][j].getIndexX()
+									* gameService.getGameConfig()
+											.getImageWidth(),
+							this.getTop()
+									+ gameService.getGameConfig()
+											.getBeginImageY()
+									+ block[i][j].getIndexY()
+									* gameService.getGameConfig()
+											.getImageHeight(), null);
 
 				}
 

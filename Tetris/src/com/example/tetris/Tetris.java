@@ -1,6 +1,7 @@
 package com.example.tetris;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
@@ -19,9 +20,12 @@ import com.example.tetris.object.GameConfig;
 import com.example.tetris.view.GameView;
 
 public class Tetris extends Activity {
-	/* 定义俄罗斯方块游戏界面的高和宽 */
-	private static final int TETRIS_HEIGHT = 17;// 20;
-	private static final int TETRIS_WIDTH = 13;// 10;
+	private int tetrisHeight;
+	private int tetrisWidth;
+	private int beginImageY;
+	private int beginImageX;
+	private int imageHeight;
+	private int imageWidth;
 	/* 游戏配置 */
 	GameConfig gameConfig;
 	/* 游戏业务逻辑接口 */
@@ -52,6 +56,14 @@ public class Tetris extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tetris);
+		Resources resources=getResources();
+		tetrisHeight=resources.getInteger(R.integer.tetris_hight);
+		tetrisWidth=resources.getInteger(R.integer.tetris_widht);
+		beginImageY=resources.getInteger(R.integer.begin_image_y);
+		beginImageX=resources.getInteger(R.integer.begin_image_x);
+		imageHeight=resources.getInteger(R.integer.image_height);
+		imageWidth=resources.getInteger(R.integer.image_width);
+		
 		init_tetris();
 		// LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_tetris,
 		// null);
@@ -59,7 +71,8 @@ public class Tetris extends Activity {
 
 	/* 初始化游戏 */
 	public void init_tetris() {
-		gameConfig = new GameConfig(TETRIS_HEIGHT, TETRIS_WIDTH, this);
+		gameConfig = new GameConfig(this.tetrisHeight, this.tetrisWidth, this.beginImageY, this.beginImageX,this.imageHeight,this.imageWidth, this);
+		System.out.printf("y=%d, x=%d+++++++++++",gameConfig.getYSize(),gameConfig.getXSize());
 		gameService = new GameServiceImplement(gameConfig);
 		gameView = (GameView) findViewById(R.id.game_view);
 		gameView.setGameService(gameService);

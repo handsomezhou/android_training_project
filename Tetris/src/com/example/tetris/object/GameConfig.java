@@ -3,18 +3,17 @@ package com.example.tetris.object;
 import android.content.Context;
 
 public class GameConfig {
+
 	/* 定义俄罗斯方块7种方块类型 */
 	public enum BlockType {
-		BLOCK_I, BLOCK_J, BLOCK_L, BLOCK_O, BLOCK_S, BLOCK_Z, BLOCK_T, /* BLOCK_TYPE_NUM */
+		BLOCK_I, BLOCK_J, BLOCK_L, BLOCK_O, BLOCK_S, BLOCK_Z, BLOCK_T, BLOCK_TYPE
 	}
 
 	/* 俄罗斯方块中方块总类型数目 */
 	public static final int BLOCK_TYPE_NUM = 7;
-	/* 俄罗斯方块界面的长和宽 */
-	private static final int TETRIS_HEIGHT = 20;
-	private static final int TETRIS_WIDTH = 10;
-	// public static final int BLOCK_WIDTH = 4;
-	// public static final int BLOCK_HEIGHT = 4;
+
+	public static final int BLOCK_WIDTH = 4;
+	public static final int BLOCK_HEIGHT = 4;
 	/* 俄罗斯方块每个方块的具体数目 */
 	public static final int BLOCK_I_NUM = 2;
 	public static final int BLOCK_J_NUM = 4;
@@ -37,29 +36,155 @@ public class GameConfig {
 	public static final int BLOCK_S_START_NUM = (BLOCK_O_START_NUM + BLOCK_O_NUM);
 	public static final int BLOCK_Z_START_NUM = (BLOCK_S_START_NUM + BLOCK_S_NUM);
 	public static final int BLOCK_T_START_NUM = (BLOCK_Z_START_NUM + BLOCK_Z_NUM);
+	/* 俄罗斯方块界面的长和宽by default */
+	private static final int TETRIS_HEIGHT = 20;
+	private static final int TETRIS_WIDTH = 10;
+	private static char[][] block={//[BLOCK_TOTAL_NUM][BLOCK_HEIGHT*BLOCK_WIDTH+1]
+		//BLOCK_I
+		{'0','1','0','0',
+			 '0','1','0','0',
+			 '0','1','0','0',
+			 '0','1','0','0','\0',},
+
+			{'0','0','0','0',
+			 '1','1','1','1',
+			 '0','0','0','0',
+			 '0','0','0','0','\0',},
+	//BLOCK_J
+			{'0','0','1','0',
+			 '0','0','1','0',
+			 '0','1','1','0',
+			 '0','0','0','0','\0',},
+
+			{'1','0','0','0',
+			 '1','1','1','0',
+			 '0','0','0','0',
+			 '0','0','0','0','\0',},
+
+			{'0','1','1','0',
+			 '0','1','0','0',
+			 '0','1','0','0',
+			 '0','0','0','0','\0',},
+			
+			{'0','0','0','0',
+			 '1','1','1','0',
+			 '0','0','1','0',
+			 '0','0','0','0','\0',},
+	//BLOCK_L
+			{'0','1','0','0',
+			 '0','1','0','0',
+			 '0','1','1','0',
+			 '0','0','0','0','\0',},
+
+			{'0','0','0','0',
+			 '1','1','1','0',
+			 '1','0','0','0',
+			 '0','0','0','0','\0',},
+
+			{'1','1','0','0',
+			 '0','1','0','0',
+			 '0','1','0','0',
+			 '0','0','0','0','\0',},
+
+			{'0','0','1','0',
+			 '1','1','1','0',
+			 '0','0','0','0',
+			 '0','0','0','0','\0',},
+	//BLOCK_O
+			{'0','0','0','0',
+			 '0','1','1','0',
+			 '0','1','1','0',
+			 '0','0','0','0','\0',},
+	//BLOCK_S
+			{'0','1','1','0',
+			 '1','1','0','0',
+			 '0','0','0','0',
+			 '0','0','0','0','\0',},
+
+			{'0','1','0','0',
+			 '0','1','1','0',
+			 '0','0','1','0',
+			 '0','0','0','0','\0',},
+	//BLOCK_Z
+			{'1','1','0','0',
+			 '0','1','1','0',
+			 '0','0','0','0',
+			 '0','0','0','0','\0',},
+
+			{'0','0','1','0',
+			 '0','1','1','0',
+			 '0','1','0','0',
+			 '0','0','0','0','\0',},
+	//BLOCK_T
+			{'0','1','0','0',
+			 '1','1','1','0',
+			 '0','0','0','0',
+			 '0','0','0','0','\0',},
+
+			{'0','1','0','0',
+			 '0','1','1','0',
+			 '0','1','0','0',
+			 '0','0','0','0','\0',},
+
+			{'0','0','0','0',
+			 '1','1','1','0',
+			 '0','1','0','0',
+			 '0','0','0','0','\0',},
+
+			{'0','1','0','0',
+			 '1','1','0','0',
+			 '0','1','0','0',
+			 '0','0','0','0','\0',},
+
+	};
 
 	// Block[y][x]数组第一二维的长度
 	private int xSize;
 	private int ySize;
-	// Board中第一张图片出现的x座标
+	// Board中第一张图片出现的x座标与y座标
 	private int beginImageX;
-	// Board中第一张图片出现的y座标
 	private int beginImageY;
+	// Block 小方块图片的宽和高
+	private int imageWidth;
+	private int imageHeight;
+
 	private Context context;
 
-	public GameConfig(Context context) {
+	public GameConfig(int beginImageY, int beginImageX, int imageHeight,
+			int imageWidth, Context context) {
 		this.ySize = TETRIS_HEIGHT;
 		this.xSize = TETRIS_WIDTH;
-		this.beginImageY = 0;
-		this.beginImageX = 0;
+		this.beginImageY = beginImageY;
+		this.beginImageX = beginImageX;
+		this.imageHeight = imageHeight;
+		this.imageWidth = imageWidth;
 		this.context = context;
 	}
 
-	public GameConfig(int tetrisHeight, int tetrisWidth, Context context) {
+	/**
+	 * 
+	 * @param tetrisHeight
+	 *            俄罗斯方块的高(行)
+	 * @param tetrisWidth
+	 *            俄罗斯方块的宽度(列)
+	 * @param beginImageY
+	 *            最左上角显示的小方块,相对于方块显示区域的Y偏移量
+	 * @param beginImageX
+	 *            最左上角显示的小方块,相对于方块显示区域的X偏移量
+	 * @param imageHeight
+	 *            小方块的高
+	 * @param imageWidth
+	 *            小方块的宽
+	 * @param context
+	 */
+	public GameConfig(int tetrisHeight, int tetrisWidth, int beginImageY,
+			int beginImageX, int imageHeight, int imageWidth, Context context) {
 		this.ySize = tetrisHeight;
 		this.xSize = tetrisWidth;
-		this.beginImageY = 0;
-		this.beginImageX = 0;
+		this.beginImageY = beginImageY;
+		this.beginImageX = beginImageX;
+		this.imageHeight = imageHeight;
+		this.imageWidth = imageWidth;
 		this.context = context;
 	}
 
@@ -68,7 +193,7 @@ public class GameConfig {
 	}
 
 	public int getXSize() {
-		return xSize;
+		return this.xSize;
 	}
 
 	public void setYSize(int ySize) {
@@ -76,7 +201,7 @@ public class GameConfig {
 	}
 
 	public int getYSize() {
-		return ySize;
+		return this.ySize;
 	}
 
 	public void setBeginImageY(int beginImageY) {
@@ -84,7 +209,7 @@ public class GameConfig {
 	}
 
 	public int getBeginImageY() {
-		return beginImageY;
+		return this.beginImageY;
 	}
 
 	public void setBeginImageX(int beginImageX) {
@@ -92,7 +217,23 @@ public class GameConfig {
 	}
 
 	public int getBeginImageX() {
-		return beginImageX;
+		return this.beginImageX;
+	}
+
+	public void setImageWidth(int imageWidth) {
+		this.imageWidth = imageWidth;
+	}
+
+	public int getImageWidth() {
+		return this.imageWidth;
+	}
+
+	public void setImageHeight(int imageHeight) {
+		this.imageHeight = imageHeight;
+	}
+
+	public int getImageHeight() {
+		return this.imageHeight;
 	}
 
 	public Context getContext() {
