@@ -1,0 +1,41 @@
+package com.example.tetris.view;
+
+import com.example.tetris.object.Block;
+import com.example.tetris.service.GameService;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.util.AttributeSet;
+import android.widget.ImageView;
+
+public class NextBlockView extends ImageView {
+	// 游戏逻辑的实现类
+	private GameService gameService = null;
+	// 俄罗斯方块图片
+	private Bitmap[] block_color;
+
+	public NextBlockView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	protected void onDraw(Canvas canvas) {
+		// TODO Auto-generated method stub
+		super.onDraw(canvas);
+		if(null==this.gameService){
+			return;
+		}
+		Block nextBlock=gameService.getNextBlock();
+		if(null!=nextBlock){
+			
+			
+		}
+	}
+	
+	public void setGridColor(Bitmap[] bitbmp)
+	{
+		this.block_color=bitbmp;
+	}
+}

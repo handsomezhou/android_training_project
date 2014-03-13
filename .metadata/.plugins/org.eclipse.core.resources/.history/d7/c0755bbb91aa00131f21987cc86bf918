@@ -1,0 +1,7 @@
+package com.example.tetris.view;
+
+import android.widget.ImageView;
+
+public class NextBlockView extends ImageView{
+
+}

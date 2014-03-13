@@ -1,0 +1,28 @@
+package com.example.tetris.view;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.util.AttributeSet;
+import android.widget.ImageView;
+
+public class NextBlockView extends ImageView {
+	// ¶íÂÞË¹·½¿éÍ¼Æ¬
+	private Bitmap[] block_color;
+
+	public NextBlockView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	protected void onDraw(Canvas canvas) {
+		// TODO Auto-generated method stub
+		super.onDraw(canvas);
+	}
+	
+	public void setGridColor(Bitmap[] bitbmp)
+	{
+		this.block_color=bitbmp;
+	}
+}

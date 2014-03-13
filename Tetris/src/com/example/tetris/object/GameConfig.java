@@ -5,8 +5,18 @@ import android.content.Context;
 public class GameConfig {
 
 	/* 定义俄罗斯方块7种方块类型 */
-	public enum BlockType {
-		BLOCK_I, BLOCK_J, BLOCK_L, BLOCK_O, BLOCK_S, BLOCK_Z, BLOCK_T, BLOCK_TYPE
+	// public enum BlockType {
+	// BLOCK_I, BLOCK_J, BLOCK_L, BLOCK_O, BLOCK_S, BLOCK_Z, BLOCK_T, BLOCK_TYPE
+	// }
+	public class BlockType {
+		public static final int BLOCK_I = 0;
+		public static final int BLOCK_J = 1;
+		public static final int BLOCK_L = 2;
+		public static final int BLOCK_O = 3;
+		public static final int BLOCK_S = 4;
+		public static final int BLOCK_Z = 5;
+		public static final int BLOCK_T = 6;
+		public static final int BLOCK_TYPE = 7;
 	}
 
 	/* 俄罗斯方块中方块总类型数目 */
@@ -36,108 +46,77 @@ public class GameConfig {
 	public static final int BLOCK_S_START_NUM = (BLOCK_O_START_NUM + BLOCK_O_NUM);
 	public static final int BLOCK_Z_START_NUM = (BLOCK_S_START_NUM + BLOCK_S_NUM);
 	public static final int BLOCK_T_START_NUM = (BLOCK_Z_START_NUM + BLOCK_Z_NUM);
+
+	private static final int BLOCK_TYPE_INIT = BlockType.BLOCK_TYPE;
+	private static final char GRID_VALUE_1 = '1';
+	private static final char GRID_VALUE_0 = '0';
 	/* 俄罗斯方块界面的长和宽by default */
 	private static final int TETRIS_HEIGHT = 20;
 	private static final int TETRIS_WIDTH = 10;
-	private static char[][] block={//[BLOCK_TOTAL_NUM][BLOCK_HEIGHT*BLOCK_WIDTH+1]
-		//BLOCK_I
-		{'0','1','0','0',
-			 '0','1','0','0',
-			 '0','1','0','0',
-			 '0','1','0','0','\0',},
 
-			{'0','0','0','0',
-			 '1','1','1','1',
-			 '0','0','0','0',
-			 '0','0','0','0','\0',},
-	//BLOCK_J
-			{'0','0','1','0',
-			 '0','0','1','0',
-			 '0','1','1','0',
-			 '0','0','0','0','\0',},
+	private static final char[][] block = {// [BLOCK_TOTAL_NUM][BLOCK_HEIGHT*BLOCK_WIDTH+1]
+			// BLOCK_I
+			{ '0', '1', '0', '0', '0', '1', '0', '0', '0', '1', '0', '0', '0',
+					'1', '0', '0', '\0', },
 
-			{'1','0','0','0',
-			 '1','1','1','0',
-			 '0','0','0','0',
-			 '0','0','0','0','\0',},
+			{ '0', '0', '0', '0', '1', '1', '1', '1', '0', '0', '0', '0', '0',
+					'0', '0', '0', '\0', },
+			// BLOCK_J
+			{ '0', '0', '1', '0', '0', '0', '1', '0', '0', '1', '1', '0', '0',
+					'0', '0', '0', '\0', },
 
-			{'0','1','1','0',
-			 '0','1','0','0',
-			 '0','1','0','0',
-			 '0','0','0','0','\0',},
-			
-			{'0','0','0','0',
-			 '1','1','1','0',
-			 '0','0','1','0',
-			 '0','0','0','0','\0',},
-	//BLOCK_L
-			{'0','1','0','0',
-			 '0','1','0','0',
-			 '0','1','1','0',
-			 '0','0','0','0','\0',},
+			{ '1', '0', '0', '0', '1', '1', '1', '0', '0', '0', '0', '0', '0',
+					'0', '0', '0', '\0', },
 
-			{'0','0','0','0',
-			 '1','1','1','0',
-			 '1','0','0','0',
-			 '0','0','0','0','\0',},
+			{ '0', '1', '1', '0', '0', '1', '0', '0', '0', '1', '0', '0', '0',
+					'0', '0', '0', '\0', },
 
-			{'1','1','0','0',
-			 '0','1','0','0',
-			 '0','1','0','0',
-			 '0','0','0','0','\0',},
+			{ '0', '0', '0', '0', '1', '1', '1', '0', '0', '0', '1', '0', '0',
+					'0', '0', '0', '\0', },
+			// BLOCK_L
+			{ '0', '1', '0', '0', '0', '1', '0', '0', '0', '1', '1', '0', '0',
+					'0', '0', '0', '\0', },
 
-			{'0','0','1','0',
-			 '1','1','1','0',
-			 '0','0','0','0',
-			 '0','0','0','0','\0',},
-	//BLOCK_O
-			{'0','0','0','0',
-			 '0','1','1','0',
-			 '0','1','1','0',
-			 '0','0','0','0','\0',},
-	//BLOCK_S
-			{'0','1','1','0',
-			 '1','1','0','0',
-			 '0','0','0','0',
-			 '0','0','0','0','\0',},
+			{ '0', '0', '0', '0', '1', '1', '1', '0', '1', '0', '0', '0', '0',
+					'0', '0', '0', '\0', },
 
-			{'0','1','0','0',
-			 '0','1','1','0',
-			 '0','0','1','0',
-			 '0','0','0','0','\0',},
-	//BLOCK_Z
-			{'1','1','0','0',
-			 '0','1','1','0',
-			 '0','0','0','0',
-			 '0','0','0','0','\0',},
+			{ '1', '1', '0', '0', '0', '1', '0', '0', '0', '1', '0', '0', '0',
+					'0', '0', '0', '\0', },
 
-			{'0','0','1','0',
-			 '0','1','1','0',
-			 '0','1','0','0',
-			 '0','0','0','0','\0',},
-	//BLOCK_T
-			{'0','1','0','0',
-			 '1','1','1','0',
-			 '0','0','0','0',
-			 '0','0','0','0','\0',},
+			{ '0', '0', '1', '0', '1', '1', '1', '0', '0', '0', '0', '0', '0',
+					'0', '0', '0', '\0', },
+			// BLOCK_O
+			{ '0', '0', '0', '0', '0', '1', '1', '0', '0', '1', '1', '0', '0',
+					'0', '0', '0', '\0', },
+			// BLOCK_S
+			{ '0', '1', '1', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0',
+					'0', '0', '0', '\0', },
 
-			{'0','1','0','0',
-			 '0','1','1','0',
-			 '0','1','0','0',
-			 '0','0','0','0','\0',},
+			{ '0', '1', '0', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0',
+					'0', '0', '0', '\0', },
+			// BLOCK_Z
+			{ '1', '1', '0', '0', '0', '1', '1', '0', '0', '0', '0', '0', '0',
+					'0', '0', '0', '\0', },
 
-			{'0','0','0','0',
-			 '1','1','1','0',
-			 '0','1','0','0',
-			 '0','0','0','0','\0',},
+			{ '0', '0', '1', '0', '0', '1', '1', '0', '0', '1', '0', '0', '0',
+					'0', '0', '0', '\0', },
+			// BLOCK_T
+			{ '0', '1', '0', '0', '1', '1', '1', '0', '0', '0', '0', '0', '0',
+					'0', '0', '0', '\0', },
 
-			{'0','1','0','0',
-			 '1','1','0','0',
-			 '0','1','0','0',
-			 '0','0','0','0','\0',},
+			{ '0', '1', '0', '0', '0', '1', '1', '0', '0', '1', '0', '0', '0',
+					'0', '0', '0', '\0', },
+
+			{ '0', '0', '0', '0', '1', '1', '1', '0', '0', '1', '0', '0', '0',
+					'0', '0', '0', '\0', },
+
+			{ '0', '1', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0',
+					'0', '0', '0', '\0', },
 
 	};
 
+	/* 俄罗斯方块类型 */
+	BlockType blockType;
 	// Block[y][x]数组第一二维的长度
 	private int xSize;
 	private int ySize;
@@ -186,6 +165,39 @@ public class GameConfig {
 		this.imageHeight = imageHeight;
 		this.imageWidth = imageWidth;
 		this.context = context;
+	}
+
+	public int getBlockTypeNUM() {
+		return BLOCK_TYPE_NUM;
+	}
+
+	public int getBlockHeight() {
+		return BLOCK_HEIGHT;
+	}
+
+	public int getBlockWidth() {
+		return BLOCK_WIDTH;
+	}
+
+	public BlockType getBlockType() {
+		return this.blockType;
+	}
+
+	public int getBlockInitType() {
+
+		return BLOCK_TYPE_INIT;
+	}
+
+	public char getValueOne() {
+		return GRID_VALUE_1;
+	}
+
+	public char getValueZero() {
+		return GRID_VALUE_0;
+	}
+
+	public  char[] getBlocks(int index) {
+		return block[index];
 	}
 
 	public void setXSize(int xSize) {

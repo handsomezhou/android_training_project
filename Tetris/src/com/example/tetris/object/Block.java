@@ -1,13 +1,11 @@
 package com.example.tetris.object;
+
 import com.example.tetris.object.GameConfig.BlockType;
 
-
 /**
- * Description: 俄罗斯方块中的方块对象
+ * Description:俄罗斯方块中的方块对象
  * 
- * @author ZJQ
- * @Date: 2014-03-7
- * @version 1.0
+ * @author Administrator
  */
 public class Block {
 	public static final int BLOCK_HEIGHT = 4;
@@ -15,7 +13,7 @@ public class Block {
 
 	private int indexY; /* 该对象在Block[y][x]中索引 y */
 	private int indexX; /* 该对象在Block[y][x]中索引 x */
-	private BlockType blockType;/* 俄罗斯方块类型 */
+	private int blockType;/* 俄罗斯方块类型 */
 	private int blockNumber; /* 方块的编码,范围为0~BLOCK_X_NUM-1,用来判断是blockType类型下具体哪个方块 */
 	private char[] blockData = new char[BLOCK_WIDTH * BLOCK_HEIGHT + 1];/* 保存方块数据 */
 
@@ -34,15 +32,21 @@ public class Block {
 		return this.indexY;
 	}
 
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
+	}
+
 	public int getIndexX() {
 		return this.indexX;
 	}
 
-	public void setBlockType(BlockType blockType) {
+	public void setBlockType(int blockType) {
 		this.blockType = blockType;
 	}
 
-	public BlockType getBlockType() {
+	public int getBlockType() {
 		return this.blockType;
 	}
 

@@ -31,7 +31,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true" >
 
-        <TextView
+        <com.example.tetris.view.NextBlockView
             android:id="@+id/next_block"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

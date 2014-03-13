@@ -1,0 +1,20 @@
+package com.example.tetris.view;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.util.AttributeSet;
+import android.widget.ImageView;
+
+public class NextBlockView extends ImageView{
+
+	public NextBlockView(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	protected void onDraw(Canvas canvas) {
+		// TODO Auto-generated method stub
+		super.onDraw(canvas);
+	}
+}

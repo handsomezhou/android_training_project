@@ -1,14 +1,10 @@
 package com.example.tetris.view;
 
-import com.example.tetris.R;
-import com.example.tetris.board.GameService;
-import com.example.tetris.object.Block;
-import com.example.tetris.object.GameConfig;
 import com.example.tetris.object.Grid;
+import com.example.tetris.service.GameService;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -25,15 +21,16 @@ public class GameView extends ImageView implements OnGestureListener,
 	GestureDetector mGestureDetector;
 	// 游戏逻辑的实现类
 	private GameService gameService = null;
+//	//当前方块与下一个方块
+//	private Block curBlock=null;
+//	private Block nextBlock=null;
 	// 俄罗斯方块图片
 	private Bitmap[] block_color;
 
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mGestureDetector = new GestureDetector(context, this);
-		init_block_color();
 		System.out.printf("GameView..................\n");
-		// this.setGameService(gameService);
 
 		// TODO Auto-generated constructor stub
 	}
@@ -106,30 +103,25 @@ public class GameView extends ImageView implements OnGestureListener,
 	protected void onDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
 		super.onDraw(canvas);
-		if ((this.gameService == null))
+		if ((null==this.gameService)||(null==this.block_color))
 			return;
 		// /*
 
 		Grid[][] block = gameService.getGrid();
+//		Block curBlock=gameService.getCurBlock();
+//		Block nextBlock=gameService.getNextBlock();
 
 		// Bitmap bm = BitmapFactory.decodeResource(this.getResources(),
 		// R.drawable.block_blue);
 		// canvas.drawBitmap(bm, 100, 100, null);
 		int[] location = new int[2];
 		this.getLocationInWindow(location);
-		int y = 0;
-		int x = 0;
 		if (null != block) {
 			for (int i = 0; i < block.length; i++) {
 				for (int j = 0; j < block[i].length; j++) {
-
-					// canvas.drawBitmap(bm, this.getLeft() +
-					// block[i][j].getIndexX() * 38,
-					// this.getTop() + block[i][j].getIndexY() * 38, null);
-					// canvas.drawBitmap(this.block_color[0], 100, 100, null);
 					canvas.drawBitmap(
 							this.block_color[(i * block.length + j)
-									% this.BLOCK_TYPE_NUM],
+									% this.gameService.getGameConfig().getBlockTypeNUM()],
 							this.getLeft()
 									+ gameService.getGameConfig()
 											.getBeginImageX()
@@ -155,26 +147,9 @@ public class GameView extends ImageView implements OnGestureListener,
 	public void setGameService(GameService gameService) {
 		this.gameService = gameService;
 	}
-
-	/*
-	 * public void setGameConfig(GameConfig gameConfig) {
-	 * this.gameConfig=gameConfig; }
-	 */
-	public void init_block_color() {
-		this.block_color = new Bitmap[BLOCK_TYPE_NUM];
-		this.block_color[0] = BitmapFactory.decodeResource(this.getResources(),
-				R.drawable.block_blue);
-		this.block_color[1] = BitmapFactory.decodeResource(this.getResources(),
-				R.drawable.block_cyan);
-		this.block_color[2] = BitmapFactory.decodeResource(this.getResources(),
-				R.drawable.block_green);
-		this.block_color[3] = BitmapFactory.decodeResource(this.getResources(),
-				R.drawable.block_magenta);
-		this.block_color[4] = BitmapFactory.decodeResource(this.getResources(),
-				R.drawable.block_purple);
-		this.block_color[5] = BitmapFactory.decodeResource(this.getResources(),
-				R.drawable.block_red);
-		this.block_color[6] = BitmapFactory.decodeResource(this.getResources(),
-				R.drawable.block_yellow);
+	
+	public void setGridColor(Bitmap[] bitbmp)
+	{
+		this.block_color=bitbmp;
 	}
 }

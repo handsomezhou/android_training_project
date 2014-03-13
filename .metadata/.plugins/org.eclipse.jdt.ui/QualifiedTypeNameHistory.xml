@@ -14,15 +14,19 @@
 <fullyQualifiedTypeName name="com.example.tetris.R.id"/>
 <fullyQualifiedTypeName name="com.example.tetris.R.drawable"/>
 <fullyQualifiedTypeName name="com.example.tetris.view.Block"/>
-<fullyQualifiedTypeName name="android.graphics.Bitmap"/>
 <fullyQualifiedTypeName name="bin.Games"/>
-<fullyQualifiedTypeName name="android.widget.ImageView"/>
 <fullyQualifiedTypeName name="com.example.tetris.board.GameService"/>
 <fullyQualifiedTypeName name="com.example.tetris.R.dimen"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="android.content.res.Resources"/>
 <fullyQualifiedTypeName name="com.example.tetris.R.integer"/>
-<fullyQualifiedTypeName name="com.example.tetris.object.GameConfig"/>
-<fullyQualifiedTypeName name="com.example.tetris.object.GameConfig.BlockType"/>
 <fullyQualifiedTypeName name="com.example.tetris.object.Grid"/>
+<fullyQualifiedTypeName name="com.example.tetris.object.GameConfig.BlockType"/>
+<fullyQualifiedTypeName name="com.example.tetris.object.GameConfig"/>
+<fullyQualifiedTypeName name="android.widget.ImageView"/>
+<fullyQualifiedTypeName name="com.example.tetris.view.NextBlockView"/>
+<fullyQualifiedTypeName name="android.graphics.Bitmap"/>
+<fullyQualifiedTypeName name="java.sql.Array"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="com.example.tetris.object.Block"/>
 </qualifiedTypeNameHistroy>
