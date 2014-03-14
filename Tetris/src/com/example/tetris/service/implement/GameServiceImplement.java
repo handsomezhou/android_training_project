@@ -1,8 +1,5 @@
 package com.example.tetris.service.implement;
 
-import java.sql.Array;
-import java.util.Arrays;
-
 import android.widget.Toast;
 import com.example.tetris.object.Block;
 import com.example.tetris.object.GameConfig;
@@ -10,7 +7,7 @@ import com.example.tetris.object.GameConfig.BlockType;
 import com.example.tetris.object.Grid;
 import com.example.tetris.service.GameService;
 
-public class GameServiceImplement implements GameService {
+public class GameServiceImplement implements GameService,Cloneable{
 
 	/* 定义一个Grid数组保存游戏区域的方块信息 */
 	private Grid[][] board = null;
@@ -27,9 +24,9 @@ public class GameServiceImplement implements GameService {
 		this.board = init_board(this.gameConfig);
 		this.curBlock = new Block(0, 0);
 		this.nextBlock = new Block(0, 0);
-		produceCurBlock(1);
+		produceCurBlock(0);
 		produceNextBlock(getCurBlock());
-		produceCurBlock(8);
+		produceCurBlock(1);
 		
 	};
 
@@ -51,7 +48,7 @@ public class GameServiceImplement implements GameService {
 	public Block produceCurBlock(int i) {
 		curBlock.setIndexYX(0, 0);
 		curBlock.setBlockType(BlockType.BLOCK_I);
-		curBlock.setBlockNumber(1);
+		curBlock.setBlockNumber(0);
 		curBlock.setBlockData(gameConfig.getBlocks(i));
 		// System.out.printf("produceCurBlock==[%s]",curBlock);
 		return this.curBlock;
@@ -59,6 +56,14 @@ public class GameServiceImplement implements GameService {
 
 	public Block produceNextBlock(Block block) {
 		this.nextBlock = block;
+		
+		try {
+			return this.nextBlock=(Block)block.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			System.out.printf(".......................................获取下一个方块数据失败！");
+			e.printStackTrace();
+		}
 		
 		return this.nextBlock;
 	}

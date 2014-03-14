@@ -1,5 +1,6 @@
 package com.example.tetris.view;
 
+import com.example.tetris.object.Block;
 import com.example.tetris.object.Grid;
 import com.example.tetris.service.GameService;
 
@@ -111,11 +112,18 @@ public class GameView extends ImageView implements OnGestureListener,
 //		Block curBlock=gameService.getCurBlock();
 //		Block nextBlock=gameService.getNextBlock();
 
-		// Bitmap bm = BitmapFactory.decodeResource(this.getResources(),
-		// R.drawable.block_blue);
-		// canvas.drawBitmap(bm, 100, 100, null);
-		int[] location = new int[2];
-		this.getLocationInWindow(location);
+		Block nextBlock=gameService.getCurBlock();
+		if(null!=nextBlock){
+			for(int i=0; i<gameService.getGameConfig().getBlockHeight(); i++){
+					for(int j=0; j<gameService.getGameConfig().getBlockWidth(); j++){
+						if(nextBlock.getBlockData()[i * gameService.getGameConfig().getBlockHeight() + j]=='1')
+						canvas.drawBitmap(this.block_color[(i * gameService.getGameConfig().getBlockHeight() + j)%gameService.getGameConfig().getBlockTypeNUM()], 
+								this.getLeft()+j*36, this.getTop()+i*36, null);
+					}
+			}
+			
+		}
+		/*
 		if (null != block) {
 			for (int i = 0; i < block.length; i++) {
 				for (int j = 0; j < block[i].length; j++) {
@@ -139,7 +147,7 @@ public class GameView extends ImageView implements OnGestureListener,
 
 			}
 		}
-
+*/
 		// */
 		System.out.printf("on Draw++++++++++++++++++++++++++++");
 	}

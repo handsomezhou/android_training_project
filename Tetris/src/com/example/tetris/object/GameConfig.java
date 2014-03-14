@@ -114,9 +114,10 @@ public class GameConfig {
 					'0', '0', '0', '\0', },
 
 	};
-
-	/* 俄罗斯方块类型 */
-	BlockType blockType;
+	private enum GameStatus{STATUS_INIT,STATUS_PLAYING,STATUS_PAUSE,STATUS_QUIT}
+	
+	/*游戏状态*/
+	GameStatus gameStatus;
 	// Block[y][x]数组第一二维的长度
 	private int xSize;
 	private int ySize;
@@ -158,6 +159,7 @@ public class GameConfig {
 	 */
 	public GameConfig(int tetrisHeight, int tetrisWidth, int beginImageY,
 			int beginImageX, int imageHeight, int imageWidth, Context context) {
+		this.gameStatus=GameStatus.STATUS_INIT;
 		this.ySize = tetrisHeight;
 		this.xSize = tetrisWidth;
 		this.beginImageY = beginImageY;
@@ -167,6 +169,15 @@ public class GameConfig {
 		this.context = context;
 	}
 
+	public void setGameStatus(GameStatus gameStatus){
+		this.gameStatus=gameStatus;
+	}
+	
+	public GameStatus getGameStatus()
+	{
+		return this.gameStatus;
+	}
+	
 	public int getBlockTypeNUM() {
 		return BLOCK_TYPE_NUM;
 	}
@@ -177,10 +188,6 @@ public class GameConfig {
 
 	public int getBlockWidth() {
 		return BLOCK_WIDTH;
-	}
-
-	public BlockType getBlockType() {
-		return this.blockType;
 	}
 
 	public int getBlockInitType() {

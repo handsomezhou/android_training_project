@@ -1,13 +1,11 @@
 package com.example.tetris.object;
 
-import com.example.tetris.object.GameConfig.BlockType;
-
 /**
  * Description:俄罗斯方块中的方块对象
  * 
  * @author Administrator
  */
-public class Block {
+public class Block implements Cloneable{
 	public static final int BLOCK_HEIGHT = 4;
 	public static final int BLOCK_WIDTH = 4;
 
@@ -33,7 +31,7 @@ public class Block {
 	}
 
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
+	public Object clone() throws CloneNotSupportedException {
 		// TODO Auto-generated method stub
 		return super.clone();
 	}

@@ -5,17 +5,13 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.view.GestureDetector;
-import android.view.GestureDetector.OnGestureListener;
-import android.view.LayoutInflater;
-import android.view.Menu;
+import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.example.tetris.object.GameConfig;
 import com.example.tetris.service.GameService;
@@ -68,6 +64,10 @@ public class Tetris extends Activity {
 	// 俄罗斯方块小格子图片
 	private Bitmap[] grid_color;
 
+	private Handler hander=new Handler(){
+		
+	};
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -84,7 +84,6 @@ public class Tetris extends Activity {
 		// LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_tetris,
 		// null);
 	}
-
 	/*
 	 * 初始化俄罗斯方块小方块颜色
 	 * */
