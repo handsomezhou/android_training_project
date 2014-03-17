@@ -3,5 +3,6 @@
 
     <string name="app_name">Tetris</string>
     <string name="action_settings">Settings</string>
-
+	<string name="score_prompt">score:</string>
+	<string name="level_prompt">level:</string>
 </resources>

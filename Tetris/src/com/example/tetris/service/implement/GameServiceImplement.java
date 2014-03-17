@@ -4,11 +4,16 @@ import android.widget.Toast;
 import com.example.tetris.object.Block;
 import com.example.tetris.object.GameConfig;
 import com.example.tetris.object.GameConfig.BlockType;
+import com.example.tetris.object.GameConfig.GameStatus;
 import com.example.tetris.object.Grid;
 import com.example.tetris.service.GameService;
 
-public class GameServiceImplement implements GameService,Cloneable{
-
+public class GameServiceImplement implements GameService, Cloneable {
+	private enum Direction{
+		DIR_LEFT,
+		DIR_RIGHT,
+		DIR_DOWN,
+	}
 	/* 定义一个Grid数组保存游戏区域的方块信息 */
 	private Grid[][] board = null;
 
@@ -27,7 +32,7 @@ public class GameServiceImplement implements GameService,Cloneable{
 		produceCurBlock(0);
 		produceNextBlock(getCurBlock());
 		produceCurBlock(1);
-		
+
 	};
 
 	private Grid[][] init_board(GameConfig gameConfig) {
@@ -55,22 +60,24 @@ public class GameServiceImplement implements GameService,Cloneable{
 	}
 
 	public Block produceNextBlock(Block block) {
-		this.nextBlock = block;
-		
+		//this.nextBlock = block;
+
 		try {
-			return this.nextBlock=(Block)block.clone();
+			this.nextBlock = (Block) block.clone();
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
-			System.out.printf(".......................................获取下一个方块数据失败！");
+			System.out
+					.printf(".......................................获取下一个方块数据失败！\n");
 			e.printStackTrace();
 		}
-		
+
 		return this.nextBlock;
 	}
 
 	@Override
 	public void start() {
 		// TODO Auto-generated method stub
+		gameConfig.setGameStatus(GameStatus.STATUS_PLAYING);
 
 	}
 
@@ -79,7 +86,13 @@ public class GameServiceImplement implements GameService,Cloneable{
 		// TODO Auto-generated method stub
 		Toast.makeText(gameConfig.getContext(), "I'm pauseContinueButton!",
 				Toast.LENGTH_SHORT).show();
+		gameConfig.setGameStatus(GameStatus.STATUS_PAUSE);
+	}
 
+	@Override
+	public void resume_playing() {
+		// TODO Auto-generated method stub
+		gameConfig.setGameStatus(GameStatus.STATUS_PLAYING);
 	}
 
 	@Override
@@ -94,16 +107,25 @@ public class GameServiceImplement implements GameService,Cloneable{
 		// TODO Auto-generated method stub
 		Toast.makeText(gameConfig.getContext(), "I'm leftButton!",
 				Toast.LENGTH_SHORT).show();
-
-		return null;
+		
+		return moveBlock(Direction.DIR_LEFT);
 	}
 
 	@Override
 	public Block move_right_block() {
 		// TODO Auto-generated method stub
-		Toast.makeText(gameConfig.getContext(), "I'm rightButton!",
+		Toast.makeText(gameConfig.getContext(), "I'm rightButton...!",
 				Toast.LENGTH_SHORT).show();
-		return null;
+		System.out.printf("I'm move_right_block()\n");
+		return moveBlock(Direction.DIR_RIGHT);
+	}
+
+	@Override
+	public Block move_down_block() {
+		// TODO Auto-generated method stub
+		Toast.makeText(gameConfig.getContext(), "I'm move down!",
+				Toast.LENGTH_SHORT).show();
+		return moveBlock(Direction.DIR_DOWN);
 	}
 
 	@Override
@@ -144,5 +166,54 @@ public class GameServiceImplement implements GameService,Cloneable{
 	public Block getNextBlock() {
 		// TODO Auto-generated method stub
 		return this.nextBlock;
+	}
+
+	private Block moveBlock(Direction dir){
+		switch(dir){
+		case DIR_LEFT:
+			if(true==canMoveBlock(curBlock.getIndexY(),curBlock.getIndexX()-1)){
+				//curBlock.setIndexYX(curBlock.getIndexY(), curBlock.getIndexX()-1);
+				curBlock.setIndexX(curBlock.getIndexX()-1);
+				return curBlock;
+			}
+			break;
+		case DIR_RIGHT:
+			if(true==canMoveBlock(curBlock.getIndexY(), curBlock.getIndexX()+1)){
+				//curBlock.setIndexYX(curBlock.getIndexY(),curBlock.getIndexX()+1);
+				curBlock.setIndexX(curBlock.getIndexX()+1);
+				System.out.printf("I'm DIR_RIGHT()  x=%d\n",curBlock.getIndexX());
+				return curBlock;
+			}
+			break;
+		case DIR_DOWN:
+			if(true==canMoveBlock(curBlock.getIndexY()+1, curBlock.getIndexX())){
+				curBlock.setIndexY(curBlock.getIndexY()+1);
+				System.out.printf("DIR_DOWN====y==%d\n",curBlock.getIndexY());
+				return curBlock;
+			}
+			break;
+		default:
+			break;
+			
+		}
+		return null;
+	}
+	
+	private boolean canMoveBlock(int y, int x){
+		Block tmp=new Block(0, 0);
+		
+		try {
+			tmp=(Block) curBlock.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		tmp.setIndexYX(y, x);
+		
+		switch(curBlock.getBlockType()){
+		//case GameConfig.BLOCK_I:
+			//break;
+		}
+		return true;
 	}
 }

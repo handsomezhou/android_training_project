@@ -13,18 +13,21 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="BlockType" key="selection"/>
+		<item value="blockType" key="selection"/>
 		<list key="findhistory">
-			<item value="BlockType"/>
 			<item value="blockType"/>
-			<item value="gameConfig"/>
-			<item value="GameConfig"/>
-			<item value="Timer"/>
-			<item value="timer"/>
-			<item value="BLOCK"/>
-			<item value="Block"/>
+			<item value="BlockType"/>
+			<item value="Clone"/>
+			<item value="clone"/>
+			<item value="upButton"/>
+			<item value="moveBlock"/>
+			<item value="MoveBlock"/>
+			<item value="produceNextBlock"/>
 		</list>
 		<list key="replacehistory">
+			<item value="curBlock"/>
+			<item value="initGame"/>
+			<item value="init_game"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">

@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
-<fullyQualifiedTypeName name="android.view.MotionEvent"/>
 <fullyQualifiedTypeName name="com.example.tetris.view.BlockType"/>
 <fullyQualifiedTypeName name="com.example.tetris.view.GameView"/>
-<fullyQualifiedTypeName name="android.view.View.OnTouchListener"/>
 <fullyQualifiedTypeName name="android.view.GestureDetector"/>
 <fullyQualifiedTypeName name="android.view.LayoutInflater"/>
 <fullyQualifiedTypeName name="android.graphics.Bitmap.Config"/>
@@ -12,7 +10,6 @@
 <fullyQualifiedTypeName name="com.example.tetris.R"/>
 <fullyQualifiedTypeName name="com.example.tetris.R.layout"/>
 <fullyQualifiedTypeName name="com.example.tetris.R.id"/>
-<fullyQualifiedTypeName name="com.example.tetris.R.drawable"/>
 <fullyQualifiedTypeName name="com.example.tetris.view.Block"/>
 <fullyQualifiedTypeName name="bin.Games"/>
 <fullyQualifiedTypeName name="com.example.tetris.board.GameService"/>
@@ -20,17 +17,29 @@
 <fullyQualifiedTypeName name="android.content.res.Resources"/>
 <fullyQualifiedTypeName name="com.example.tetris.R.integer"/>
 <fullyQualifiedTypeName name="com.example.tetris.object.Grid"/>
-<fullyQualifiedTypeName name="com.example.tetris.object.GameConfig.BlockType"/>
-<fullyQualifiedTypeName name="com.example.tetris.object.GameConfig"/>
 <fullyQualifiedTypeName name="android.widget.ImageView"/>
 <fullyQualifiedTypeName name="com.example.tetris.view.NextBlockView"/>
 <fullyQualifiedTypeName name="android.graphics.Bitmap"/>
 <fullyQualifiedTypeName name="java.sql.Array"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.lang.Cloneable"/>
-<fullyQualifiedTypeName name="com.example.tetris.object.Block"/>
 <fullyQualifiedTypeName name="com.example.tetris.Tetris.GameStatus"/>
-<fullyQualifiedTypeName name="com.example.tetris.object.GameConfig.GameStatus"/>
 <fullyQualifiedTypeName name="android.os.Handler"/>
+<fullyQualifiedTypeName name="com.example.tetris.object.GameConfig"/>
+<fullyQualifiedTypeName name="com.example.tetris.object.GameConfig.BlockType"/>
+<fullyQualifiedTypeName name="java.util.Timer"/>
+<fullyQualifiedTypeName name="java.util.TimerTask"/>
+<fullyQualifiedTypeName name="com.example.tetris.service.GameService"/>
+<fullyQualifiedTypeName name="com.example.tetris.object.GameConfig.GameStatus"/>
+<fullyQualifiedTypeName name="android.view.View.OnTouchListener"/>
+<fullyQualifiedTypeName name="android.util.MonthDisplayHelper"/>
+<fullyQualifiedTypeName name="android.view.MotionEvent"/>
+<fullyQualifiedTypeName name="com.example.tetris.R.drawable"/>
+<fullyQualifiedTypeName name="android.media.AudioManager"/>
+<fullyQualifiedTypeName name="android.media.SoundPool"/>
+<fullyQualifiedTypeName name="com.example.tetris.R.raw"/>
+<fullyQualifiedTypeName name="com.example.tetris.R.string"/>
+<fullyQualifiedTypeName name="com.example.tetris.service.implement.GameServiceImplement.Direction"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="com.example.tetris.object.Block"/>
 </qualifiedTypeNameHistroy>

@@ -9,42 +9,50 @@ public interface GameService {
 	/*
 	 * 游戏开始
 	 */
-	void start();
+	public void start();
 
 	/*
 	 * 游戏暂停
 	 */
-	void pause();
+	public void pause();
+	
+	/*
+	 * 游戏继续
+	 * */
+	public void resume_playing();
 
 	/*
 	 * 等级设置
 	 */
-	void set_level(int level);
+	public void set_level(int level);
 
 	/*
 	 * 方块左移
 	 */
-	Block move_left_block();
+	public Block move_left_block();
 
 	/*
 	 * 方块右移
 	 */
-	Block move_right_block();
+	public Block move_right_block();
+	
+	/*方块下移*/
+	public Block move_down_block();
 
 	/*
 	 * 方块快速下落
 	 */
-	Block fast_down_block();
+	public Block fast_down_block();
 
 	/*
 	 * 方块翻转
 	 */
-	Block rotate_block();
+	public Block rotate_block();
 
 	/*
 	 * 获取方块数组
 	 */
-	Grid[][] getGrid();
+	public Grid[][] getGrid();
 
 	/*
 	 * 获取相关配置信息

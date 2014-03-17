@@ -1,0 +1,285 @@
+package com.example.tetris.object;
+
+import android.content.Context;
+
+public class GameConfig {
+
+	/* 定义俄罗斯方块7种方块类型 */
+	// public enum BlockType {
+	// BLOCK_I, BLOCK_J, BLOCK_L, BLOCK_O, BLOCK_S, BLOCK_Z, BLOCK_T, BLOCK_TYPE
+	// }
+	public class BlockType {
+		public static final int BLOCK_I = 0;
+		public static final int BLOCK_J = 1;
+		public static final int BLOCK_L = 2;
+		public static final int BLOCK_O = 3;
+		public static final int BLOCK_S = 4;
+		public static final int BLOCK_Z = 5;
+		public static final int BLOCK_T = 6;
+		public static final int BLOCK_TYPE = 7;
+	}
+
+	/* 俄罗斯方块中方块总类型数目 */
+	public static final int BLOCK_TYPE_NUM = 7;
+
+	public static final int BLOCK_WIDTH = 4;
+	public static final int BLOCK_HEIGHT = 4;
+	/* 俄罗斯方块每个方块的具体数目 */
+	public static final int BLOCK_I_NUM = 2;
+	public static final int BLOCK_J_NUM = 4;
+	public static final int BLOCK_L_NUM = 4;
+	public static final int BLOCK_O_NUM = 1;
+	public static final int BLOCK_S_NUM = 2;
+	public static final int BLOCK_Z_NUM = 2;
+	public static final int BLOCK_T_NUM = 4;
+	public static final int BLOCK_SINGLE_MAX_NUM = 4;
+
+	/* 俄罗斯方块中方块总数目 */
+	public static final int BLOCK_TOTAL_NUM = 19; /*
+												 * BLOCK_I_NUM+...+BLOCK_T_NUM
+												 */
+	/* 将俄罗斯方块中方块编号:BLOCK_X_START_NUM~BLOCK_X_NUM-1 代表X类型的方块所属编号 */
+	public static final int BLOCK_I_START_NUM = 0;
+	public static final int BLOCK_J_START_NUM = (BLOCK_I_START_NUM + BLOCK_I_NUM);
+	public static final int BLOCK_L_START_NUM = (BLOCK_J_START_NUM + BLOCK_J_NUM);
+	public static final int BLOCK_O_START_NUM = (BLOCK_L_START_NUM + BLOCK_L_NUM);
+	public static final int BLOCK_S_START_NUM = (BLOCK_O_START_NUM + BLOCK_O_NUM);
+	public static final int BLOCK_Z_START_NUM = (BLOCK_S_START_NUM + BLOCK_S_NUM);
+	public static final int BLOCK_T_START_NUM = (BLOCK_Z_START_NUM + BLOCK_Z_NUM);
+
+	private static final int BLOCK_TYPE_INIT = BlockType.BLOCK_TYPE;
+	private static final char GRID_VALUE_1 = '1';
+	private static final char GRID_VALUE_0 = '0';
+	/* 俄罗斯方块界面的长和宽by default */
+	private static final int TETRIS_HEIGHT = 20;
+	private static final int TETRIS_WIDTH = 10;
+
+	private static final char[][] block = {// [BLOCK_TOTAL_NUM][BLOCK_HEIGHT*BLOCK_WIDTH+1]
+			// BLOCK_I
+			{ '0', '1', '0', '0', '0', '1', '0', '0', '0', '1', '0', '0', '0',
+					'1', '0', '0', '\0', },
+
+			{ '0', '0', '0', '0', '1', '1', '1', '1', '0', '0', '0', '0', '0',
+					'0', '0', '0', '\0', },
+			// BLOCK_J
+			{ '0', '0', '1', '0', '0', '0', '1', '0', '0', '1', '1', '0', '0',
+					'0', '0', '0', '\0', },
+
+			{ '1', '0', '0', '0', '1', '1', '1', '0', '0', '0', '0', '0', '0',
+					'0', '0', '0', '\0', },
+
+			{ '0', '1', '1', '0', '0', '1', '0', '0', '0', '1', '0', '0', '0',
+					'0', '0', '0', '\0', },
+
+			{ '0', '0', '0', '0', '1', '1', '1', '0', '0', '0', '1', '0', '0',
+					'0', '0', '0', '\0', },
+			// BLOCK_L
+			{ '0', '1', '0', '0', '0', '1', '0', '0', '0', '1', '1', '0', '0',
+					'0', '0', '0', '\0', },
+
+			{ '0', '0', '0', '0', '1', '1', '1', '0', '1', '0', '0', '0', '0',
+					'0', '0', '0', '\0', },
+
+			{ '1', '1', '0', '0', '0', '1', '0', '0', '0', '1', '0', '0', '0',
+					'0', '0', '0', '\0', },
+
+			{ '0', '0', '1', '0', '1', '1', '1', '0', '0', '0', '0', '0', '0',
+					'0', '0', '0', '\0', },
+			// BLOCK_O
+			{ '0', '0', '0', '0', '0', '1', '1', '0', '0', '1', '1', '0', '0',
+					'0', '0', '0', '\0', },
+			// BLOCK_S
+			{ '0', '1', '1', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0',
+					'0', '0', '0', '\0', },
+
+			{ '0', '1', '0', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0',
+					'0', '0', '0', '\0', },
+			// BLOCK_Z
+			{ '1', '1', '0', '0', '0', '1', '1', '0', '0', '0', '0', '0', '0',
+					'0', '0', '0', '\0', },
+
+			{ '0', '0', '1', '0', '0', '1', '1', '0', '0', '1', '0', '0', '0',
+					'0', '0', '0', '\0', },
+			// BLOCK_T
+			{ '0', '1', '0', '0', '1', '1', '1', '0', '0', '0', '0', '0', '0',
+					'0', '0', '0', '\0', },
+
+			{ '0', '1', '0', '0', '0', '1', '1', '0', '0', '1', '0', '0', '0',
+					'0', '0', '0', '\0', },
+
+			{ '0', '0', '0', '0', '1', '1', '1', '0', '0', '1', '0', '0', '0',
+					'0', '0', '0', '\0', },
+
+			{ '0', '1', '0', '0', '1', '1', '0', '0', '0', '1', '0', '0', '0',
+					'0', '0', '0', '\0', },
+
+	};
+
+	public static enum GameStatus {
+		STATUS_INIT, STATUS_PLAYING, STATUS_PAUSE, STATUS_QUIT
+	}
+
+	/* 游戏状态 */
+	public GameStatus gameStatus;
+	/* 游戏等级 */
+	private int gameLevel;
+	/* 游戏分数 */
+	private int gameScore;
+	// Block[y][x]数组第一二维的长度
+	private int xSize;
+	private int ySize;
+	// Board中第一张图片出现的x座标与y座标
+	private int beginImageX;
+	private int beginImageY;
+	// Block 小方块图片的宽和高
+	private int imageWidth;
+	private int imageHeight;
+
+	private Context context;
+
+	public GameConfig(int beginImageY, int beginImageX, int imageHeight,
+			int imageWidth, Context context) {
+		this.ySize = TETRIS_HEIGHT;
+		this.xSize = TETRIS_WIDTH;
+		this.beginImageY = beginImageY;
+		this.beginImageX = beginImageX;
+		this.imageHeight = imageHeight;
+		this.imageWidth = imageWidth;
+		this.context = context;
+	}
+
+	/**
+	 * 
+	 * @param tetrisHeight
+	 *            俄罗斯方块的高(行)
+	 * @param tetrisWidth
+	 *            俄罗斯方块的宽度(列)
+	 * @param beginImageY
+	 *            最左上角显示的小方块,相对于方块显示区域的Y偏移量
+	 * @param beginImageX
+	 *            最左上角显示的小方块,相对于方块显示区域的X偏移量
+	 * @param imageHeight
+	 *            小方块的高
+	 * @param imageWidth
+	 *            小方块的宽
+	 * @param context
+	 */
+	public GameConfig(int tetrisHeight, int tetrisWidth, int beginImageY,
+			int beginImageX, int imageHeight, int imageWidth, Context context) {
+		this.gameStatus = GameStatus.STATUS_INIT;
+		this.gameLevel = 1;
+		this.gameScore = 0;
+		this.ySize = tetrisHeight;
+		this.xSize = tetrisWidth;
+		this.beginImageY = beginImageY;
+		this.beginImageX = beginImageX;
+		this.imageHeight = imageHeight;
+		this.imageWidth = imageWidth;
+		this.context = context;
+	}
+
+	public void setGameStatus(GameStatus gameStatus) {
+		this.gameStatus = gameStatus;
+	}
+
+	public GameStatus getGameStatus() {
+		return this.gameStatus;
+	}
+
+	public void setGameLevel(int gameLevel) {
+		this.gameLevel = gameLevel;
+	}
+
+	public int getGameLevel() {
+		return this.gameLevel;
+	}
+
+	public void setGameScore(int gameScore) {
+		this.gameScore = gameScore;
+	}
+
+	public int getGameScore() {
+		return this.gameScore;
+	}
+
+	public int getBlockTypeNUM() {
+		return BLOCK_TYPE_NUM;
+	}
+
+	public int getBlockHeight() {
+		return BLOCK_HEIGHT;
+	}
+
+	public int getBlockWidth() {
+		return BLOCK_WIDTH;
+	}
+
+	public int getBlockInitType() {
+
+		return BLOCK_TYPE_INIT;
+	}
+
+	public char getValueOne() {
+		return GRID_VALUE_1;
+	}
+
+	public char getValueZero() {
+		return GRID_VALUE_0;
+	}
+
+	public char[] getBlocks(int index) {
+		return block[index];
+	}
+
+	public void setXSize(int xSize) {
+		this.xSize = xSize;
+	}
+
+	public int getXSize() {
+		return this.xSize;
+	}
+
+	public void setYSize(int ySize) {
+		this.ySize = ySize;
+	}
+
+	public int getYSize() {
+		return this.ySize;
+	}
+
+	public void setBeginImageY(int beginImageY) {
+		this.beginImageY = beginImageY;
+	}
+
+	public int getBeginImageY() {
+		return this.beginImageY;
+	}
+
+	public void setBeginImageX(int beginImageX) {
+		this.beginImageX = beginImageX;
+	}
+
+	public int getBeginImageX() {
+		return this.beginImageX;
+	}
+
+	public void setImageWidth(int imageWidth) {
+		this.imageWidth = imageWidth;
+	}
+
+	public int getImageWidth() {
+		return this.imageWidth;
+	}
+
+	public void setImageHeight(int imageHeight) {
+		this.imageHeight = imageHeight;
+	}
+
+	public int getImageHeight() {
+		return this.imageHeight;
+	}
+
+	public Context getContext() {
+		return context;
+	}
+}

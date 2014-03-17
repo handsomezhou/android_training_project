@@ -112,13 +112,40 @@ public class GameView extends ImageView implements OnGestureListener,
 //		Block curBlock=gameService.getCurBlock();
 //		Block nextBlock=gameService.getNextBlock();
 
-		Block nextBlock=gameService.getCurBlock();
-		if(null!=nextBlock){
+		Block curBlock=gameService.getCurBlock();
+		/*
+		if(null!=curBlock){
 			for(int i=0; i<gameService.getGameConfig().getBlockHeight(); i++){
 					for(int j=0; j<gameService.getGameConfig().getBlockWidth(); j++){
-						if(nextBlock.getBlockData()[i * gameService.getGameConfig().getBlockHeight() + j]=='1')
+						if(curBlock.getBlockData()[i * gameService.getGameConfig().getBlockHeight() + j]=='1')
 						canvas.drawBitmap(this.block_color[(i * gameService.getGameConfig().getBlockHeight() + j)%gameService.getGameConfig().getBlockTypeNUM()], 
 								this.getLeft()+j*36, this.getTop()+i*36, null);
+					}
+			}
+			
+		}
+		*/
+		if(null!=curBlock){
+			System.out.printf("\ncurBlock======onDraw (y,x)===(%d,%d)\n",curBlock.getIndexY(),curBlock.getIndexX());
+			for(int i=0; i<gameService.getGameConfig().getBlockHeight(); i++){
+					for(int j=0; j<gameService.getGameConfig().getBlockWidth(); j++){
+						if(curBlock.getBlockData()[i * gameService.getGameConfig().getBlockHeight() + j]=='1')
+//						canvas.drawBitmap(this.block_color[(i * gameService.getGameConfig().getBlockHeight() + j)%gameService.getGameConfig().getBlockTypeNUM()], 
+//								this.getLeft()+j*36, this.getTop()+i*36, null);
+							canvas.drawBitmap(
+									this.block_color[curBlock.getBlockType()],
+									this.getLeft()
+											+ gameService.getGameConfig()
+													.getBeginImageX()
+											+ (curBlock.getIndexX()+j)
+											* gameService.getGameConfig()
+													.getImageWidth(),
+									this.getTop()
+											+ gameService.getGameConfig()
+													.getBeginImageY()
+											+ (curBlock.getIndexY()+i)
+											* gameService.getGameConfig()
+													.getImageHeight(), null);
 					}
 			}
 			

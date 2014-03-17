@@ -1,17 +1,22 @@
 package com.example.tetris;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.TextView;
-
 
 import com.example.tetris.object.GameConfig;
 import com.example.tetris.service.GameService;
@@ -27,6 +32,8 @@ import com.example.tetris.view.NextBlockView;
  * @version 1.0
  */
 public class Tetris extends Activity {
+	private static final int HANDLE_MSG_BLOCK_DROP = 0x01;
+	private static final int maxStreams = 7;// 声音资源的数量
 	private static final int BLOCK_TYPE_NUM = 7;// 7种类型的方块
 	private int tetrisHeight;
 	private int tetrisWidth;
@@ -38,6 +45,8 @@ public class Tetris extends Activity {
 	private GameConfig gameConfig;
 	/* 游戏业务逻辑接口 */
 	private GameService gameService;
+	// /* 方块下落定时器 */
+	private Timer blockDropTimer = new Timer();
 	// 游戏界面
 	private GameView gameView;
 
@@ -63,11 +72,37 @@ public class Tetris extends Activity {
 
 	// 俄罗斯方块小格子图片
 	private Bitmap[] grid_color;
+	// 播放音效
+	SoundPool soundPool = new SoundPool(maxStreams, AudioManager.STREAM_SYSTEM,
+			0);
+	int bkgrdSound;
+	int dropSound;
+	int gameOverSound;
+	int gamePauseSound;
+	int levelUpSound;
+	int rotateSound;
+	int scoringSound;
 
-	private Handler hander=new Handler(){
-		
+	private Handler hander = new Handler() {
+
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			switch (msg.what) {
+			case HANDLE_MSG_BLOCK_DROP:
+			//	gameService.move_down_block();
+				gameConfig.setGameLevel(gameConfig.getGameLevel() + 1);
+				gameLevel.setText(getString(R.string.level_prompt)
+						+ String.valueOf(gameConfig.getGameLevel()));
+				break;
+			default:
+				break;
+			}
+		}
+
 	};
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -80,13 +115,13 @@ public class Tetris extends Activity {
 		imageHeight = resources.getInteger(R.integer.image_height);
 		imageWidth = resources.getInteger(R.integer.image_width);
 
-		init_tetris();
-		// LayoutInflater.from(getApplicationContext()).inflate(R.layout.activity_tetris,
-		// null);
+		initGame();
+		startGame();
 	}
+
 	/*
 	 * 初始化俄罗斯方块小方块颜色
-	 * */
+	 */
 	public void init_grid_color() {
 		this.grid_color = new Bitmap[BLOCK_TYPE_NUM];
 		this.grid_color[0] = BitmapFactory.decodeResource(this.getResources(),
@@ -106,7 +141,7 @@ public class Tetris extends Activity {
 	}
 
 	/* 初始化游戏 */
-	public void init_tetris() {
+	public void initGame() {
 		init_grid_color();
 		gameConfig = new GameConfig(this.tetrisHeight, this.tetrisWidth,
 				this.beginImageY, this.beginImageX, this.imageHeight,
@@ -121,9 +156,13 @@ public class Tetris extends Activity {
 		nextBlock = (NextBlockView) findViewById(R.id.next_block);
 		nextBlock.setGameService(gameService);
 		nextBlock.setGridColor(this.grid_color);
-		
+
 		gameScore = (TextView) findViewById(R.id.game_score);
+		gameScore.setText(getString(R.string.score_prompt)
+				+ String.valueOf(gameConfig.getGameScore()));
 		gameLevel = (TextView) findViewById(R.id.game_level);
+		gameLevel.setText(getString(R.string.level_prompt)
+				+ String.valueOf(gameConfig.getGameLevel()));
 		levelIncreasesButton = (Button) findViewById(R.id.level_increases_button);
 		pauseContinueButton = (Button) findViewById(R.id.pause_continue_button);
 		upButton = (Button) findViewById(R.id.up_button);
@@ -131,6 +170,15 @@ public class Tetris extends Activity {
 		downButton = (Button) findViewById(R.id.down_button);
 		rightButton = (Button) findViewById(R.id.right_button);
 		backButton = (Button) findViewById(R.id.back_button);
+		// gameConfig.setGameLevel(gameConfig.getGameLevel()+1);
+		// 初始化音效
+		bkgrdSound = soundPool.load(this, R.raw.bkgrd, 1);
+		dropSound = soundPool.load(this, R.raw.drop, 1);
+		gameOverSound = soundPool.load(this, R.raw.game_over, 1);
+		gamePauseSound = soundPool.load(this, R.raw.game_pause, 1);
+		levelUpSound = soundPool.load(this, R.raw.levelup, 1);
+		rotateSound = soundPool.load(this, R.raw.rotate, 1);
+		scoringSound = soundPool.load(this, R.raw.scoring, 1);
 
 		// 为游戏区域的触碰事件绑定监听器
 
@@ -156,12 +204,58 @@ public class Tetris extends Activity {
 		});
 
 		// 为暂停继续按钮的单击事件绑定监听器
-		pauseContinueButton.setOnClickListener(new View.OnClickListener() {
+		/*
+		 * pauseContinueButton.setOnClickListener(new View.OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) { // TODO Auto-generated method
+		 * stub //gameService.pause(); switch(gameConfig.getGameStatus()){ case
+		 * STATUS_PAUSE: continueGame();
+		 * pauseContinueButton.setBackgroundResource(R.drawable.pause_sel);
+		 * pauseContinueButton.invalidate(); break; case STATUS_PLAYING:
+		 * pauseGame();
+		 * pauseContinueButton.setBackgroundResource(R.drawable.continue_sel);
+		 * pauseContinueButton.invalidate(); break; default: break; }
+		 * 
+		 * }
+		 * 
+		 * });
+		 */
+		pauseContinueButton.setOnTouchListener(new View.OnTouchListener() {
 
 			@Override
-			public void onClick(View v) {
+			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
-				gameService.pause();
+				switch (gameConfig.getGameStatus()) {
+				case STATUS_PAUSE:
+					if (MotionEvent.ACTION_DOWN == event.getAction()) {
+						pauseContinueButton
+								.setBackgroundResource(R.drawable.continue_sel);
+						pauseContinueButton.invalidate();
+					} else if (MotionEvent.ACTION_UP == event.getAction()) {
+						continueGame();
+						soundPool.play(gamePauseSound, 1, 1, 0, 0, 1);
+						pauseContinueButton
+								.setBackgroundResource(R.drawable.pause_normal);
+						pauseContinueButton.invalidate();
+					}
+					break;
+				case STATUS_PLAYING:
+					if (MotionEvent.ACTION_DOWN == event.getAction()) {
+						pauseContinueButton
+								.setBackgroundResource(R.drawable.pause_sel);
+						pauseContinueButton.invalidate();
+					} else if (MotionEvent.ACTION_UP == event.getAction()) {
+						pauseGame();
+						soundPool.play(gamePauseSound, 1, 1, 0, 0, 1);
+						pauseContinueButton
+								.setBackgroundResource(R.drawable.continue_normal);
+						pauseContinueButton.invalidate();
+					}
+					break;
+				default:
+					break;
+				}
+				return true;
 			}
 		});
 
@@ -172,6 +266,8 @@ public class Tetris extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				gameService.rotate_block();
+				soundPool.play(rotateSound, 1, 1, 0, 0, 1);
+				gameView.invalidate();
 			}
 		});
 
@@ -181,6 +277,7 @@ public class Tetris extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				gameService.move_left_block();
+				gameView.invalidate();
 			}
 		});
 
@@ -189,7 +286,10 @@ public class Tetris extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				gameService.fast_down_block();
+				//gameService.fast_down_block();
+				gameService.move_down_block();
+				soundPool.play(dropSound, 1, 1, 0, 0, 1);
+				gameView.invalidate();
 			}
 		});
 
@@ -200,6 +300,7 @@ public class Tetris extends Activity {
 				// TODO Auto-generated method stub
 
 				gameService.move_right_block();
+				gameView.invalidate();
 
 			}
 		});
@@ -216,4 +317,48 @@ public class Tetris extends Activity {
 
 	}
 
+	/* 开始游戏 */
+	public void startGame() {
+		stopTimer(blockDropTimer);
+		gameService.start();
+		this.blockDropTimer = new Timer();
+		this.blockDropTimer.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				hander.sendEmptyMessage(HANDLE_MSG_BLOCK_DROP);
+			}
+		}, 0, 1000);
+
+	}
+
+	/* 暂停游戏 */
+	public void pauseGame() {
+		stopTimer(blockDropTimer);
+		gameService.pause();
+	}
+
+	/* 继续游戏 */
+	public void continueGame() {
+		stopTimer(blockDropTimer);
+		gameService.resume_playing();
+		this.blockDropTimer = new Timer();
+		this.blockDropTimer.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				hander.sendEmptyMessage(HANDLE_MSG_BLOCK_DROP);
+			}
+		}, 0, 1000);
+	}
+
+	private void stopTimer(Timer timer) {
+		if (null == timer) {
+			return;
+		}
+		timer.cancel();
+		timer = null;
+	}
 }

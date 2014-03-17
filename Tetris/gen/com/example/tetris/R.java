@@ -10,6 +10,11 @@ package com.example.tetris;
 public final class R {
     public static final class attr {
     }
+    public static final class color {
+        public static final int blue=0x7f050002;
+        public static final int green=0x7f050001;
+        public static final int red=0x7f050000;
+    }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
 
@@ -17,8 +22,8 @@ public final class R {
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
-        public static final int activity_horizontal_margin=0x7f040000;
-        public static final int activity_vertical_margin=0x7f040001;
+        public static final int activity_horizontal_margin=0x7f060000;
+        public static final int activity_vertical_margin=0x7f060001;
     }
     public static final class drawable {
         public static final int back_button_selector=0x7f020000;
@@ -58,36 +63,47 @@ public final class R {
         public static final int up_sel=0x7f020022;
     }
     public static final class id {
-        public static final int action_settings=0x7f09000b;
-        public static final int back_button=0x7f090000;
-        public static final int down_button=0x7f090009;
-        public static final int game_level=0x7f090004;
-        public static final int game_score=0x7f090003;
-        public static final int game_view=0x7f090001;
-        public static final int left_button=0x7f090008;
-        public static final int level_increases_button=0x7f090005;
-        public static final int next_block=0x7f090002;
-        public static final int pause_continue_button=0x7f090006;
-        public static final int right_button=0x7f09000a;
-        public static final int up_button=0x7f090007;
+        public static final int action_settings=0x7f0b000b;
+        public static final int back_button=0x7f0b0000;
+        public static final int down_button=0x7f0b0009;
+        public static final int game_level=0x7f0b0004;
+        public static final int game_score=0x7f0b0003;
+        public static final int game_view=0x7f0b0001;
+        public static final int left_button=0x7f0b0008;
+        public static final int level_increases_button=0x7f0b0005;
+        public static final int next_block=0x7f0b0002;
+        public static final int pause_continue_button=0x7f0b0006;
+        public static final int right_button=0x7f0b000a;
+        public static final int up_button=0x7f0b0007;
     }
     public static final class integer {
-        public static final int begin_image_x=0x7f050003;
-        public static final int begin_image_y=0x7f050002;
-        public static final int image_height=0x7f050004;
-        public static final int image_width=0x7f050005;
-        public static final int tetris_hight=0x7f050000;
-        public static final int tetris_widht=0x7f050001;
+        public static final int begin_image_x=0x7f070003;
+        public static final int begin_image_y=0x7f070002;
+        public static final int image_height=0x7f070004;
+        public static final int image_width=0x7f070005;
+        public static final int tetris_hight=0x7f070000;
+        public static final int tetris_widht=0x7f070001;
     }
     public static final class layout {
         public static final int activity_tetris=0x7f030000;
     }
     public static final class menu {
-        public static final int tetris=0x7f080000;
+        public static final int tetris=0x7f0a0000;
+    }
+    public static final class raw {
+        public static final int bkgrd=0x7f040000;
+        public static final int drop=0x7f040001;
+        public static final int game_over=0x7f040002;
+        public static final int game_pause=0x7f040003;
+        public static final int levelup=0x7f040004;
+        public static final int rotate=0x7f040005;
+        public static final int scoring=0x7f040006;
     }
     public static final class string {
-        public static final int action_settings=0x7f060001;
-        public static final int app_name=0x7f060000;
+        public static final int action_settings=0x7f080001;
+        public static final int app_name=0x7f080000;
+        public static final int level_prompt=0x7f080003;
+        public static final int score_prompt=0x7f080002;
     }
     public static final class style {
         /** 
@@ -111,10 +127,10 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f070000;
+        public static final int AppBaseTheme=0x7f090000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f070001;
+        public static final int AppTheme=0x7f090001;
     }
 }

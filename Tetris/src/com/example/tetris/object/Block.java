@@ -26,6 +26,14 @@ public class Block implements Cloneable{
 		this.indexX = indexX;
 	}
 
+	public void setIndexY(int indexY){
+		this.indexY=indexY;
+	}
+	
+	public void setIndexX(int indexX){
+		this.indexX=indexX;
+	}
+	
 	public int getIndexY() {
 		return this.indexY;
 	}
