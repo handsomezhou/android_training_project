@@ -16,6 +16,10 @@
         android:background="@drawable/back_button_selector" />
 
     <!-- android:gravity="center" -->
+    <!--
+   android:background="@drawable/tetris_board" 
+   android:scaleType="centerInside"
+    -->
 
     <com.example.tetris.view.GameView
         android:id="@+id/game_view"
@@ -23,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/tetris_board" />
+        android:src="@drawable/tetris_board" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -45,8 +49,8 @@
             android:layout_alignLeft="@id/next_block"
             android:layout_below="@id/next_block"
             android:background="@drawable/game_score"
-            android:textColor="@color/blue"
             android:gravity="center"
+            android:textColor="@color/blue"
             android:textIsSelectable="false"
             android:textSize="30sp" />
 

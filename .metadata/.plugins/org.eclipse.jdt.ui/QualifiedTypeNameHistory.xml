@@ -25,8 +25,6 @@
 <fullyQualifiedTypeName name="java.lang.Cloneable"/>
 <fullyQualifiedTypeName name="com.example.tetris.Tetris.GameStatus"/>
 <fullyQualifiedTypeName name="android.os.Handler"/>
-<fullyQualifiedTypeName name="com.example.tetris.object.GameConfig"/>
-<fullyQualifiedTypeName name="com.example.tetris.object.GameConfig.BlockType"/>
 <fullyQualifiedTypeName name="java.util.Timer"/>
 <fullyQualifiedTypeName name="java.util.TimerTask"/>
 <fullyQualifiedTypeName name="com.example.tetris.service.GameService"/>
@@ -40,6 +38,10 @@
 <fullyQualifiedTypeName name="com.example.tetris.R.raw"/>
 <fullyQualifiedTypeName name="com.example.tetris.R.string"/>
 <fullyQualifiedTypeName name="com.example.tetris.service.implement.GameServiceImplement.Direction"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="com.example.tetris.object.GameConfig.BlockType"/>
 <fullyQualifiedTypeName name="com.example.tetris.object.Block"/>
+<fullyQualifiedTypeName name="com.example.tetris.object.GameConfig"/>
 </qualifiedTypeNameHistroy>

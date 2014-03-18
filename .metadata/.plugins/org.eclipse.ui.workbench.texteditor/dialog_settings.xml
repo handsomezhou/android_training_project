@@ -2,8 +2,8 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="275" key="DIALOG_WIDTH"/>
-		<item value="280" key="DIALOG_Y_ORIGIN"/>
-		<item value="818" key="DIALOG_X_ORIGIN"/>
+		<item value="289" key="DIALOG_Y_ORIGIN"/>
+		<item value="1022" key="DIALOG_X_ORIGIN"/>
 		<item value="355" key="DIALOG_HEIGHT"/>
 		<item value="1|宋体|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|宋体" key="DIALOG_FONT_NAME"/>
 	</section>
@@ -13,18 +13,20 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="blockType" key="selection"/>
+		<item value="produceCurBlock" key="selection"/>
 		<list key="findhistory">
-			<item value="blockType"/>
-			<item value="BlockType"/>
-			<item value="Clone"/>
-			<item value="clone"/>
-			<item value="upButton"/>
-			<item value="moveBlock"/>
-			<item value="MoveBlock"/>
+			<item value="produceCurBlock"/>
+			<item value="RemoveLayer"/>
+			<item value="removeLayer"/>
+			<item value="addBlockToGrid"/>
 			<item value="produceNextBlock"/>
+			<item value="tmp"/>
+			<item value="ImageHeight"/>
+			<item value="imageHeight"/>
 		</list>
 		<list key="replacehistory">
+			<item value="block.getBlockNumber()"/>
+			<item value="public static final int"/>
 			<item value="curBlock"/>
 			<item value="initGame"/>
 			<item value="init_game"/>

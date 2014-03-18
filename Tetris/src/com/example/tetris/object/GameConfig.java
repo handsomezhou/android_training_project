@@ -6,7 +6,7 @@ public class GameConfig {
 
 	/* 定义俄罗斯方块7种方块类型 */
 	// public enum BlockType {
-	// BLOCK_I, BLOCK_J, BLOCK_L, BLOCK_O, BLOCK_S, BLOCK_Z, BLOCK_T, BLOCK_TYPE
+	// BLOCK_I, BLOCK_J, BLOCK_L, BLOCK_O, BLOCK_S, BLOCK_Z, BLOCK_T, _TYPE
 	// }
 	public class BlockType {
 		public static final int BLOCK_I = 0;
@@ -32,7 +32,7 @@ public class GameConfig {
 	public static final int BLOCK_S_NUM = 2;
 	public static final int BLOCK_Z_NUM = 2;
 	public static final int BLOCK_T_NUM = 4;
-	public static final int BLOCK_SINGLE_MAX_NUM = 4;
+	public final int BLOCK_SINGLE_MAX_NUM = 4;
 
 	/* 俄罗斯方块中方块总数目 */
 	public static final int BLOCK_TOTAL_NUM = 19; /*
@@ -46,6 +46,100 @@ public class GameConfig {
 	public static final int BLOCK_S_START_NUM = (BLOCK_O_START_NUM + BLOCK_O_NUM);
 	public static final int BLOCK_Z_START_NUM = (BLOCK_S_START_NUM + BLOCK_S_NUM);
 	public static final int BLOCK_T_START_NUM = (BLOCK_Z_START_NUM + BLOCK_Z_NUM);
+
+	public final int BLOCK_I0_MIN_X = 2;
+	public final int BLOCK_I0_MIN_Y = 1;
+	public final int BLOCK_I0_MAX_X = 2;
+	public final int BLOCK_I0_MAX_Y = 4;
+
+	public final int BLOCK_I1_MIN_X = 1;
+	public final int BLOCK_I1_MIN_Y = 2;
+	public final int BLOCK_I1_MAX_X = 4;
+	public final int BLOCK_I1_MAX_Y = 2;
+
+	public final int BLOCK_J0_MIN_X = 2;
+	public final int BLOCK_J0_MIN_Y = 1;
+	public final int BLOCK_J0_MAX_X = 3;
+	public final int BLOCK_J0_MAX_Y = 3;
+
+	public final int BLOCK_J1_MIN_X = 1;
+	public final int BLOCK_J1_MAX_X = 3;
+	public final int BLOCK_J1_MIN_Y = 1;
+	public final int BLOCK_J1_MAX_Y = 2;
+	public final int BLOCK_J2_MIN_X = 2;
+	public final int BLOCK_J2_MIN_Y = 1;
+	public final int BLOCK_J2_MAX_X = 3;
+	public final int BLOCK_J2_MAX_Y = 3;
+
+	public final int BLOCK_J3_MIN_X = 1;
+	public final int BLOCK_J3_MIN_Y = 2;
+	public final int BLOCK_J3_MAX_X = 3;
+	public final int BLOCK_J3_MAX_Y = 3;
+
+	public final int BLOCK_L0_MIN_X = 2;
+	public final int BLOCK_L0_MIN_Y = 1;
+	public final int BLOCK_L0_MAX_X = 3;
+	public final int BLOCK_L0_MAX_Y = 3;
+
+	public final int BLOCK_L1_MIN_X = 1;
+	public final int BLOCK_L1_MIN_Y = 2;
+	public final int BLOCK_L1_MAX_X = 3;
+	public final int BLOCK_L1_MAX_Y = 3;
+
+	public final int BLOCK_L2_MIN_X = 1;
+	public final int BLOCK_L2_MIN_Y = 1;
+	public final int BLOCK_L2_MAX_X = 2;
+	public final int BLOCK_L2_MAX_Y = 3;
+
+	public final int BLOCK_L3_MIN_X = 1;
+	public final int BLOCK_L3_MIN_Y = 1;
+	public final int BLOCK_L3_MAX_X = 3;
+	public final int BLOCK_L3_MAX_Y = 2;
+
+	public final int BLOCK_O0_MIN_X = 2;
+	public final int BLOCK_O0_MIN_Y = 2;
+	public final int BLOCK_O0_MAX_X = 3;
+	public final int BLOCK_O0_MAX_Y = 3;
+
+	public final int BLOCK_S0_MIN_X = 1;
+	public final int BLOCK_S0_MIN_Y = 1;
+	public final int BLOCK_S0_MAX_X = 3;
+	public final int BLOCK_S0_MAX_Y = 2;
+
+	public final int BLOCK_S1_MIN_X = 2;
+	public final int BLOCK_S1_MIN_Y = 1;
+	public final int BLOCK_S1_MAX_X = 3;
+	public final int BLOCK_S1_MAX_Y = 3;
+
+	public final int BLOCK_Z0_MIN_X = 1;
+	public final int BLOCK_Z0_MIN_Y = 1;
+	public final int BLOCK_Z0_MAX_X = 3;
+	public final int BLOCK_Z0_MAX_Y = 2;
+
+	public final int BLOCK_Z1_MIN_X = 2;
+	public final int BLOCK_Z1_MIN_Y = 1;
+	public final int BLOCK_Z1_MAX_X = 3;
+	public final int BLOCK_Z1_MAX_Y = 3;
+
+	public final int BLOCK_T0_MIN_X = 1;
+	public final int BLOCK_T0_MIN_Y = 1;
+	public final int BLOCK_T0_MAX_X = 3;
+	public final int BLOCK_T0_MAX_Y = 2;
+
+	public final int BLOCK_T1_MIN_X = 2;
+	public final int BLOCK_T1_MIN_Y = 1;
+	public final int BLOCK_T1_MAX_X = 3;
+	public final int BLOCK_T1_MAX_Y = 3;
+
+	public final int BLOCK_T2_MIN_X = 1;
+	public final int BLOCK_T2_MIN_Y = 2;
+	public final int BLOCK_T2_MAX_X = 3;
+	public final int BLOCK_T2_MAX_Y = 3;
+
+	public final int BLOCK_T3_MIN_X = 1;
+	public final int BLOCK_T3_MIN_Y = 1;
+	public final int BLOCK_T3_MAX_X = 2;
+	public final int BLOCK_T3_MAX_Y = 3;
 
 	private static final int BLOCK_TYPE_INIT = BlockType.BLOCK_TYPE;
 	private static final char GRID_VALUE_1 = '1';
@@ -115,6 +209,18 @@ public class GameConfig {
 
 	};
 
+	public final int TTRS_SUCCEED = 0;
+	public final int TTRS_FAILED = -1;
+
+	/* 初始化Block */
+	public final int BLOCK_INIT_X = 0;
+	public final int BLOCK_INIT_Y = 0;
+	public final int BLOCK_ERROR_TYPE = -1;
+	public final int BLOCK_ERROR_NUM = -1;
+
+	public final int CUR_BLOCK_INIT_Y =-3;
+	public final int CUR_BLOCK_INIT_X =((TETRIS_WIDTH-BLOCK_WIDTH)/2+1);
+	
 	public enum GameStatus {
 		STATUS_INIT, STATUS_PLAYING, STATUS_PAUSE, STATUS_QUIT
 	}
@@ -135,16 +241,24 @@ public class GameConfig {
 	private int imageWidth;
 	private int imageHeight;
 
+	// CurBlock 第一次出现的位置
+	private int curBlockInitY;
+	private int curBlockInitX;
+
 	private Context context;
 
 	public GameConfig(int beginImageY, int beginImageX, int imageHeight,
 			int imageWidth, Context context) {
 		this.ySize = TETRIS_HEIGHT;
 		this.xSize = TETRIS_WIDTH;
+		this.gameLevel = 1;
+		this.gameScore = 0;
 		this.beginImageY = beginImageY;
 		this.beginImageX = beginImageX;
 		this.imageHeight = imageHeight;
 		this.imageWidth = imageWidth;
+		this.curBlockInitY= CUR_BLOCK_INIT_Y;
+		this.curBlockInitX = ((this.xSize-BLOCK_WIDTH)/2+1);
 		this.context = context;
 	}
 
@@ -175,6 +289,8 @@ public class GameConfig {
 		this.beginImageX = beginImageX;
 		this.imageHeight = imageHeight;
 		this.imageWidth = imageWidth;
+		this.curBlockInitY= CUR_BLOCK_INIT_Y;
+		this.curBlockInitX = ((this.xSize-BLOCK_WIDTH)/2+1);
 		this.context = context;
 	}
 
@@ -231,6 +347,13 @@ public class GameConfig {
 		return block[index];
 	}
 
+	/*
+	 * public char[] copyBlockData(char[] dst, char[] scr, int size) { for (int
+	 * i = 0; i < size; i++) { dst[i] = scr[i]; }
+	 * 
+	 * return dst; }
+	 */
+
 	public void setXSize(int xSize) {
 		this.xSize = xSize;
 	}
@@ -277,6 +400,22 @@ public class GameConfig {
 
 	public int getImageHeight() {
 		return this.imageHeight;
+	}
+
+	public void setCurBlockInitY(int curBlockInitY) {
+		this.curBlockInitY = curBlockInitY;
+	}
+
+	public int getCurBlockInitY() {
+		return this.curBlockInitY;
+	}
+
+	public void setCurBlockInitX(int curBlockInitX) {
+		this.curBlockInitX = curBlockInitX;
+	}
+
+	public int getCurBlockInitX() {
+		return this.curBlockInitX;
 	}
 
 	public Context getContext() {

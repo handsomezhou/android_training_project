@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/tetris_bkgrd"
+    android:orientation="vertical"
+    tools:context=".Tetris" >
+
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/back_button_selector" />
+
+    <!-- android:gravity="center" -->
+<!--   android:background="@drawable/tetris_board" 
+   android:scaleType="centerInside"-->
+    <com.example.tetris.view.GameView
+        android:id="@+id/game_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+     
+        android:src="@drawable/tetris_board" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true" >
+
+        <com.example.tetris.view.NextBlockView
+            android:id="@+id/next_block"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/next_block"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:id="@+id/game_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/next_block"
+            android:layout_below="@id/next_block"
+            android:background="@drawable/game_score"
+            android:textColor="@color/blue"
+            android:gravity="center"
+            android:textIsSelectable="false"
+            android:textSize="30sp" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/game_score"
+            android:layout_below="@id/game_score" >
+
+            <TextView
+                android:id="@+id/game_level"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/game_level"
+                android:gravity="center"
+                android:textColor="@color/blue"
+                android:textIsSelectable="false"
+                android:textSize="30sp" />
+
+            <Button
+                android:id="@+id/level_increases_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/game_level"
+                android:layout_alignTop="@id/game_level"
+                android:background="@drawable/up_arrow_button_selector" >
+            </Button>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/pause_continue_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/pause_normal" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:gravity="bottom|right" >
+
+        <Button
+            android:id="@+id/up_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="79dp"
+            android:background="@drawable/up_button_selector" />
+
+        <Button
+            android:id="@+id/left_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/up_button"
+            android:background="@drawable/left_button_selector" />
+
+        <Button
+            android:id="@+id/down_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/left_button"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_toRightOf="@id/left_button"
+            android:background="@drawable/down_button_selector" />
+
+        <Button
+            android:id="@+id/right_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/down_button"
+            android:layout_toRightOf="@id/down_button"
+            android:background="@drawable/right_button_selector" />
+    </RelativeLayout>
+
+</RelativeLayout>

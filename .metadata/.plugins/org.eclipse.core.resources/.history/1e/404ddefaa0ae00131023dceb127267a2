@@ -1,0 +1,658 @@
+package com.example.tetris.service.implement;
+
+import java.util.Random;
+
+import android.widget.Toast;
+import com.example.tetris.object.Block;
+import com.example.tetris.object.GameConfig;
+import com.example.tetris.object.GameConfig.BlockType;
+import com.example.tetris.object.GameConfig.GameStatus;
+import com.example.tetris.object.Grid;
+import com.example.tetris.service.GameService;
+
+public class GameServiceImplement implements GameService, Cloneable {
+	private enum Direction {
+		DIR_LEFT, DIR_RIGHT, DIR_DOWN,
+	}
+
+	/* 定义一个Grid数组保存游戏区域的方块信息 */
+	private Grid[][] board = null;
+
+	/* 游戏配置对象 */
+	private GameConfig gameConfig = null;
+	/* 当前显示的方块与下一个方块 */
+	private Block curBlock = null;
+	private Block nextBlock = null;
+
+	public GameServiceImplement(GameConfig gameConfig) {
+		// TODO Auto-generated constructor stub
+		this.gameConfig = gameConfig;
+		this.board = init_board(this.gameConfig);
+		this.curBlock = new Block(0, 0);
+		this.nextBlock = new Block(0, 0);
+		/*
+		 * produceCurBlock(0); produceNextBlock(getCurBlock());
+		 * produceCurBlock(1);
+		 */
+		produceNextBlock();
+		produceCurBlock(getNextBlock());
+		produceNextBlock();
+
+	};
+
+	private Grid[][] init_board(GameConfig gameConfig) {
+		Grid[][] board = new Grid[gameConfig.getYSize()][gameConfig.getXSize()];
+		for (int y = 0; y < gameConfig.getYSize(); y++) {
+			for (int x = 0; x < gameConfig.getXSize(); x++) {
+				Grid grid = new Grid(y, x);
+				grid.setBlockType(gameConfig.getBlockInitType());
+				grid.setValue(gameConfig.getValueZero());
+				board[y][x] = grid;
+				// System.out.printf("(%d,%d)-[%d]-[%c]\n",board[y][x].getIndexY(),board[y][x].getIndexX(),board[y][x].getBlockType(),board[y][x].getValue());
+			}
+			// System.out.printf("\n");
+		}
+		return board;
+	}
+
+	public Block produceCurBlock(Block block) {
+		/*
+		 * curBlock.setIndexYX(0, 0); curBlock.setBlockType(BlockType.BLOCK_I);
+		 * curBlock.setBlockNumber(0);
+		 * curBlock.setBlockData(gameConfig.getBlocks(i));
+		 */
+		// // System.out.printf("produceCurBlock==[%s]",curBlock);
+		// Block tmp=new Block(0, 0);
+		// do{
+		//
+		// return this.curBlock;
+		// }while(false);
+		//
+		// return null;
+		try {
+			this.curBlock = (Block) block.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			System.out.printf("Block clone Exception:get cur block failed!\n");
+
+			e.printStackTrace();
+		}
+		this.curBlock.setIndexY(gameConfig.getCurBlockInitY());
+		this.curBlock.setIndexX(gameConfig.getCurBlockInitX());
+
+		// this.curBlock.setIndexY(0);
+		// this.curBlock.setIndexX(0);
+		return this.curBlock;
+	}
+
+	public Block produceNextBlock() {
+		Block block;
+		block = newBlock();
+		if (null == block) {
+			return null;
+		}
+
+		try {
+			this.nextBlock = (Block) block.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			System.out.printf("Block clone Exception:get next block failed!\n");
+			e.printStackTrace();
+		}
+		/*
+		 * //this.nextBlock = block;
+		 * 
+		 * try { this.nextBlock = (Block) block.clone(); } catch
+		 * (CloneNotSupportedException e) { // TODO Auto-generated catch block
+		 * System.out
+		 * .printf(".......................................获取下一个方块数据失败！\n");
+		 * e.printStackTrace(); }
+		 */
+		return this.nextBlock;
+	}
+
+	@Override
+	public void start() {
+		// TODO Auto-generated method stub
+		gameConfig.setGameStatus(GameStatus.STATUS_PLAYING);
+
+	}
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		Toast.makeText(gameConfig.getContext(), "I'm pauseContinueButton!",
+				Toast.LENGTH_SHORT).show();
+		gameConfig.setGameStatus(GameStatus.STATUS_PAUSE);
+	}
+
+	@Override
+	public void resume_playing() {
+		// TODO Auto-generated method stub
+		gameConfig.setGameStatus(GameStatus.STATUS_PLAYING);
+	}
+
+	@Override
+	public void set_level(int level) {
+		// TODO Auto-generated method stub
+		Toast.makeText(gameConfig.getContext(), "I'm levelIncreasesButton!",
+				Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public Block move_left_block() {
+		// TODO Auto-generated method stub
+		Toast.makeText(gameConfig.getContext(), "I'm leftButton!",
+				Toast.LENGTH_SHORT).show();
+
+		return moveBlock(Direction.DIR_LEFT);
+	}
+
+	@Override
+	public Block move_right_block() {
+		// TODO Auto-generated method stub
+		Toast.makeText(gameConfig.getContext(), "I'm rightButton...!",
+				Toast.LENGTH_SHORT).show();
+		System.out.printf("I'm move_right_block()\n");
+		return moveBlock(Direction.DIR_RIGHT);
+	}
+
+	@Override
+	public Block move_down_block() {
+		// TODO Auto-generated method stub
+		Toast.makeText(gameConfig.getContext(), "I'm move down!",
+				Toast.LENGTH_SHORT).show();
+		boolean isAddBlock=false;
+		Block block = moveBlock(Direction.DIR_DOWN);
+		if (null == block) {
+			isAddBlock=addBlockToGrid();
+			if(false==isAddBlock){//game over
+				
+			}else{
+				
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public Block fast_down_block() {
+		// TODO Auto-generated method stub
+		Toast.makeText(gameConfig.getContext(), "I'm downButton!",
+				Toast.LENGTH_SHORT).show();
+		return null;
+	}
+
+	@Override
+	public Block rotate_block() {
+		// TODO Auto-generated method stub
+
+		Toast.makeText(gameConfig.getContext(), "I'm upButton!",
+				Toast.LENGTH_SHORT).show();
+		return null;
+	}
+
+	@Override
+	public Grid[][] getGrid() {
+		// TODO Auto-generated method stub
+		return this.board;
+	}
+
+	@Override
+	public GameConfig getGameConfig() {
+		return this.gameConfig;
+	}
+
+	@Override
+	public Block getCurBlock() {
+		// TODO Auto-generated method stub
+		return this.curBlock;
+	}
+
+	@Override
+	public Block getNextBlock() {
+		// TODO Auto-generated method stub
+		return this.nextBlock;
+	}
+
+	private Block moveBlock(Direction dir) {
+		switch (dir) {
+		case DIR_LEFT:
+			if (true == canMoveBlock(curBlock.getIndexY(),
+					curBlock.getIndexX() - 1)) {
+				// curBlock.setIndexYX(curBlock.getIndexY(),
+				// curBlock.getIndexX()-1);
+				curBlock.setIndexX(curBlock.getIndexX() - 1);
+				return curBlock;
+			}
+			break;
+		case DIR_RIGHT:
+			if (true == canMoveBlock(curBlock.getIndexY(),
+					curBlock.getIndexX() + 1)) {
+				// curBlock.setIndexYX(curBlock.getIndexY(),curBlock.getIndexX()+1);
+				curBlock.setIndexX(curBlock.getIndexX() + 1);
+				System.out.printf("I'm DIR_RIGHT()  x=%d\n",
+						curBlock.getIndexX());
+				return curBlock;
+			}
+			break;
+		case DIR_DOWN:
+			if (true == canMoveBlock(curBlock.getIndexY() + 1,
+					curBlock.getIndexX())) {
+				curBlock.setIndexY(curBlock.getIndexY() + 1);
+				System.out.printf("DIR_DOWN====y==%d\n", curBlock.getIndexY());
+				return curBlock;
+			}
+			break;
+		default:
+			break;
+
+		}
+		return null;
+	}
+
+	private boolean canMoveBlock(int y, int x) {
+		Block block = new Block(0, 0);
+
+		try {
+			block = (Block) curBlock.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		block.setIndexYX(y, x);
+
+		switch (curBlock.getBlockType()) {
+		case GameConfig.BlockType.BLOCK_I:
+			switch (block.getBlockNumber()) {
+			case 0:
+				if (isCollisionWall(block, gameConfig.BLOCK_I0_MIN_X,
+						gameConfig.BLOCK_I0_MAX_X, gameConfig.BLOCK_I0_MAX_Y) == true
+						|| isCollisionBlock(block) == true) {
+					return false;
+				}
+				break;
+			case GameConfig.BLOCK_I_NUM - 1:
+				if (isCollisionWall(block, gameConfig.BLOCK_I1_MIN_X,
+						gameConfig.BLOCK_I1_MAX_X, gameConfig.BLOCK_I1_MAX_Y) == true
+						|| isCollisionBlock(block) == true) {
+					return false;
+				}
+				break;
+			}
+			break;
+
+		case GameConfig.BlockType.BLOCK_J:
+			switch (block.getBlockNumber()) {
+			case 0:
+				if (isCollisionWall(block, gameConfig.BLOCK_J0_MIN_X,
+						gameConfig.BLOCK_J0_MAX_X, gameConfig.BLOCK_J0_MAX_Y) == true
+						|| isCollisionBlock(block) == true) {
+					return false;
+				}
+				break;
+			case 1:
+				if (isCollisionWall(block, gameConfig.BLOCK_J1_MIN_X,
+						gameConfig.BLOCK_J1_MAX_X, gameConfig.BLOCK_J1_MAX_Y) == true
+						|| isCollisionBlock(block) == true) {
+					return false;
+				}
+				break;
+			case 2:
+				if (isCollisionWall(block, gameConfig.BLOCK_J2_MIN_X,
+						gameConfig.BLOCK_J2_MAX_X, gameConfig.BLOCK_J2_MAX_Y) == true
+						|| isCollisionBlock(block) == true) {
+					return false;
+				}
+				break;
+			case GameConfig.BLOCK_J_NUM - 1:
+				if (isCollisionWall(block, gameConfig.BLOCK_J3_MIN_X,
+						gameConfig.BLOCK_J3_MAX_X, gameConfig.BLOCK_J3_MAX_Y) == true
+						|| isCollisionBlock(block) == true) {
+					return false;
+				}
+				break;
+			}
+			break;
+
+		case GameConfig.BlockType.BLOCK_L:
+			switch (block.getBlockNumber()) {
+			case 0:
+				if (isCollisionWall(block, gameConfig.BLOCK_L0_MIN_X,
+						gameConfig.BLOCK_L0_MAX_X, gameConfig.BLOCK_L0_MAX_Y) == true
+						|| isCollisionBlock(block) == true) {
+					return false;
+				}
+				break;
+			case 1:
+				if (isCollisionWall(block, gameConfig.BLOCK_L1_MIN_X,
+						gameConfig.BLOCK_L1_MAX_X, gameConfig.BLOCK_L1_MAX_Y) == true
+						|| isCollisionBlock(block) == true) {
+					return false;
+				}
+				break;
+			case 2:
+				if (isCollisionWall(block, gameConfig.BLOCK_L2_MIN_X,
+						gameConfig.BLOCK_L2_MAX_X, gameConfig.BLOCK_L2_MAX_Y) == true
+						|| isCollisionBlock(block) == true) {
+					return false;
+				}
+				break;
+			case GameConfig.BLOCK_L_NUM - 1:
+				if (isCollisionWall(block, gameConfig.BLOCK_L3_MIN_X,
+						gameConfig.BLOCK_L3_MAX_X, gameConfig.BLOCK_L3_MAX_Y) == true
+						|| isCollisionBlock(block) == true) {
+					return false;
+				}
+				break;
+			}
+			break;
+
+		case GameConfig.BlockType.BLOCK_O:
+			if (isCollisionWall(block, gameConfig.BLOCK_O0_MIN_X,
+					gameConfig.BLOCK_O0_MAX_X, gameConfig.BLOCK_O0_MAX_Y) == true
+					|| isCollisionBlock(block) == true) {
+				return false;
+			}
+			break;
+		case GameConfig.BlockType.BLOCK_S:
+			switch (block.getBlockNumber()) {
+			case 0:
+				if (isCollisionWall(block, gameConfig.BLOCK_S0_MIN_X,
+						gameConfig.BLOCK_S0_MAX_X, gameConfig.BLOCK_S0_MAX_Y) == true
+						|| isCollisionBlock(block) == true) {
+					return false;
+				}
+				break;
+			case GameConfig.BLOCK_S_NUM - 1:
+				if (isCollisionWall(block, gameConfig.BLOCK_S1_MIN_X,
+						gameConfig.BLOCK_S1_MAX_X, gameConfig.BLOCK_S1_MAX_Y) == true
+						|| isCollisionBlock(block) == true) {
+					return false;
+				}
+				break;
+			}
+			break;
+
+		case GameConfig.BlockType.BLOCK_Z:
+			switch (block.getBlockNumber()) {
+			case 0:
+				if (isCollisionWall(block, gameConfig.BLOCK_Z0_MIN_X,
+						gameConfig.BLOCK_Z0_MAX_X, gameConfig.BLOCK_Z0_MAX_Y) == true
+						|| isCollisionBlock(block) == true) {
+					return false;
+				}
+				break;
+			case GameConfig.BLOCK_Z_NUM - 1:
+				if (isCollisionWall(block, gameConfig.BLOCK_Z1_MIN_X,
+						gameConfig.BLOCK_Z1_MAX_X, gameConfig.BLOCK_Z1_MAX_Y) == true
+						|| isCollisionBlock(block) == true) {
+					return false;
+				}
+				break;
+			}
+			break;
+
+		case GameConfig.BlockType.BLOCK_T:
+			switch (block.getBlockNumber()) {
+			case 0:
+				if (isCollisionWall(block, gameConfig.BLOCK_T0_MIN_X,
+						gameConfig.BLOCK_T0_MAX_X, gameConfig.BLOCK_T0_MAX_Y) == true
+						|| isCollisionBlock(block) == true) {
+					return false;
+				}
+				break;
+			case 1:
+				if (isCollisionWall(block, gameConfig.BLOCK_T1_MIN_X,
+						gameConfig.BLOCK_T1_MAX_X, gameConfig.BLOCK_T1_MAX_Y) == true
+						|| isCollisionBlock(block) == true) {
+					return false;
+				}
+				break;
+			case 2:
+				if (isCollisionWall(block, gameConfig.BLOCK_T2_MIN_X,
+						gameConfig.BLOCK_T2_MAX_X, gameConfig.BLOCK_T2_MAX_Y) == true
+						|| isCollisionBlock(block) == true) {
+					return false;
+				}
+				break;
+			case GameConfig.BLOCK_T_NUM - 1:
+				if (isCollisionWall(block, gameConfig.BLOCK_T3_MIN_X,
+						gameConfig.BLOCK_T3_MAX_X, gameConfig.BLOCK_T3_MAX_Y) == true
+						|| isCollisionBlock(block) == true) {
+					return false;
+				}
+				break;
+			}
+			break;
+		default:
+			break;
+
+		}
+		return true;
+	}
+
+	private boolean isCollisionWall(Block block, int minX, int maxX, int maxY) {
+		if (block.getIndexX() + minX - 1 < 1
+				|| block.getIndexX() + maxX - 1 > gameConfig.getXSize()
+				|| block.getIndexY() + maxY - 1 > gameConfig.getYSize()) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isCollisionBlock(Block block) {
+		int y, x;
+		for (y = gameConfig.getBlockHeight() - 1; y >= 0; y--) {
+			for (x = gameConfig.getBlockWidth() - 1; x >= 0; x--) {
+				// nextBlock.getBlockData()[i *
+				// gameService.getGameConfig().getBlockHeight() +
+				// j]==gameService.getGameConfig().getValueOne())
+				if (block.getBlockData()[y * gameConfig.getBlockWidth() + x] == gameConfig
+						.getValueOne()) {
+					if (block.getIndexY() + y - 1 >= 0
+							&& board[block.getIndexY() + y - 1][block
+									.getIndexX() + x - 1].getValue() == gameConfig
+									.getValueOne()) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private Block newBlock() {
+		int num;
+		Block block;
+		do {
+			num = getRandomBlock();
+			block = getBlockFromNum(num);
+			if (block.getBlockType() == gameConfig.BLOCK_ERROR_TYPE
+					|| block.getBlockNumber() == gameConfig.BLOCK_ERROR_NUM) {
+				break;
+			}
+			return block;
+		} while (false);
+
+		return null;
+	}
+
+	private int getRandomBlock() {
+		int blockType;
+		int blockNumber;
+		int ret = gameConfig.TTRS_FAILED;
+		Block tmp = new Block(0, 0);
+		Random random = new Random();
+		blockType = Math.abs(random.nextInt() % gameConfig.getBlockTypeNUM());
+		blockNumber = Math.abs(random.nextInt()
+				% gameConfig.BLOCK_SINGLE_MAX_NUM);
+
+		switch (blockType) {
+		case GameConfig.BlockType.BLOCK_O:
+			blockNumber = 0;
+			break;
+		case GameConfig.BlockType.BLOCK_I:
+		case GameConfig.BlockType.BLOCK_S:
+		case GameConfig.BlockType.BLOCK_Z:
+			blockNumber = blockNumber % 2;
+			break;
+		case GameConfig.BlockType.BLOCK_J:
+		case GameConfig.BlockType.BLOCK_L:
+		case GameConfig.BlockType.BLOCK_T:
+			// blockNumber=blockNumber;
+			break;
+		default:
+			break;
+		}
+		tmp.setBlockType(blockType);
+		tmp.setBlockNumber(blockNumber);
+		ret = getNumFromBlock(tmp);
+		return ret;
+	}
+
+	private int getNumFromBlock(Block block) {
+		int num = gameConfig.TTRS_SUCCEED;
+		switch (block.getBlockType()) {
+		case GameConfig.BlockType.BLOCK_I:
+			num = GameConfig.BLOCK_I_START_NUM + block.getBlockNumber();
+			break;
+		case GameConfig.BlockType.BLOCK_J:
+			num = GameConfig.BLOCK_J_START_NUM + block.getBlockNumber();
+			break;
+
+		case GameConfig.BlockType.BLOCK_L:
+			num = GameConfig.BLOCK_L_START_NUM + block.getBlockNumber();
+			break;
+
+		case GameConfig.BlockType.BLOCK_O:
+			num = GameConfig.BLOCK_O_START_NUM + block.getBlockNumber();
+			break;
+
+		case GameConfig.BlockType.BLOCK_S:
+			num = GameConfig.BLOCK_S_START_NUM + block.getBlockNumber();
+			break;
+
+		case GameConfig.BlockType.BLOCK_Z:
+			num = GameConfig.BLOCK_Z_START_NUM + block.getBlockNumber();
+			break;
+
+		case GameConfig.BlockType.BLOCK_T:
+			num = GameConfig.BLOCK_T_START_NUM + block.getBlockNumber();
+			break;
+		default:
+			num = gameConfig.TTRS_FAILED;
+			break;
+		}
+
+		return num;
+	}
+
+	@SuppressWarnings("static-access")
+	private Block getBlockFromNum(int num) {
+		int n = num;
+		Block bck = new Block(0, 0);
+		bck.setIndexY(gameConfig.BLOCK_INIT_Y);
+		bck.setIndexX(gameConfig.BLOCK_INIT_X);
+		bck.setBlockType(gameConfig.BLOCK_ERROR_TYPE);
+		bck.setBlockNumber(gameConfig.BLOCK_ERROR_NUM);
+		bck.setBlockData(gameConfig.getBlocks(num));
+
+		if (n < 0 || n >= gameConfig.BLOCK_TOTAL_NUM) {
+			return bck;
+		}
+		if (n >= gameConfig.BLOCK_I_START_NUM
+				&& n < gameConfig.BLOCK_I_START_NUM + gameConfig.BLOCK_I_NUM) {
+			bck.setBlockType(GameConfig.BlockType.BLOCK_I);
+			bck.setBlockNumber(n - gameConfig.BLOCK_I_START_NUM);
+		} else if (n >= gameConfig.BLOCK_J_START_NUM
+				&& n < gameConfig.BLOCK_J_START_NUM + gameConfig.BLOCK_J_NUM) {
+			bck.setBlockType(GameConfig.BlockType.BLOCK_J);
+			bck.setBlockNumber(n - gameConfig.BLOCK_J_START_NUM);
+		} else if (n >= gameConfig.BLOCK_L_START_NUM
+				&& n < gameConfig.BLOCK_L_START_NUM + gameConfig.BLOCK_L_NUM) {
+			bck.setBlockType(GameConfig.BlockType.BLOCK_L);
+			bck.setBlockNumber(n - gameConfig.BLOCK_L_START_NUM);
+		} else if (n >= gameConfig.BLOCK_O_START_NUM
+				&& n < gameConfig.BLOCK_O_START_NUM + gameConfig.BLOCK_O_NUM) {
+			bck.setBlockType(GameConfig.BlockType.BLOCK_O);
+			bck.setBlockNumber(n - gameConfig.BLOCK_O_START_NUM);
+		} else if (n >= gameConfig.BLOCK_S_START_NUM
+				&& n < gameConfig.BLOCK_S_START_NUM + gameConfig.BLOCK_S_NUM) {
+			bck.setBlockType(GameConfig.BlockType.BLOCK_S);
+			bck.setBlockNumber(n - gameConfig.BLOCK_S_START_NUM);
+		} else if (n >= gameConfig.BLOCK_Z_START_NUM
+				&& n < gameConfig.BLOCK_Z_START_NUM + gameConfig.BLOCK_Z_NUM) {
+			bck.setBlockType(GameConfig.BlockType.BLOCK_Z);
+			bck.setBlockNumber(n - gameConfig.BLOCK_Z_START_NUM);
+		} else if (n >= gameConfig.BLOCK_T_START_NUM
+				&& n < gameConfig.BLOCK_T_START_NUM + gameConfig.BLOCK_T_NUM) {
+			bck.setBlockType(GameConfig.BlockType.BLOCK_T);
+			bck.setBlockNumber(n - gameConfig.BLOCK_T_START_NUM);
+		}
+		return bck;
+	}
+
+	private boolean addBlockToGrid() {
+		Block block = this.curBlock;
+		int y = 0;
+		int x = 0;
+		if (block.getIndexY() + y - 1 >= 0) {
+			for (y = 0; y < gameConfig.getBlockHeight(); y++) {
+				for (x = 0; x < gameConfig.getBlockWidth(); x++) {
+					if (block.getBlockData()[y * gameConfig.getBlockWidth() + x] == gameConfig
+							.getValueOne()
+							&& this.board[block.getIndexY() + y - 1][block
+									.getIndexX() + x - 1].getValue() != gameConfig
+									.getValueOne()) {
+						this.board[block.getIndexY() + y - 1][block.getIndexX()
+								+ x - 1].setValue(gameConfig.getValueOne());
+						this.board[block.getIndexY() + y - 1][block.getIndexX()
+								+ x - 1].setBlockType(block.getBlockType());
+					}
+				}
+			}
+		} else {
+			return false;
+		}
+
+		return true;
+	}
+	
+	private int removeBlockLayer(){
+		int rmLayer=0;
+		int num=0;
+		num=getRemoveLayerNum();
+		if(0!=num){
+			
+		}
+		return rmLayer;
+	}
+	
+	private int getRemoveLayerNum(){
+		int ret_num=0;//Binary number:0000~1111
+		int y,x;
+		Block block=this.curBlock;
+		int max_y=(block.getIndexY()-1+gameConfig.getBlockHeight())>(gameConfig.getYSize())?(gameConfig.getYSize()):(block.getIndexY()-1+gameConfig.getBlockHeight());
+		for(y=block.getIndexY()-1; y<max_y; y++){
+			for(x=0;x<gameConfig.getBlockWidth();x++){
+				if(this.board[y][x].getValue()!=gameConfig.getValueOne()){
+					break;
+				}else {
+					if(x==gameConfig.getBlockWidth()-1){
+						ret_num += 1<<(y-(block.getIndexY()-1));
+					}
+				}
+				
+			}
+		}
+		return ret_num;
+	}
+	
+	private void removeLayer(int removeLayerNum)
+	{
+		
+	}
+}

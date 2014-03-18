@@ -95,6 +95,9 @@ public class Tetris extends Activity {
 				gameConfig.setGameLevel(gameConfig.getGameLevel() + 1);
 				gameLevel.setText(getString(R.string.level_prompt)
 						+ String.valueOf(gameConfig.getGameLevel()));
+				gameService.move_down_block();
+				gameView.invalidate();
+				nextBlock.invalidate();
 				break;
 			default:
 				break;
@@ -146,7 +149,7 @@ public class Tetris extends Activity {
 		gameConfig = new GameConfig(this.tetrisHeight, this.tetrisWidth,
 				this.beginImageY, this.beginImageX, this.imageHeight,
 				this.imageWidth, this);
-		System.out.printf("y=%d, x=%d+++++++++++", gameConfig.getYSize(),
+		System.out.printf("y=%d, x=%d+++++++++++\n", gameConfig.getYSize(),
 				gameConfig.getXSize());
 		gameService = new GameServiceImplement(gameConfig);
 		gameView = (GameView) findViewById(R.id.game_view);
