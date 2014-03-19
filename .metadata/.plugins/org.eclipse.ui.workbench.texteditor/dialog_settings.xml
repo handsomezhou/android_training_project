@@ -13,16 +13,16 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="produceCurBlock" key="selection"/>
+		<item value="startGame" key="selection"/>
 		<list key="findhistory">
-			<item value="produceCurBlock"/>
-			<item value="RemoveLayer"/>
-			<item value="removeLayer"/>
-			<item value="addBlockToGrid"/>
-			<item value="produceNextBlock"/>
-			<item value="tmp"/>
-			<item value="ImageHeight"/>
-			<item value="imageHeight"/>
+			<item value="startGame"/>
+			<item value="pauseContinueButton"/>
+			<item value="continueGame"/>
+			<item value="gameScore"/>
+			<item value="GameScore"/>
+			<item value="gameMsecond"/>
+			<item value="isLevelUp"/>
+			<item value="GameMsecond"/>
 		</list>
 		<list key="replacehistory">
 			<item value="block.getBlockNumber()"/>

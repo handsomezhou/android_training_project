@@ -5,7 +5,6 @@
 <fullyQualifiedTypeName name="com.example.tetris.view.GameView"/>
 <fullyQualifiedTypeName name="android.view.GestureDetector"/>
 <fullyQualifiedTypeName name="android.view.LayoutInflater"/>
-<fullyQualifiedTypeName name="android.graphics.Bitmap.Config"/>
 <fullyQualifiedTypeName name="com.example.tetris.board.implement.GameServiceImplement"/>
 <fullyQualifiedTypeName name="com.example.tetris.R"/>
 <fullyQualifiedTypeName name="com.example.tetris.R.layout"/>
@@ -41,7 +40,10 @@
 <fullyQualifiedTypeName name="java.util.Random"/>
 <fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
-<fullyQualifiedTypeName name="com.example.tetris.object.GameConfig.BlockType"/>
 <fullyQualifiedTypeName name="com.example.tetris.object.Block"/>
+<fullyQualifiedTypeName name="com.example.tetris.object.GameConfig.BlockType"/>
 <fullyQualifiedTypeName name="com.example.tetris.object.GameConfig"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="android.graphics.Bitmap.Config"/>
+<fullyQualifiedTypeName name="com.example.tetris.object.GameConfig.ConfigInfo"/>
 </qualifiedTypeNameHistroy>

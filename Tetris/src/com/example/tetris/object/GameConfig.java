@@ -1,6 +1,7 @@
 package com.example.tetris.object;
 
 import android.content.Context;
+import android.graphics.Bitmap.Config;
 
 public class GameConfig {
 
@@ -8,6 +9,7 @@ public class GameConfig {
 	// public enum BlockType {
 	// BLOCK_I, BLOCK_J, BLOCK_L, BLOCK_O, BLOCK_S, BLOCK_Z, BLOCK_T, _TYPE
 	// }
+
 	public class BlockType {
 		public static final int BLOCK_I = 0;
 		public static final int BLOCK_J = 1;
@@ -16,8 +18,55 @@ public class GameConfig {
 		public static final int BLOCK_S = 4;
 		public static final int BLOCK_Z = 5;
 		public static final int BLOCK_T = 6;
-		public static final int BLOCK_TYPE = 7;
+		// public static final int BLOCK_TYPE = 7;
 	}
+
+	private final int GAME_MAX_LEVEL = 8;
+
+	public final class ConfigInfo {
+		int level;
+		int score;
+		int msecond;
+
+		public ConfigInfo(int level, int score, int msecond) {
+			this.level = level;
+			this.score = score;
+			this.msecond = msecond;
+		}
+
+		public void setConfigInfo(int level, int score, int msecond) {
+			this.level = level;
+			this.score = score;
+			this.msecond = msecond;
+		}
+
+		public int getLevel() {
+			return this.level;
+		}
+
+		public int getScore() {
+			return this.score;
+		}
+
+		public int getMsecond() {
+			return this.msecond;
+		}
+	}
+
+	// =(ConfigInfo[]) new ConfigInfo[8];
+
+	// private static final ConfigInfo[] configInfo={
+	// /*
+	// {1 , 0 , 1000},
+	// {2 , 200 , 600},
+	// {3 , 500 , 400},
+	// {4 , 1000 , 250},
+	// {5 , 2000 , 150} ,
+	// {6 , 4000, 100},
+	// {7 , 8000 , 50},
+	// {8 , 16000 , 5}
+	// */
+	// };
 
 	/* 俄罗斯方块中方块总类型数目 */
 	public static final int BLOCK_TYPE_NUM = 7;
@@ -25,13 +74,13 @@ public class GameConfig {
 	public static final int BLOCK_WIDTH = 4;
 	public static final int BLOCK_HEIGHT = 4;
 	/* 俄罗斯方块每个方块的具体数目 */
-	public static final int BLOCK_I_NUM = 2;
-	public static final int BLOCK_J_NUM = 4;
-	public static final int BLOCK_L_NUM = 4;
-	public static final int BLOCK_O_NUM = 1;
-	public static final int BLOCK_S_NUM = 2;
-	public static final int BLOCK_Z_NUM = 2;
-	public static final int BLOCK_T_NUM = 4;
+	public final static int BLOCK_I_NUM = 2;
+	public final static int BLOCK_J_NUM = 4;
+	public final static int BLOCK_L_NUM = 4;
+	public final static int BLOCK_O_NUM = 1;
+	public final static int BLOCK_S_NUM = 2;
+	public final static int BLOCK_Z_NUM = 2;
+	public final static int BLOCK_T_NUM = 4;
 	public final int BLOCK_SINGLE_MAX_NUM = 4;
 
 	/* 俄罗斯方块中方块总数目 */
@@ -39,13 +88,13 @@ public class GameConfig {
 												 * BLOCK_I_NUM+...+BLOCK_T_NUM
 												 */
 	/* 将俄罗斯方块中方块编号:BLOCK_X_START_NUM~BLOCK_X_NUM-1 代表X类型的方块所属编号 */
-	public static final int BLOCK_I_START_NUM = 0;
-	public static final int BLOCK_J_START_NUM = (BLOCK_I_START_NUM + BLOCK_I_NUM);
-	public static final int BLOCK_L_START_NUM = (BLOCK_J_START_NUM + BLOCK_J_NUM);
-	public static final int BLOCK_O_START_NUM = (BLOCK_L_START_NUM + BLOCK_L_NUM);
-	public static final int BLOCK_S_START_NUM = (BLOCK_O_START_NUM + BLOCK_O_NUM);
-	public static final int BLOCK_Z_START_NUM = (BLOCK_S_START_NUM + BLOCK_S_NUM);
-	public static final int BLOCK_T_START_NUM = (BLOCK_Z_START_NUM + BLOCK_Z_NUM);
+	public final int BLOCK_I_START_NUM = 0;
+	public final int BLOCK_J_START_NUM = (BLOCK_I_START_NUM + BLOCK_I_NUM);
+	public final int BLOCK_L_START_NUM = (BLOCK_J_START_NUM + BLOCK_J_NUM);
+	public final int BLOCK_O_START_NUM = (BLOCK_L_START_NUM + BLOCK_L_NUM);
+	public final int BLOCK_S_START_NUM = (BLOCK_O_START_NUM + BLOCK_O_NUM);
+	public final int BLOCK_Z_START_NUM = (BLOCK_S_START_NUM + BLOCK_S_NUM);
+	public final int BLOCK_T_START_NUM = (BLOCK_Z_START_NUM + BLOCK_Z_NUM);
 
 	public final int BLOCK_I0_MIN_X = 2;
 	public final int BLOCK_I0_MIN_Y = 1;
@@ -141,12 +190,16 @@ public class GameConfig {
 	public final int BLOCK_T3_MAX_X = 2;
 	public final int BLOCK_T3_MAX_Y = 3;
 
-	private static final int BLOCK_TYPE_INIT = BlockType.BLOCK_TYPE;
+	private static final int BLOCK_TYPE_INIT = BlockType.BLOCK_I;
 	private static final char GRID_VALUE_1 = '1';
 	private static final char GRID_VALUE_0 = '0';
 	/* 俄罗斯方块界面的长和宽by default */
 	private static final int TETRIS_HEIGHT = 20;
 	private static final int TETRIS_WIDTH = 10;
+
+	/* 消去行得分 */
+	private static int TETRIS_SCORE_PER_LINE = 10;
+	private static int TETRIS_LINE_BONUS = 5;
 
 	private static final char[][] block = {// [BLOCK_TOTAL_NUM][BLOCK_HEIGHT*BLOCK_WIDTH+1]
 			// BLOCK_I
@@ -218,19 +271,25 @@ public class GameConfig {
 	public final int BLOCK_ERROR_TYPE = -1;
 	public final int BLOCK_ERROR_NUM = -1;
 
-	public final int CUR_BLOCK_INIT_Y =-3;
-	public final int CUR_BLOCK_INIT_X =((TETRIS_WIDTH-BLOCK_WIDTH)/2+1);
-	
+	public final int CUR_BLOCK_INIT_Y = -3;
+	public final int CUR_BLOCK_INIT_X = ((TETRIS_WIDTH - BLOCK_WIDTH) / 2 + 1);
+
 	public enum GameStatus {
-		STATUS_INIT, STATUS_PLAYING, STATUS_PAUSE, STATUS_QUIT
+		STATUS_INIT, STATUS_PLAYING, STATUS_PAUSE, STATUS_OVER
 	}
 
 	/* 游戏状态 */
 	public GameStatus gameStatus;
+	/* 游戏配置信息 */
+	public ConfigInfo[] configInfo;
 	/* 游戏等级 */
 	private int gameLevel;
 	/* 游戏分数 */
 	private int gameScore;
+	/* 方块下落一格延迟 */
+	private int gameMsecond;
+	/*是否升级标志*/
+	private boolean isLevelUp;
 	// Block[y][x]数组第一二维的长度
 	private int xSize;
 	private int ySize;
@@ -253,13 +312,18 @@ public class GameConfig {
 		this.xSize = TETRIS_WIDTH;
 		this.gameLevel = 1;
 		this.gameScore = 0;
+		this.isLevelUp = false;
 		this.beginImageY = beginImageY;
 		this.beginImageX = beginImageX;
 		this.imageHeight = imageHeight;
 		this.imageWidth = imageWidth;
-		this.curBlockInitY= CUR_BLOCK_INIT_Y;
-		this.curBlockInitX = ((this.xSize-BLOCK_WIDTH)/2+1);
+		this.curBlockInitY = CUR_BLOCK_INIT_Y;
+		this.curBlockInitX = (this.xSize % 2 == 0) ? (((this.xSize - BLOCK_WIDTH) / 2 + 1))
+				: (((this.xSize - BLOCK_WIDTH) / 2 + 2));// ((this.xSize -
+															// BLOCK_WIDTH) / 2
+															// + 1);
 		this.context = context;
+		initConfigInfo();
 	}
 
 	/**
@@ -283,17 +347,52 @@ public class GameConfig {
 		this.gameStatus = GameStatus.STATUS_INIT;
 		this.gameLevel = 1;
 		this.gameScore = 0;
+		this.isLevelUp = false;
 		this.ySize = tetrisHeight;
 		this.xSize = tetrisWidth;
 		this.beginImageY = beginImageY;
 		this.beginImageX = beginImageX;
 		this.imageHeight = imageHeight;
 		this.imageWidth = imageWidth;
-		this.curBlockInitY= CUR_BLOCK_INIT_Y;
-		this.curBlockInitX = ((this.xSize-BLOCK_WIDTH)/2+1);
+		this.curBlockInitY = CUR_BLOCK_INIT_Y;
+		this.curBlockInitX = (this.xSize % 2 == 0) ? (((this.xSize - BLOCK_WIDTH) / 2 + 1))
+				: (((this.xSize - BLOCK_WIDTH) / 2 + 2));
 		this.context = context;
+		initConfigInfo();
 	}
 
+	private void initConfigInfo() {
+		configInfo = (ConfigInfo[]) new ConfigInfo[GAME_MAX_LEVEL];
+		/*
+		 * {1 , 0 , 1000},\ {2 , 200 , 600},\ {3 , 500 , 400},\ {4 , 1000 ,
+		 * 250},\ {5 , 2000 , 150} ,\ {6 , 4000, 100},\ {7 , 8000 , 50},\ {8 ,
+		 * T_U16_MAX , 5}
+		 */
+		configInfo[0] = new ConfigInfo(1, 0, 1000);
+		configInfo[1] = new ConfigInfo(2, 200/10, 600);
+		configInfo[2] = new ConfigInfo(3, 500/10, 400);
+		configInfo[3] = new ConfigInfo(4, 1000/10, 250);
+		configInfo[4] = new ConfigInfo(5, 2000, 150);
+		configInfo[5] = new ConfigInfo(6, 4000, 100);
+		configInfo[6] = new ConfigInfo(7, 8000, 50);
+		configInfo[7] = new ConfigInfo(8, Integer.MAX_VALUE, 5);
+		setGameLevel(configInfo[0].getLevel());
+		setGameScore(configInfo[0].getScore());
+		setGameMsecond(configInfo[0].getMsecond());
+	}
+
+	public void reinitConfigInfo(){
+		setGameLevel(configInfo[0].getLevel());
+		setGameScore(configInfo[0].getScore());
+		setGameMsecond(configInfo[0].getMsecond());
+	}
+	
+	public ConfigInfo getConfigInfoByLevel(int level) {
+		int lvl = ((level - 1) >= 0) ? (level - 1) : (0);
+		return configInfo[lvl % GAME_MAX_LEVEL];
+	}
+
+	// =(ConfigInfo[]) new ConfigInfo[GAME_MAX_LEVEL]
 	public void setGameStatus(GameStatus gameStatus) {
 		this.gameStatus = gameStatus;
 	}
@@ -314,10 +413,39 @@ public class GameConfig {
 		this.gameScore = gameScore;
 	}
 
+	
+
 	public int getGameScore() {
 		return this.gameScore;
 	}
 
+	public int getNewAddScore(int removeLayer) {
+		int newAddScore = 0;
+		if (0 == removeLayer) {
+			return newAddScore;
+		}
+
+		newAddScore = removeLayer * TETRIS_SCORE_PER_LINE + (removeLayer - 1)
+				* (removeLayer - 1) * TETRIS_LINE_BONUS;
+
+		return newAddScore;
+	}
+
+	public void setGameMsecond(int msecond) {
+		this.gameMsecond = msecond;
+	}
+
+	public int getMsecond() {
+		return this.gameMsecond;
+	}
+	
+	public void setIsLevelUp(boolean isLevelUp){
+		this.isLevelUp=isLevelUp;
+	}
+	
+	public boolean getIsLevelUp(){
+		return this.isLevelUp;
+	}
 	public int getBlockTypeNUM() {
 		return BLOCK_TYPE_NUM;
 	}

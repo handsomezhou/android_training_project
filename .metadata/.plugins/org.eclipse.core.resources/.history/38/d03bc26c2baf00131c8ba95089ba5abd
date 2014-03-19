@@ -1,0 +1,73 @@
+package com.example.tetris.service;
+
+import com.example.tetris.object.Block;
+import com.example.tetris.object.GameConfig;
+import com.example.tetris.object.Grid;
+
+public interface GameService {
+	// Block [][]board=null;
+	/*
+	 * 游戏开始
+	 */
+	public void start();
+
+	/*
+	 * 游戏暂停
+	 */
+	public void pause();
+	
+	/*
+	 * 游戏继续
+	 * */
+	public void resume_playing();
+
+	/*
+	 * 等级设置
+	 */
+	public void set_level(int level);
+
+	/*
+	 * 方块左移
+	 */
+	public Block move_left_block();
+
+	/*
+	 * 方块右移
+	 */
+	public Block move_right_block();
+	
+	/*方块下移*/
+	public Block move_down_block();
+
+	/*
+	 * 方块快速下落
+	 */
+	public Block fast_down_block();
+
+	/*
+	 * 方块翻转
+	 */
+	public Block rotate_block();
+
+	/*
+	 * 获取方块数组
+	 */
+	public Grid[][] getGrid();
+
+	/*
+	 * 获取相关配置信息
+	 */
+	public GameConfig getGameConfig();
+
+	/*
+	 * 获取当前方块
+	 */
+
+	public Block getCurBlock();
+
+	/*
+	 * 获取下一个方块
+	 */
+	public Block getNextBlock();
+
+}

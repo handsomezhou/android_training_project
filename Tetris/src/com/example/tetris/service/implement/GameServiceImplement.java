@@ -5,7 +5,6 @@ import java.util.Random;
 import android.widget.Toast;
 import com.example.tetris.object.Block;
 import com.example.tetris.object.GameConfig;
-import com.example.tetris.object.GameConfig.BlockType;
 import com.example.tetris.object.GameConfig.GameStatus;
 import com.example.tetris.object.Grid;
 import com.example.tetris.service.GameService;
@@ -55,6 +54,16 @@ public class GameServiceImplement implements GameService, Cloneable {
 		return board;
 	}
 
+	private void reinitBoard(){
+		for (int y = 0; y < gameConfig.getYSize(); y++) {
+			for (int x = 0; x < gameConfig.getXSize(); x++) {
+				board[y][x].setBlockType(gameConfig.getBlockInitType());
+				board[y][x].setValue(gameConfig.getValueZero());
+			}
+			
+		}
+	}
+	
 	public Block produceCurBlock(Block block) {
 		/*
 		 * curBlock.setIndexYX(0, 0); curBlock.setBlockType(BlockType.BLOCK_I);
@@ -99,22 +108,19 @@ public class GameServiceImplement implements GameService, Cloneable {
 			System.out.printf("Block clone Exception:get next block failed!\n");
 			e.printStackTrace();
 		}
-		/*
-		 * //this.nextBlock = block;
-		 * 
-		 * try { this.nextBlock = (Block) block.clone(); } catch
-		 * (CloneNotSupportedException e) { // TODO Auto-generated catch block
-		 * System.out
-		 * .printf(".......................................获取下一个方块数据失败！\n");
-		 * e.printStackTrace(); }
-		 */
+	
 		return this.nextBlock;
 	}
 
 	@Override
 	public void start() {
 		// TODO Auto-generated method stub
+		reinitBoard();
+		produceNextBlock();
+		produceCurBlock(getNextBlock());
+		produceNextBlock();
 		gameConfig.setGameStatus(GameStatus.STATUS_PLAYING);
+		gameConfig.reinitConfigInfo();
 
 	}
 
@@ -132,6 +138,12 @@ public class GameServiceImplement implements GameService, Cloneable {
 		gameConfig.setGameStatus(GameStatus.STATUS_PLAYING);
 	}
 
+	@Override
+	public void over() {
+		// TODO Auto-generated method stub
+		gameConfig.setGameStatus(GameStatus.STATUS_OVER);
+	}
+	
 	@Override
 	public void set_level(int level) {
 		// TODO Auto-generated method stub
@@ -168,18 +180,19 @@ public class GameServiceImplement implements GameService, Cloneable {
 		if (null == block) {
 			isAddBlock=addBlockToGrid();
 			if(false==isAddBlock){//game over
-				
+				this.over();
 			}else{
 				num=removeBlockLayer();
-				if(num>-1){
-					
+				if(num>0){//
+				//if(num>-1){//
+					updateGameConfigData(num);
 				}
+				produceCurBlock(getNextBlock());
+				produceNextBlock();
 			}
-			produceCurBlock(getNextBlock());
-			produceNextBlock();
 		}
 
-		return null;
+		return block;
 	}
 
 	@Override
@@ -187,6 +200,11 @@ public class GameServiceImplement implements GameService, Cloneable {
 		// TODO Auto-generated method stub
 		Toast.makeText(gameConfig.getContext(), "I'm downButton!",
 				Toast.LENGTH_SHORT).show();
+		Block block=null;
+		do{
+			block=move_down_block();
+		}while(null!=block);
+		
 		return null;
 	}
 
@@ -196,6 +214,22 @@ public class GameServiceImplement implements GameService, Cloneable {
 
 		Toast.makeText(gameConfig.getContext(), "I'm upButton!",
 				Toast.LENGTH_SHORT).show();
+		Block block=null;
+		block=getNextRotateBlock();
+		if(null==block){
+			return block;
+		}
+		if(canMoveBlock(block,block.getIndexY(), block.getIndexX())){
+			try {
+				this.curBlock=(Block)block.clone();
+			} catch (CloneNotSupportedException e) {
+				// TODO Auto-generated catch block
+				
+				e.printStackTrace();
+			}
+			return this.curBlock;
+		}
+		
 		return null;
 	}
 
@@ -225,7 +259,7 @@ public class GameServiceImplement implements GameService, Cloneable {
 	private Block moveBlock(Direction dir) {
 		switch (dir) {
 		case DIR_LEFT:
-			if (true == canMoveBlock(curBlock.getIndexY(),
+			if (true == canMoveBlock(curBlock,curBlock.getIndexY(),
 					curBlock.getIndexX() - 1)) {
 				// curBlock.setIndexYX(curBlock.getIndexY(),
 				// curBlock.getIndexX()-1);
@@ -234,7 +268,7 @@ public class GameServiceImplement implements GameService, Cloneable {
 			}
 			break;
 		case DIR_RIGHT:
-			if (true == canMoveBlock(curBlock.getIndexY(),
+			if (true == canMoveBlock(curBlock,curBlock.getIndexY(),
 					curBlock.getIndexX() + 1)) {
 				// curBlock.setIndexYX(curBlock.getIndexY(),curBlock.getIndexX()+1);
 				curBlock.setIndexX(curBlock.getIndexX() + 1);
@@ -244,7 +278,7 @@ public class GameServiceImplement implements GameService, Cloneable {
 			}
 			break;
 		case DIR_DOWN:
-			if (true == canMoveBlock(curBlock.getIndexY() + 1,
+			if (true == canMoveBlock(curBlock,curBlock.getIndexY() + 1,
 					curBlock.getIndexX())) {
 				curBlock.setIndexY(curBlock.getIndexY() + 1);
 				System.out.printf("DIR_DOWN====y==%d\n", curBlock.getIndexY());
@@ -258,18 +292,18 @@ public class GameServiceImplement implements GameService, Cloneable {
 		return null;
 	}
 
-	private boolean canMoveBlock(int y, int x) {
+	private boolean canMoveBlock(Block bck,int y, int x) {
 		Block block = new Block(0, 0);
 
 		try {
-			block = (Block) curBlock.clone();
+			block = (Block) bck.clone();
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		block.setIndexYX(y, x);
 
-		switch (curBlock.getBlockType()) {
+		switch (block.getBlockType()) {
 		case GameConfig.BlockType.BLOCK_I:
 			switch (block.getBlockNumber()) {
 			case 0:
@@ -523,30 +557,30 @@ public class GameServiceImplement implements GameService, Cloneable {
 		int num = gameConfig.TTRS_SUCCEED;
 		switch (block.getBlockType()) {
 		case GameConfig.BlockType.BLOCK_I:
-			num = GameConfig.BLOCK_I_START_NUM + block.getBlockNumber();
+			num = gameConfig.BLOCK_I_START_NUM + block.getBlockNumber();
 			break;
 		case GameConfig.BlockType.BLOCK_J:
-			num = GameConfig.BLOCK_J_START_NUM + block.getBlockNumber();
+			num = gameConfig.BLOCK_J_START_NUM + block.getBlockNumber();
 			break;
 
 		case GameConfig.BlockType.BLOCK_L:
-			num = GameConfig.BLOCK_L_START_NUM + block.getBlockNumber();
+			num = gameConfig.BLOCK_L_START_NUM + block.getBlockNumber();
 			break;
 
 		case GameConfig.BlockType.BLOCK_O:
-			num = GameConfig.BLOCK_O_START_NUM + block.getBlockNumber();
+			num = gameConfig.BLOCK_O_START_NUM + block.getBlockNumber();
 			break;
 
 		case GameConfig.BlockType.BLOCK_S:
-			num = GameConfig.BLOCK_S_START_NUM + block.getBlockNumber();
+			num = gameConfig.BLOCK_S_START_NUM + block.getBlockNumber();
 			break;
 
 		case GameConfig.BlockType.BLOCK_Z:
-			num = GameConfig.BLOCK_Z_START_NUM + block.getBlockNumber();
+			num = gameConfig.BLOCK_Z_START_NUM + block.getBlockNumber();
 			break;
 
 		case GameConfig.BlockType.BLOCK_T:
-			num = GameConfig.BLOCK_T_START_NUM + block.getBlockNumber();
+			num = gameConfig.BLOCK_T_START_NUM + block.getBlockNumber();
 			break;
 		default:
 			num = gameConfig.TTRS_FAILED;
@@ -649,11 +683,11 @@ public class GameServiceImplement implements GameService, Cloneable {
 		Block block=this.curBlock;
 		int max_y=(block.getIndexY()-1+gameConfig.getBlockHeight())>(gameConfig.getYSize())?(gameConfig.getYSize()):(block.getIndexY()-1+gameConfig.getBlockHeight());
 		for(y=block.getIndexY()-1; y<max_y; y++){
-			for(x=0;x<gameConfig.getBlockWidth();x++){
+			for(x=0;x<gameConfig.getXSize();x++){
 				if(this.board[y][x].getValue()!=gameConfig.getValueOne()){
 					break;
 				}else {
-					if(x==gameConfig.getBlockWidth()-1){
+					if(x==gameConfig.getXSize()-1){
 						ret_num += 1<<(y-(block.getIndexY()-1));
 					}
 				}
@@ -695,10 +729,68 @@ public class GameServiceImplement implements GameService, Cloneable {
 			}
 		}
 
+		y=0;
 		for(x=0; x<gameConfig.getXSize(); x++){
-			this.board[y][x].setValue(gameConfig.getValueZero());	
+			//this.board[y][x].setValue(gameConfig.getValueZero());	
+			this.board[y][x].setBlockType(gameConfig.getBlockInitType());//y=0;
+			this.board[y][x].setValue(gameConfig.getValueZero());
 		}
 		
 		return 0;
 	}
+	
+	private Block getNextRotateBlock(){
+		int num=0;
+		Block block=new Block(0, 0);
+		try {
+			block=(Block)this.curBlock.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			System.out.printf("Block Clone Exception:===>%s",new Exception().getStackTrace()[0].getMethodName());
+			e.printStackTrace();
+		}
+		block.setBlockNumber(block.getBlockNumber()+1);
+		switch(block.getBlockType()){
+		case GameConfig.BlockType.BLOCK_I:
+			block.setBlockNumber(block.getBlockNumber()%GameConfig.BLOCK_I_NUM);
+			break;
+		case GameConfig.BlockType.BLOCK_J:
+			block.setBlockNumber(block.getBlockNumber()%GameConfig.BLOCK_J_NUM);
+			break;
+		case GameConfig.BlockType.BLOCK_L:
+			block.setBlockNumber(block.getBlockNumber()%GameConfig.BLOCK_L_NUM);
+			break;
+		case GameConfig.BlockType.BLOCK_O:
+			block.setBlockNumber(block.getBlockNumber()%GameConfig.BLOCK_O_NUM);
+			break;
+		case GameConfig.BlockType.BLOCK_S:
+			block.setBlockNumber(block.getBlockNumber()%GameConfig.BLOCK_S_NUM);
+			break;
+		case GameConfig.BlockType.BLOCK_Z:
+			block.setBlockNumber(block.getBlockNumber()%GameConfig.BLOCK_Z_NUM);
+			break;
+		case GameConfig.BlockType.BLOCK_T:
+			block.setBlockNumber(block.getBlockNumber()%GameConfig.BLOCK_T_NUM);
+			break;
+		default:
+			return null;
+			//break;
+		
+		}
+		num=getNumFromBlock(block);
+		block.setBlockData(gameConfig.getBlocks(num));
+		
+		return block;
+	}
+
+	private void updateGameConfigData(int removerLayerNumber){
+		int newAddScore=gameConfig.getNewAddScore(removerLayerNumber);
+		gameConfig.setGameScore(gameConfig.getGameScore()+newAddScore);
+		if(gameConfig.getGameScore()>=gameConfig.getConfigInfoByLevel(gameConfig.getGameLevel()+1).getScore()){//level up
+			gameConfig.setGameLevel(gameConfig.getGameLevel()+1);
+			gameConfig.setGameMsecond(gameConfig.getConfigInfoByLevel(gameConfig.getGameLevel()).getMsecond());
+			gameConfig.setIsLevelUp(true);
+		}
+	}
+
 }

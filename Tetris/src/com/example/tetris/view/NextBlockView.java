@@ -32,7 +32,7 @@ public class NextBlockView extends ImageView {
 			for(int i=0; i<gameService.getGameConfig().getBlockHeight(); i++){
 					for(int j=0; j<gameService.getGameConfig().getBlockWidth(); j++){
 						if(nextBlock.getBlockData()[i * gameService.getGameConfig().getBlockHeight() + j]==gameService.getGameConfig().getValueOne())
-						canvas.drawBitmap(this.block_color[(i * gameService.getGameConfig().getBlockHeight() + j)%gameService.getGameConfig().getBlockTypeNUM()], 
+						canvas.drawBitmap(this.block_color[nextBlock.getBlockType()], 
 								this.getLeft()+j*36, this.getTop()+i*36, null);
 					}
 			}

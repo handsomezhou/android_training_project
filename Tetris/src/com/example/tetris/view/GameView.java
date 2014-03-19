@@ -1,10 +1,7 @@
 package com.example.tetris.view;
-
 import com.example.tetris.object.Block;
-import com.example.tetris.object.GameConfig;
 import com.example.tetris.object.Grid;
 import com.example.tetris.service.GameService;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -19,13 +16,12 @@ import android.widget.Toast;
 
 public class GameView extends ImageView implements OnGestureListener,
 		OnTouchListener {
-	private static final int BLOCK_TYPE_NUM = 7;// 7种类型的方块
 	GestureDetector mGestureDetector;
 	// 游戏逻辑的实现类
 	private GameService gameService = null;
-//	//当前方块与下一个方块
-//	private Block curBlock=null;
-//	private Block nextBlock=null;
+	// //当前方块与下一个方块
+	// private Block curBlock=null;
+	// private Block nextBlock=null;
 	// 俄罗斯方块图片
 	private Bitmap[] block_color;
 
@@ -33,7 +29,6 @@ public class GameView extends ImageView implements OnGestureListener,
 		super(context, attrs);
 		mGestureDetector = new GestureDetector(context, this);
 		System.out.printf("GameView..................\n");
-
 		// TODO Auto-generated constructor stub
 	}
 
@@ -105,57 +100,47 @@ public class GameView extends ImageView implements OnGestureListener,
 	protected void onDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
 		super.onDraw(canvas);
-		if ((null==this.gameService)||(null==this.block_color))
+		if ((null == this.gameService) || (null == this.block_color))
 			return;
-		// /*
 
+		Block curBlock = gameService.getCurBlock();
 		Grid[][] board = gameService.getGrid();
-//		Block curBlock=gameService.getCurBlock();
-//		Block nextBlock=gameService.getNextBlock();
 
-		Block curBlock=gameService.getCurBlock();
-		/*
-		if(null!=curBlock){
-			for(int i=0; i<gameService.getGameConfig().getBlockHeight(); i++){
-					for(int j=0; j<gameService.getGameConfig().getBlockWidth(); j++){
-						if(curBlock.getBlockData()[i * gameService.getGameConfig().getBlockHeight() + j]=='1')
-						canvas.drawBitmap(this.block_color[(i * gameService.getGameConfig().getBlockHeight() + j)%gameService.getGameConfig().getBlockTypeNUM()], 
-								this.getLeft()+j*36, this.getTop()+i*36, null);
-					}
+		if (null != curBlock) {
+			System.out.printf("\ncurBlock======onDraw (y,x)===(%d,%d)\n",
+					curBlock.getIndexY(), curBlock.getIndexX());
+			for (int i = 0; i < gameService.getGameConfig().getBlockHeight(); i++) {
+				for (int j = 0; j < gameService.getGameConfig().getBlockWidth(); j++) {
+					if (curBlock.getBlockData()[i
+							* gameService.getGameConfig().getBlockHeight() + j] == '1')
+						// canvas.drawBitmap(this.block_color[(i *
+						// gameService.getGameConfig().getBlockHeight() +
+						// j)%gameService.getGameConfig().getBlockTypeNUM()],
+						// this.getLeft()+j*36, this.getTop()+i*36, null);
+						canvas.drawBitmap(
+								this.block_color[curBlock.getBlockType()],
+								this.getLeft()
+										+ gameService.getGameConfig()
+												.getBeginImageX()
+										+ ((curBlock.getIndexX() - 1) + j)
+										* gameService.getGameConfig()
+												.getImageWidth(),
+								this.getTop()
+										+ gameService.getGameConfig()
+												.getBeginImageY()
+										+ ((curBlock.getIndexY() - 1) + i)
+										* gameService.getGameConfig()
+												.getImageHeight(), null);
+				}
 			}
-			
+
 		}
-		*/
-		if(null!=curBlock){
-			System.out.printf("\ncurBlock======onDraw (y,x)===(%d,%d)\n",curBlock.getIndexY(),curBlock.getIndexX());
-			for(int i=0; i<gameService.getGameConfig().getBlockHeight(); i++){
-					for(int j=0; j<gameService.getGameConfig().getBlockWidth(); j++){
-						if(curBlock.getBlockData()[i * gameService.getGameConfig().getBlockHeight() + j]=='1')
-//						canvas.drawBitmap(this.block_color[(i * gameService.getGameConfig().getBlockHeight() + j)%gameService.getGameConfig().getBlockTypeNUM()], 
-//								this.getLeft()+j*36, this.getTop()+i*36, null);
-							canvas.drawBitmap(
-									this.block_color[curBlock.getBlockType()],
-									this.getLeft()
-											+ gameService.getGameConfig()
-													.getBeginImageX()
-											+ (curBlock.getIndexX()+j)
-											* gameService.getGameConfig()
-													.getImageWidth(),
-									this.getTop()
-											+ gameService.getGameConfig()
-													.getBeginImageY()
-											+ (curBlock.getIndexY()+i)
-											* gameService.getGameConfig()
-													.getImageHeight(), null);
-					}
-			}
-			
-		}
-		
+
 		if (null != board) {
-			for (int i = 0; i < board.length; i++) {
-				for (int j = 0; j < board[i].length; j++) {
-					if(board[i][j].getValue()==gameService.getGameConfig().getValueOne()){
+			for (int i = 0; i < gameService.getGameConfig().getYSize(); i++) {
+				for (int j = 0; j < gameService.getGameConfig().getXSize(); j++) {
+					if (board[i][j].getValue() == gameService.getGameConfig()
+							.getValueOne()) {
 						canvas.drawBitmap(
 								this.block_color[board[i][j].getBlockType()],
 								this.getLeft()
@@ -176,16 +161,25 @@ public class GameView extends ImageView implements OnGestureListener,
 			}
 		}
 
-		// */
+		switch (gameService.getGameConfig().getGameStatus()) {
+			case STATUS_PLAYING:
+				break;
+			case STATUS_PAUSE:
+				break;
+			case STATUS_OVER:
+				break;
+			default:
+				break;
+		}
+		
 		System.out.printf("on Draw++++++++++++++++++++++++++++");
 	}
 
 	public void setGameService(GameService gameService) {
 		this.gameService = gameService;
 	}
-	
-	public void setGridColor(Bitmap[] bitbmp)
-	{
-		this.block_color=bitbmp;
+
+	public void setGridColor(Bitmap[] bitbmp) {
+		this.block_color = bitbmp;
 	}
 }
