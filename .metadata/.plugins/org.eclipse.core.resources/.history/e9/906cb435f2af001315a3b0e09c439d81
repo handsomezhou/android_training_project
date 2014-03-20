@@ -102,7 +102,6 @@ public class Tetris extends Activity {
 					gameService.move_down_block();
 					if(gameConfig.getIsLevelUp()){
 						continueGame();
-						soundPool.play(levelUpSound, 1, 1, 0, 0, 1);
 						gameConfig.setIsLevelUp(false);
 					}
 					gameView.invalidate();

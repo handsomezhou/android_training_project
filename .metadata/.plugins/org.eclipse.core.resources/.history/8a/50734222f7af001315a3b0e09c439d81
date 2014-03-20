@@ -182,5 +182,4 @@ public class GameView extends ImageView implements OnGestureListener,
 	public void setGridColor(Bitmap[] bitbmp) {
 		this.block_color = bitbmp;
 	}
-	
 }
