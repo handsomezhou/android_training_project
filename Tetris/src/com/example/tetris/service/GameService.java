@@ -5,6 +5,9 @@ import com.example.tetris.object.GameConfig;
 import com.example.tetris.object.Grid;
 
 public interface GameService {
+	public enum Direction {
+		DIR_LEFT, DIR_RIGHT, DIR_DOWN,DIR_UP,
+	}
 	// Block [][]board=null;
 	/*
 	 * ÓÎÏ·¿ªÊ¼

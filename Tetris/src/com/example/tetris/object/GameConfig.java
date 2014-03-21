@@ -1,7 +1,6 @@
 package com.example.tetris.object;
 
 import android.content.Context;
-import android.graphics.Bitmap.Config;
 
 public class GameConfig {
 

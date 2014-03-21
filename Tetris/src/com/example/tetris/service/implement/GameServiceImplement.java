@@ -2,7 +2,11 @@ package com.example.tetris.service.implement;
 
 import java.util.Random;
 
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.widget.Toast;
+
+import com.example.tetris.R;
 import com.example.tetris.object.Block;
 import com.example.tetris.object.GameConfig;
 import com.example.tetris.object.GameConfig.GameStatus;
@@ -10,9 +14,7 @@ import com.example.tetris.object.Grid;
 import com.example.tetris.service.GameService;
 
 public class GameServiceImplement implements GameService, Cloneable {
-	private enum Direction {
-		DIR_LEFT, DIR_RIGHT, DIR_DOWN,
-	}
+	
 
 	/* 定义一个Grid数组保存游戏区域的方块信息 */
 	private Grid[][] board = null;
@@ -22,6 +24,17 @@ public class GameServiceImplement implements GameService, Cloneable {
 	/* 当前显示的方块与下一个方块 */
 	private Block curBlock = null;
 	private Block nextBlock = null;
+	// 播放音效
+	private static final int maxStreams = 7;// 声音资源的数量
+	SoundPool soundPool = new SoundPool(maxStreams, AudioManager.STREAM_SYSTEM,
+			0);
+	int bkgrdSound;
+	int dropSound;
+	int gameOverSound;
+	int gamePauseSound;
+	int levelUpSound;
+	int rotateSound;
+	int scoringSound;
 
 	public GameServiceImplement(GameConfig gameConfig) {
 		// TODO Auto-generated constructor stub
@@ -36,7 +49,7 @@ public class GameServiceImplement implements GameService, Cloneable {
 		produceNextBlock();
 		produceCurBlock(getNextBlock());
 		produceNextBlock();
-
+		init_sound();
 	};
 
 	private Grid[][] init_board(GameConfig gameConfig) {
@@ -54,30 +67,34 @@ public class GameServiceImplement implements GameService, Cloneable {
 		return board;
 	}
 
-	private void reinitBoard(){
+	private void init_sound() {
+		// 初始化音效
+		bkgrdSound = soundPool.load(this.gameConfig.getContext(), R.raw.bkgrd,
+				1);
+		dropSound = soundPool.load(this.gameConfig.getContext(), R.raw.drop, 1);
+		gameOverSound = soundPool.load(this.gameConfig.getContext(),
+				R.raw.game_over, 1);
+		gamePauseSound = soundPool.load(this.gameConfig.getContext(),
+				R.raw.game_pause, 1);
+		levelUpSound = soundPool.load(this.gameConfig.getContext(),
+				R.raw.levelup, 1);
+		rotateSound = soundPool.load(this.gameConfig.getContext(),
+				R.raw.rotate, 1);
+		scoringSound = soundPool.load(this.gameConfig.getContext(),
+				R.raw.scoring, 1);
+	}
+
+	private void reinitBoard() {
 		for (int y = 0; y < gameConfig.getYSize(); y++) {
 			for (int x = 0; x < gameConfig.getXSize(); x++) {
 				board[y][x].setBlockType(gameConfig.getBlockInitType());
 				board[y][x].setValue(gameConfig.getValueZero());
 			}
-			
+
 		}
 	}
-	
+
 	public Block produceCurBlock(Block block) {
-		/*
-		 * curBlock.setIndexYX(0, 0); curBlock.setBlockType(BlockType.BLOCK_I);
-		 * curBlock.setBlockNumber(0);
-		 * curBlock.setBlockData(gameConfig.getBlocks(i));
-		 */
-		// // System.out.printf("produceCurBlock==[%s]",curBlock);
-		// Block tmp=new Block(0, 0);
-		// do{
-		//
-		// return this.curBlock;
-		// }while(false);
-		//
-		// return null;
 		try {
 			this.curBlock = (Block) block.clone();
 		} catch (CloneNotSupportedException e) {
@@ -108,7 +125,7 @@ public class GameServiceImplement implements GameService, Cloneable {
 			System.out.printf("Block clone Exception:get next block failed!\n");
 			e.printStackTrace();
 		}
-	
+
 		return this.nextBlock;
 	}
 
@@ -121,7 +138,7 @@ public class GameServiceImplement implements GameService, Cloneable {
 		produceNextBlock();
 		gameConfig.setGameStatus(GameStatus.STATUS_PLAYING);
 		gameConfig.reinitConfigInfo();
-
+		this.playGamePauseSound();
 	}
 
 	@Override
@@ -130,20 +147,23 @@ public class GameServiceImplement implements GameService, Cloneable {
 		Toast.makeText(gameConfig.getContext(), "I'm pauseContinueButton!",
 				Toast.LENGTH_SHORT).show();
 		gameConfig.setGameStatus(GameStatus.STATUS_PAUSE);
+		soundPool.play(gamePauseSound, 1, 1, 0, 0, 1);
 	}
 
 	@Override
 	public void resume_playing() {
 		// TODO Auto-generated method stub
 		gameConfig.setGameStatus(GameStatus.STATUS_PLAYING);
+		soundPool.play(gamePauseSound, 1, 1, 0, 0, 1);
 	}
 
 	@Override
 	public void over() {
 		// TODO Auto-generated method stub
 		gameConfig.setGameStatus(GameStatus.STATUS_OVER);
+		this.playGameOverSound();
 	}
-	
+
 	@Override
 	public void set_level(int level) {
 		// TODO Auto-generated method stub
@@ -172,19 +192,21 @@ public class GameServiceImplement implements GameService, Cloneable {
 	@Override
 	public Block move_down_block() {
 		// TODO Auto-generated method stub
-		Toast.makeText(gameConfig.getContext(), "I'm move down!",
-				Toast.LENGTH_SHORT).show();
-		boolean isAddBlock=false;
+		/*
+		 * Toast.makeText(gameConfig.getContext(), "I'm move down!",
+		 * Toast.LENGTH_SHORT).show();
+		 */
+		boolean isAddBlock = false;
 		int num;
 		Block block = moveBlock(Direction.DIR_DOWN);
 		if (null == block) {
-			isAddBlock=addBlockToGrid();
-			if(false==isAddBlock){//game over
+			isAddBlock = addBlockToGrid();
+			if (false == isAddBlock) {// game over
 				this.over();
-			}else{
-				num=removeBlockLayer();
-				if(num>0){//
-				//if(num>-1){//
+			} else {
+				num = removeBlockLayer();
+				if (num > 0) {//
+					// if(num>-1){//
 					updateGameConfigData(num);
 				}
 				produceCurBlock(getNextBlock());
@@ -200,11 +222,12 @@ public class GameServiceImplement implements GameService, Cloneable {
 		// TODO Auto-generated method stub
 		Toast.makeText(gameConfig.getContext(), "I'm downButton!",
 				Toast.LENGTH_SHORT).show();
-		Block block=null;
-		do{
-			block=move_down_block();
-		}while(null!=block);
-		
+		Block block = null;
+		do {
+			block = move_down_block();
+		} while (null != block);
+		this.playDropSound();
+
 		return null;
 	}
 
@@ -214,22 +237,23 @@ public class GameServiceImplement implements GameService, Cloneable {
 
 		Toast.makeText(gameConfig.getContext(), "I'm upButton!",
 				Toast.LENGTH_SHORT).show();
-		Block block=null;
-		block=getNextRotateBlock();
-		if(null==block){
+		Block block = null;
+		block = getNextRotateBlock();
+		if (null == block) {
 			return block;
 		}
-		if(canMoveBlock(block,block.getIndexY(), block.getIndexX())){
+		if (canMoveBlock(block, block.getIndexY(), block.getIndexX())) {
 			try {
-				this.curBlock=(Block)block.clone();
+				this.curBlock = (Block) block.clone();
 			} catch (CloneNotSupportedException e) {
 				// TODO Auto-generated catch block
-				
+
 				e.printStackTrace();
 			}
+			this.playRotateSound();
 			return this.curBlock;
 		}
-		
+
 		return null;
 	}
 
@@ -256,10 +280,38 @@ public class GameServiceImplement implements GameService, Cloneable {
 		return this.nextBlock;
 	}
 
+	public void playBkgrdSound() {
+		soundPool.play(bkgrdSound, 1, 1, 0, 0, 1);
+	}
+
+	public void playDropSound() {
+		soundPool.play(dropSound, 1, 1, 0, 0, 1);
+	}
+
+	public void playGameOverSound() {
+		soundPool.play(gameOverSound, 1, 1, 0, 0, 1);
+	}
+
+	public void playGamePauseSound() {
+		soundPool.play(gamePauseSound, 1, 1, 0, 0, 1);
+	}
+
+	public void playLevelUpSound() {
+		soundPool.play(levelUpSound, 1, 1, 0, 0, 1);
+	}
+
+	public void playRotateSound() {
+		soundPool.play(rotateSound, 1, 1, 0, 0, 1);
+	}
+
+	public void playScoringSound() {
+		soundPool.play(scoringSound, 1, 1, 0, 0, 1);
+	}
+
 	private Block moveBlock(Direction dir) {
 		switch (dir) {
 		case DIR_LEFT:
-			if (true == canMoveBlock(curBlock,curBlock.getIndexY(),
+			if (true == canMoveBlock(curBlock, curBlock.getIndexY(),
 					curBlock.getIndexX() - 1)) {
 				// curBlock.setIndexYX(curBlock.getIndexY(),
 				// curBlock.getIndexX()-1);
@@ -268,7 +320,7 @@ public class GameServiceImplement implements GameService, Cloneable {
 			}
 			break;
 		case DIR_RIGHT:
-			if (true == canMoveBlock(curBlock,curBlock.getIndexY(),
+			if (true == canMoveBlock(curBlock, curBlock.getIndexY(),
 					curBlock.getIndexX() + 1)) {
 				// curBlock.setIndexYX(curBlock.getIndexY(),curBlock.getIndexX()+1);
 				curBlock.setIndexX(curBlock.getIndexX() + 1);
@@ -278,7 +330,7 @@ public class GameServiceImplement implements GameService, Cloneable {
 			}
 			break;
 		case DIR_DOWN:
-			if (true == canMoveBlock(curBlock,curBlock.getIndexY() + 1,
+			if (true == canMoveBlock(curBlock, curBlock.getIndexY() + 1,
 					curBlock.getIndexX())) {
 				curBlock.setIndexY(curBlock.getIndexY() + 1);
 				System.out.printf("DIR_DOWN====y==%d\n", curBlock.getIndexY());
@@ -292,7 +344,7 @@ public class GameServiceImplement implements GameService, Cloneable {
 		return null;
 	}
 
-	private boolean canMoveBlock(Block bck,int y, int x) {
+	private boolean canMoveBlock(Block bck, int y, int x) {
 		Block block = new Block(0, 0);
 
 		try {
@@ -660,136 +712,149 @@ public class GameServiceImplement implements GameService, Cloneable {
 
 		return true;
 	}
-	
-	private int removeBlockLayer(){
-		int rmLayer=0;
-		int num=0;
-		num=getRemoveLayerNum();
-		if(0!=num){
+
+	private int removeBlockLayer() {
+		int rmLayer = 0;
+		int num = 0;
+		num = getRemoveLayerNum();
+		if (0 != num) {
 			removeLayer(num);
 		}
-		do{
-			if((num&1)==1){
+		do {
+			if ((num & 1) == 1) {
 				rmLayer++;
 			}
-		}while((num=num>>1)>0);
-		
+		} while ((num = num >> 1) > 0);
+
 		return rmLayer;
 	}
-	
-	private int getRemoveLayerNum(){
-		int ret_num=0;//Binary number:0000~1111
-		int y,x;
-		Block block=this.curBlock;
-		int max_y=(block.getIndexY()-1+gameConfig.getBlockHeight())>(gameConfig.getYSize())?(gameConfig.getYSize()):(block.getIndexY()-1+gameConfig.getBlockHeight());
-		for(y=block.getIndexY()-1; y<max_y; y++){
-			for(x=0;x<gameConfig.getXSize();x++){
-				if(this.board[y][x].getValue()!=gameConfig.getValueOne()){
+
+	private int getRemoveLayerNum() {
+		int ret_num = 0;// Binary number:0000~1111
+		int y, x;
+		Block block = this.curBlock;
+		int max_y = (block.getIndexY() - 1 + gameConfig.getBlockHeight()) > (gameConfig
+				.getYSize()) ? (gameConfig.getYSize())
+				: (block.getIndexY() - 1 + gameConfig.getBlockHeight());
+		for (y = block.getIndexY() - 1; y < max_y; y++) {
+			for (x = 0; x < gameConfig.getXSize(); x++) {
+				if (this.board[y][x].getValue() != gameConfig.getValueOne()) {
 					break;
-				}else {
-					if(x==gameConfig.getXSize()-1){
-						ret_num += 1<<(y-(block.getIndexY()-1));
+				} else {
+					if (x == gameConfig.getXSize() - 1) {
+						ret_num += 1 << (y - (block.getIndexY() - 1));
 					}
 				}
-				
+
 			}
 		}
 		return ret_num;
 	}
-	
-	private void removeLayer(int removeLayerNum)
-	{
+
+	private void removeLayer(int removeLayerNum) {
 		int y;
-		int layer_num=removeLayerNum;
-		Block block=this.curBlock;
-		y=block.getIndexY()-1;
-		if(((y+0)<gameConfig.getYSize())&&(((layer_num>>0)&1)==1)){
-			removeLayerFromGrid(y+0);
+		int layer_num = removeLayerNum;
+		Block block = this.curBlock;
+		y = block.getIndexY() - 1;
+		if (((y + 0) < gameConfig.getYSize()) && (((layer_num >> 0) & 1) == 1)) {
+			removeLayerFromGrid(y + 0);
 		}
 
-		if(((y+1)<gameConfig.getYSize())&&(((layer_num>>1)&1)==1)){
-			removeLayerFromGrid(y+1);
+		if (((y + 1) < gameConfig.getYSize()) && (((layer_num >> 1) & 1) == 1)) {
+			removeLayerFromGrid(y + 1);
 		}
-		
-		if(((y+2)<gameConfig.getYSize())&&(((layer_num>>2)&1)==1)){
-			removeLayerFromGrid(y+2);
+
+		if (((y + 2) < gameConfig.getYSize()) && (((layer_num >> 2) & 1) == 1)) {
+			removeLayerFromGrid(y + 2);
 		}
-		
-		if(((y+3)<gameConfig.getYSize())&&(((layer_num>>3)&1)==1)){
-			removeLayerFromGrid(y+3);
+
+		if (((y + 3) < gameConfig.getYSize()) && (((layer_num >> 3) & 1) == 1)) {
+			removeLayerFromGrid(y + 3);
 		}
-		
+
 	}
-	
-	private int removeLayerFromGrid(int layerY){
-		int y,x;
-		for(y=layerY; y>0; y--){
-			for(x=0; x<gameConfig.getXSize(); x++){
-				this.board[y][x].setValue(this.board[y-1][x].getValue());
+
+	private int removeLayerFromGrid(int layerY) {
+		int y, x;
+		for (y = layerY; y > 0; y--) {
+			for (x = 0; x < gameConfig.getXSize(); x++) {
+				this.board[y][x].setValue(this.board[y - 1][x].getValue());
 			}
 		}
 
-		y=0;
-		for(x=0; x<gameConfig.getXSize(); x++){
-			//this.board[y][x].setValue(gameConfig.getValueZero());	
-			this.board[y][x].setBlockType(gameConfig.getBlockInitType());//y=0;
+		y = 0;
+		for (x = 0; x < gameConfig.getXSize(); x++) {
+			// this.board[y][x].setValue(gameConfig.getValueZero());
+			this.board[y][x].setBlockType(gameConfig.getBlockInitType());// y=0;
 			this.board[y][x].setValue(gameConfig.getValueZero());
 		}
-		
+
 		return 0;
 	}
-	
-	private Block getNextRotateBlock(){
-		int num=0;
-		Block block=new Block(0, 0);
+
+	private Block getNextRotateBlock() {
+		int num = 0;
+		Block block = new Block(0, 0);
 		try {
-			block=(Block)this.curBlock.clone();
+			block = (Block) this.curBlock.clone();
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
-			System.out.printf("Block Clone Exception:===>%s",new Exception().getStackTrace()[0].getMethodName());
+			System.out.printf("Block Clone Exception:===>%s",
+					new Exception().getStackTrace()[0].getMethodName());
 			e.printStackTrace();
 		}
-		block.setBlockNumber(block.getBlockNumber()+1);
-		switch(block.getBlockType()){
+		block.setBlockNumber(block.getBlockNumber() + 1);
+		switch (block.getBlockType()) {
 		case GameConfig.BlockType.BLOCK_I:
-			block.setBlockNumber(block.getBlockNumber()%GameConfig.BLOCK_I_NUM);
+			block.setBlockNumber(block.getBlockNumber()
+					% GameConfig.BLOCK_I_NUM);
 			break;
 		case GameConfig.BlockType.BLOCK_J:
-			block.setBlockNumber(block.getBlockNumber()%GameConfig.BLOCK_J_NUM);
+			block.setBlockNumber(block.getBlockNumber()
+					% GameConfig.BLOCK_J_NUM);
 			break;
 		case GameConfig.BlockType.BLOCK_L:
-			block.setBlockNumber(block.getBlockNumber()%GameConfig.BLOCK_L_NUM);
+			block.setBlockNumber(block.getBlockNumber()
+					% GameConfig.BLOCK_L_NUM);
 			break;
 		case GameConfig.BlockType.BLOCK_O:
-			block.setBlockNumber(block.getBlockNumber()%GameConfig.BLOCK_O_NUM);
+			block.setBlockNumber(block.getBlockNumber()
+					% GameConfig.BLOCK_O_NUM);
 			break;
 		case GameConfig.BlockType.BLOCK_S:
-			block.setBlockNumber(block.getBlockNumber()%GameConfig.BLOCK_S_NUM);
+			block.setBlockNumber(block.getBlockNumber()
+					% GameConfig.BLOCK_S_NUM);
 			break;
 		case GameConfig.BlockType.BLOCK_Z:
-			block.setBlockNumber(block.getBlockNumber()%GameConfig.BLOCK_Z_NUM);
+			block.setBlockNumber(block.getBlockNumber()
+					% GameConfig.BLOCK_Z_NUM);
 			break;
 		case GameConfig.BlockType.BLOCK_T:
-			block.setBlockNumber(block.getBlockNumber()%GameConfig.BLOCK_T_NUM);
+			block.setBlockNumber(block.getBlockNumber()
+					% GameConfig.BLOCK_T_NUM);
 			break;
 		default:
 			return null;
-			//break;
-		
+			// break;
+
 		}
-		num=getNumFromBlock(block);
+		num = getNumFromBlock(block);
 		block.setBlockData(gameConfig.getBlocks(num));
-		
+
 		return block;
 	}
 
-	private void updateGameConfigData(int removerLayerNumber){
-		int newAddScore=gameConfig.getNewAddScore(removerLayerNumber);
-		gameConfig.setGameScore(gameConfig.getGameScore()+newAddScore);
-		if(gameConfig.getGameScore()>=gameConfig.getConfigInfoByLevel(gameConfig.getGameLevel()+1).getScore()){//level up
-			gameConfig.setGameLevel(gameConfig.getGameLevel()+1);
-			gameConfig.setGameMsecond(gameConfig.getConfigInfoByLevel(gameConfig.getGameLevel()).getMsecond());
+	private void updateGameConfigData(int removerLayerNumber) {
+		int newAddScore = gameConfig.getNewAddScore(removerLayerNumber);
+		gameConfig.setGameScore(gameConfig.getGameScore() + newAddScore);
+		this.playScoringSound();
+		if (gameConfig.getGameScore() >= gameConfig.getConfigInfoByLevel(
+				gameConfig.getGameLevel() + 1).getScore()) {// level up
+			gameConfig.setGameLevel(gameConfig.getGameLevel() + 1);
+			gameConfig.setGameMsecond(gameConfig.getConfigInfoByLevel(
+					gameConfig.getGameLevel()).getMsecond());
 			gameConfig.setIsLevelUp(true);
+			this.playLevelUpSound();
 		}
 	}
 

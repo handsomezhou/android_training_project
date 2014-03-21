@@ -7,8 +7,6 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -33,7 +31,6 @@ import com.example.tetris.view.NextBlockView;
  */
 public class Tetris extends Activity {
 	private static final int HANDLE_MSG_BLOCK_DROP = 0x01;
-	private static final int maxStreams = 7;// 声音资源的数量
 	private static final int BLOCK_TYPE_NUM = 7;// 7种类型的方块
 	private int tetrisHeight;
 	private int tetrisWidth;
@@ -72,16 +69,6 @@ public class Tetris extends Activity {
 
 	// 俄罗斯方块小格子图片
 	private Bitmap[] grid_color;
-	// 播放音效
-	SoundPool soundPool = new SoundPool(maxStreams, AudioManager.STREAM_SYSTEM,
-			0);
-	int bkgrdSound;
-	int dropSound;
-	int gameOverSound;
-	int gamePauseSound;
-	int levelUpSound;
-	int rotateSound;
-	int scoringSound;
 
 	private Handler hander = new Handler() {
 
@@ -94,15 +81,11 @@ public class Tetris extends Activity {
 				case STATUS_PAUSE:
 					break;
 				case STATUS_PLAYING:
-					//gameConfig.setGameLevel(gameConfig.getGameLevel() + 1);
-//					gameLevel.setText(getString(R.string.level_prompt)
-//							+ String.valueOf(gameConfig.getGameLevel()));
 					gameLevel.setText(String.valueOf(gameConfig.getGameLevel()));
 					gameScore.setText(String.valueOf(gameConfig.getGameScore()));
 					gameService.move_down_block();
 					if(gameConfig.getIsLevelUp()){
 						continueGame();
-						soundPool.play(levelUpSound, 1, 1, 0, 0, 1);
 						gameConfig.setIsLevelUp(false);
 					}
 					gameView.invalidate();
@@ -190,14 +173,7 @@ public class Tetris extends Activity {
 		rightButton = (Button) findViewById(R.id.right_button);
 		backButton = (Button) findViewById(R.id.back_button);
 		// gameConfig.setGameLevel(gameConfig.getGameLevel()+1);
-		// 初始化音效
-		bkgrdSound = soundPool.load(this, R.raw.bkgrd, 1);
-		dropSound = soundPool.load(this, R.raw.drop, 1);
-		gameOverSound = soundPool.load(this, R.raw.game_over, 1);
-		gamePauseSound = soundPool.load(this, R.raw.game_pause, 1);
-		levelUpSound = soundPool.load(this, R.raw.levelup, 1);
-		rotateSound = soundPool.load(this, R.raw.rotate, 1);
-		scoringSound = soundPool.load(this, R.raw.scoring, 1);
+		
 
 		// 为游戏区域的触碰事件绑定监听器
 
@@ -206,7 +182,14 @@ public class Tetris extends Activity {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
-				gameView.onTouchEvent(event);
+				switch(gameConfig.getGameStatus()){
+				case STATUS_PLAYING:
+					gameView.onTouchEvent(event);
+					break;
+				default:
+					break;
+				}
+			
 				return true;
 			}
 		});
@@ -222,23 +205,6 @@ public class Tetris extends Activity {
 			}
 		});
 
-		// 为暂停继续按钮的单击事件绑定监听器
-		/*
-		 * pauseContinueButton.setOnClickListener(new View.OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { // TODO Auto-generated method
-		 * stub //gameService.pause(); switch(gameConfig.getGameStatus()){ case
-		 * STATUS_PAUSE: continueGame();
-		 * pauseContinueButton.setBackgroundResource(R.drawable.pause_sel);
-		 * pauseContinueButton.invalidate(); break; case STATUS_PLAYING:
-		 * pauseGame();
-		 * pauseContinueButton.setBackgroundResource(R.drawable.continue_sel);
-		 * pauseContinueButton.invalidate(); break; default: break; }
-		 * 
-		 * }
-		 * 
-		 * });
-		 */
 		pauseContinueButton.setOnTouchListener(new View.OnTouchListener() {
 
 			@Override
@@ -252,7 +218,6 @@ public class Tetris extends Activity {
 						pauseContinueButton.invalidate();
 					} else if (MotionEvent.ACTION_UP == event.getAction()) {
 						continueGame();
-						soundPool.play(gamePauseSound, 1, 1, 0, 0, 1);
 						pauseContinueButton
 								.setBackgroundResource(R.drawable.pause_normal);
 						pauseContinueButton.invalidate();
@@ -265,7 +230,6 @@ public class Tetris extends Activity {
 						pauseContinueButton.invalidate();
 					} else if (MotionEvent.ACTION_UP == event.getAction()) {
 						pauseGame();
-						soundPool.play(gamePauseSound, 1, 1, 0, 0, 1);
 						pauseContinueButton
 								.setBackgroundResource(R.drawable.continue_normal);
 						pauseContinueButton.invalidate();
@@ -278,7 +242,6 @@ public class Tetris extends Activity {
 						pauseContinueButton.invalidate();
 					} else if (MotionEvent.ACTION_UP == event.getAction()) {
 						startGame();
-						soundPool.play(gamePauseSound, 1, 1, 0, 0, 1);
 						pauseContinueButton
 								.setBackgroundResource(R.drawable.pause_normal);
 						pauseContinueButton.invalidate();
@@ -300,7 +263,6 @@ public class Tetris extends Activity {
 				switch(gameConfig.getGameStatus()){
 				case STATUS_PLAYING:
 					gameService.rotate_block();
-					soundPool.play(rotateSound, 1, 1, 0, 0, 1);
 					gameView.invalidate();
 				default:
 					break;
@@ -333,7 +295,6 @@ public class Tetris extends Activity {
 				switch(gameConfig.getGameStatus()){
 				case STATUS_PLAYING:
 					gameService.fast_down_block();
-					soundPool.play(dropSound, 1, 1, 0, 0, 1);
 					gameView.invalidate();
 				default:
 					break;
@@ -408,8 +369,7 @@ public class Tetris extends Activity {
 	/*结束游戏*/
 	public void overGame(){
 		stopTimer(blockDropTimer);
-		gameService.over();
-		soundPool.play(gameOverSound, 1, 1, 0, 0, 1);
+		//gameService.over();
 		pauseContinueButton.setBackgroundResource(R.drawable.continue_normal);pauseContinueButton.invalidate();
 		gameView.invalidate();
 	}
