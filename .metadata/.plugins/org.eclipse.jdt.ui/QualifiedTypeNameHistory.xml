@@ -18,7 +18,6 @@
 <fullyQualifiedTypeName name="com.example.tetris.object.Grid"/>
 <fullyQualifiedTypeName name="android.widget.ImageView"/>
 <fullyQualifiedTypeName name="com.example.tetris.view.NextBlockView"/>
-<fullyQualifiedTypeName name="android.graphics.Bitmap"/>
 <fullyQualifiedTypeName name="java.sql.Array"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.lang.Cloneable"/>
@@ -46,4 +45,5 @@
 <fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="android.graphics.Bitmap.Config"/>
 <fullyQualifiedTypeName name="com.example.tetris.object.GameConfig.ConfigInfo"/>
+<fullyQualifiedTypeName name="android.graphics.Bitmap"/>
 </qualifiedTypeNameHistroy>

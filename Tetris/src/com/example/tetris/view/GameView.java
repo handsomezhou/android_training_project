@@ -1,5 +1,6 @@
 package com.example.tetris.view;
 
+import com.example.tetris.R;
 import com.example.tetris.object.Block;
 import com.example.tetris.object.Grid;
 import com.example.tetris.service.GameService;
@@ -7,6 +8,7 @@ import com.example.tetris.service.GameService.Direction;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -25,12 +27,15 @@ public class GameView extends ImageView implements OnGestureListener,
 	// //当前方块与下一个方块
 	// private Block curBlock=null;
 	// private Block nextBlock=null;
-	// 俄罗斯方块图片
+	// 俄罗斯方块小方格图片
 	private Bitmap[] block_color;
+	private Bitmap gameOver;
+	private Bitmap gamePause;
 
 	public GameView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mGestureDetector = new GestureDetector(context, this);
+		loadPicture();
 		System.out.printf("GameView..................\n");
 		// TODO Auto-generated constructor stub
 	}
@@ -43,57 +48,67 @@ public class GameView extends ImageView implements OnGestureListener,
 		float y1 = e1.getY();
 		float x2 = e2.getX();
 		float y2 = e2.getY();
-		float distance_x=Math.abs(x2-x1);
-		float distance_y=Math.abs(y2-y1);
-		int x_move_steps=0;
-		int y_move_steps=0;
-		Direction direction=getDirection(x1, y1, x2, y2);
-		x_move_steps=(int) (Math.abs(distance_x)/gameService.getGameConfig().getImageWidth());
-		y_move_steps=(int) (Math.abs(distance_y)/gameService.getGameConfig().getImageHeight());
-		System.out.printf("============(%f,%f)---(%d,%d)\n", distance_y,distance_x,gameService.getGameConfig().getImageHeight(),gameService.getGameConfig().getImageWidth());
-		switch(direction){
+		float distance_x = Math.abs(x2 - x1);
+		float distance_y = Math.abs(y2 - y1);
+		int x_move_steps = 0;
+		int y_move_steps = 0;
+		Direction direction = getDirection(x1, y1, x2, y2);
+		x_move_steps = (int) (Math.abs(distance_x) / gameService
+				.getGameConfig().getImageWidth());
+		y_move_steps = (int) (Math.abs(distance_y) / gameService
+				.getGameConfig().getImageHeight());
+		System.out.printf("============(%f,%f)---(%d,%d)\n", distance_y,
+				distance_x, gameService.getGameConfig().getImageHeight(),
+				gameService.getGameConfig().getImageWidth());
+		switch (direction) {
 		case DIR_LEFT:
-			while(0<x_move_steps){
+			while (0 < x_move_steps) {
 				x_move_steps--;
-				if(null==gameService.move_left_block()){
-					x_move_steps=0;
-					Toast.makeText(getContext(), "I'm onScroll===DIR_LEFT  null!", Toast.LENGTH_SHORT)
-					.show();
+				if (null == gameService.move_left_block()) {
+					x_move_steps = 0;
+					Toast.makeText(getContext(),
+							"I'm onScroll===DIR_LEFT  null!",
+							Toast.LENGTH_SHORT).show();
 				}
 				this.invalidate();
 			}
-//			Toast.makeText(getContext(), "I'm onScroll===DIR_LEFT!", Toast.LENGTH_SHORT)
-//			.show();
+			// Toast.makeText(getContext(), "I'm onScroll===DIR_LEFT!",
+			// Toast.LENGTH_SHORT)
+			// .show();
 			break;
 		case DIR_RIGHT:
-			while(0<x_move_steps){
+			while (0 < x_move_steps) {
 				x_move_steps--;
-				if(null==gameService.move_right_block()){
-					x_move_steps=0;
-					Toast.makeText(getContext(), "I'm onScroll===DIR_RIGHT  null!", Toast.LENGTH_SHORT)
-					.show();
+				if (null == gameService.move_right_block()) {
+					x_move_steps = 0;
+					Toast.makeText(getContext(),
+							"I'm onScroll===DIR_RIGHT  null!",
+							Toast.LENGTH_SHORT).show();
 				}
 				this.invalidate();
 			}
-//			Toast.makeText(getContext(), "I'm onScroll===DIR_RIGHT!", Toast.LENGTH_SHORT)
-//			.show();
+			// Toast.makeText(getContext(), "I'm onScroll===DIR_RIGHT!",
+			// Toast.LENGTH_SHORT)
+			// .show();
 			break;
 		case DIR_DOWN:
-			while(0<y_move_steps){
+			while (0 < y_move_steps) {
 				y_move_steps--;
-				if(null==gameService.move_down_block()){
-					y_move_steps=0;
-					Toast.makeText(getContext(), "I'm onScroll===DIR_DOWN  null!", Toast.LENGTH_SHORT)
-					.show();
+				if (null == gameService.move_down_block()) {
+					y_move_steps = 0;
+					Toast.makeText(getContext(),
+							"I'm onScroll===DIR_DOWN  null!",
+							Toast.LENGTH_SHORT).show();
 				}
 				this.invalidate();
 			}
-//			Toast.makeText(getContext(), "I'm onScroll===DIR_DOWN!", Toast.LENGTH_SHORT)
-//			.show();
+			// Toast.makeText(getContext(), "I'm onScroll===DIR_DOWN!",
+			// Toast.LENGTH_SHORT)
+			// .show();
 			break;
 		default:
-			Toast.makeText(getContext(), "I'm onScroll===DIR_UP!", Toast.LENGTH_SHORT)
-			.show();
+			Toast.makeText(getContext(), "I'm onScroll===DIR_UP!",
+					Toast.LENGTH_SHORT).show();
 			break;
 		}
 		return true;
@@ -160,6 +175,59 @@ public class GameView extends ImageView implements OnGestureListener,
 		if ((null == this.gameService) || (null == this.block_color))
 			return;
 
+		switch (gameService.getGameConfig().getGameStatus()) {
+		case STATUS_PLAYING:
+			showGameView(canvas);
+			break;
+		case STATUS_PAUSE:
+			showGamePause(canvas);
+			break;
+		case STATUS_OVER:
+			showGameView(canvas);
+			showGameOver(canvas);
+			break;
+		default:
+			break;
+		}
+
+		this.invalidate();
+		System.out.printf("on Draw++++++++++++++++++++++++++++");
+	}
+
+	public void setGameService(GameService gameService) {
+		this.gameService = gameService;
+	}
+
+	public void setGridColor(Bitmap[] bitbmp) {
+		this.block_color = bitbmp;
+	}
+
+	private void loadPicture() {
+		gameOver = BitmapFactory.decodeResource(this.getResources(),
+				R.drawable.game_over);
+		gamePause = BitmapFactory.decodeResource(this.getResources(),
+				R.drawable.game_pause);
+	}
+
+	private Direction getDirection(float startX, float startY, float endX,
+			float endY) {
+		float distanceX = endX - startX;
+		float distanceY = endY - startY;
+
+		if ((distanceX < 0) && (Math.abs(distanceY / distanceX) <= 1)) {
+			return Direction.DIR_LEFT;
+		} else if ((distanceX > 0) && (Math.abs(distanceY / distanceX) <= 1)) {
+			return Direction.DIR_RIGHT;
+		} else if (distanceY > 0 && (Math.abs(distanceX / distanceY) < 1)) {
+			return Direction.DIR_DOWN;
+		} else if ((distanceY < 0) && (Math.abs(distanceX / distanceY) < 1)) {
+			return Direction.DIR_UP;
+		}
+
+		return Direction.DIR_UP;
+	}
+
+	private void showGameView(Canvas canvas) {
 		Block curBlock = gameService.getCurBlock();
 		Grid[][] board = gameService.getGrid();
 
@@ -169,7 +237,8 @@ public class GameView extends ImageView implements OnGestureListener,
 			for (int i = 0; i < gameService.getGameConfig().getBlockHeight(); i++) {
 				for (int j = 0; j < gameService.getGameConfig().getBlockWidth(); j++) {
 					if (curBlock.getBlockData()[i
-							* gameService.getGameConfig().getBlockHeight() + j] == gameService.getGameConfig().getValueOne())
+							* gameService.getGameConfig().getBlockHeight() + j] == gameService
+							.getGameConfig().getValueOne())
 						canvas.drawBitmap(
 								this.block_color[curBlock.getBlockType()],
 								this.getLeft()
@@ -214,44 +283,22 @@ public class GameView extends ImageView implements OnGestureListener,
 			}
 		}
 
-		switch (gameService.getGameConfig().getGameStatus()) {
-		case STATUS_PLAYING:
-			break;
-		case STATUS_PAUSE:
-			break;
-		case STATUS_OVER:
-			break;
-		default:
-			break;
-		}
-
-		System.out.printf("on Draw++++++++++++++++++++++++++++");
 	}
 
-	public void setGameService(GameService gameService) {
-		this.gameService = gameService;
+	private void showGamePause(Canvas canvas) {
+		float left = this.getLeft() + (this.getWidth() - gamePause.getWidth())
+				/ 2;
+		float top = this.getTop() + (this.getHeight() - gamePause.getHeight())
+				/ 2;
+		canvas.drawBitmap(gamePause, left, top, null);
 	}
 
-	public void setGridColor(Bitmap[] bitbmp) {
-		this.block_color = bitbmp;
-	}
-	
-	private Direction getDirection(float startX, float startY, float endX,
-			float endY) {
-		float distanceX = endX - startX;
-		float distanceY = endY - startY;
-
-		if ((distanceX < 0) && (Math.abs(distanceY / distanceX) <= 1)) {
-			return Direction.DIR_LEFT;
-		} else if ((distanceX > 0) && (Math.abs(distanceY / distanceX) <= 1)) {
-			return Direction.DIR_RIGHT;
-		}  else if (distanceY > 0 && (Math.abs(distanceX / distanceY) < 1)) {
-			return Direction.DIR_DOWN;
-		}else if ((distanceY < 0) && (Math.abs(distanceX / distanceY) < 1)) {
-			return Direction.DIR_UP;
-		}
-		
-		return Direction.DIR_UP;
+	private void showGameOver(Canvas canvas) {
+		float left = this.getLeft() + (this.getWidth() - gameOver.getWidth())
+				/ 2;
+		float top = this.getTop() + (this.getHeight() - gameOver.getHeight())
+				/ 2;
+		canvas.drawBitmap(gameOver, left, top, null);
 	}
 
 }
