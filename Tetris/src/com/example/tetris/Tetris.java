@@ -81,10 +81,12 @@ public class Tetris extends Activity {
 				case STATUS_PAUSE:
 					break;
 				case STATUS_PLAYING:
-					gameLevel.setText(String.valueOf(gameConfig.getGameLevel()));
-					gameScore.setText(String.valueOf(gameConfig.getGameScore()));
+					gameLevel
+							.setText(String.valueOf(gameConfig.getGameLevel()));
+					gameScore
+							.setText(String.valueOf(gameConfig.getGameScore()));
 					gameService.move_down_block();
-					if(gameConfig.getIsLevelUp()){
+					if (gameConfig.getIsLevelUp()) {
 						continueGame();
 						gameConfig.setIsLevelUp(false);
 					}
@@ -155,6 +157,24 @@ public class Tetris extends Activity {
 		gameView.setGameService(gameService);
 		gameView.setGridColor(this.grid_color);
 
+		//根据GameView区域动态设置小方块大小
+		int w = View.MeasureSpec.makeMeasureSpec(0,
+				View.MeasureSpec.UNSPECIFIED);
+		int h = View.MeasureSpec.makeMeasureSpec(0,
+				View.MeasureSpec.UNSPECIFIED);
+		gameView.measure(w, h);
+		int imageHeight = (gameView.getMeasuredHeight()-2*gameService.getGameConfig().getBeginImageY())
+				/ gameService.getGameConfig().getYSize();
+		int imageWidth = (gameView.getMeasuredWidth()-2*gameService.getGameConfig().getBeginImageY())
+				/ gameService.getGameConfig().getXSize();
+		gameService.getGameConfig().setImageHeight(imageHeight);
+		gameService.getGameConfig().setImageWidth(imageWidth);
+		
+//		int n=999;
+//		while(n>0){
+//		System.out.printf("h=%d,w=%d\n",gameView.getHeight(),gameView.getWidth() );
+//		n--;
+//		}
 		nextBlock = (NextBlockView) findViewById(R.id.next_block);
 		nextBlock.setGameService(gameService);
 		nextBlock.setGridColor(this.grid_color);
@@ -173,7 +193,6 @@ public class Tetris extends Activity {
 		rightButton = (Button) findViewById(R.id.right_button);
 		backButton = (Button) findViewById(R.id.back_button);
 		// gameConfig.setGameLevel(gameConfig.getGameLevel()+1);
-		
 
 		// 为游戏区域的触碰事件绑定监听器
 
@@ -182,14 +201,14 @@ public class Tetris extends Activity {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				// TODO Auto-generated method stub
-				switch(gameConfig.getGameStatus()){
+				switch (gameConfig.getGameStatus()) {
 				case STATUS_PLAYING:
 					gameView.onTouchEvent(event);
 					break;
 				default:
 					break;
 				}
-			
+
 				return true;
 			}
 		});
@@ -260,7 +279,7 @@ public class Tetris extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				switch(gameConfig.getGameStatus()){
+				switch (gameConfig.getGameStatus()) {
 				case STATUS_PLAYING:
 					gameService.rotate_block();
 					gameView.invalidate();
@@ -275,14 +294,14 @@ public class Tetris extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				switch(gameConfig.getGameStatus()){
+				switch (gameConfig.getGameStatus()) {
 				case STATUS_PLAYING:
 					gameService.move_left_block();
 					gameView.invalidate();
 				default:
 					break;
 				}
-				
+
 			}
 		});
 
@@ -291,8 +310,8 @@ public class Tetris extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				//gameService.fast_down_block();
-				switch(gameConfig.getGameStatus()){
+				// gameService.fast_down_block();
+				switch (gameConfig.getGameStatus()) {
 				case STATUS_PLAYING:
 					gameService.fast_down_block();
 					gameView.invalidate();
@@ -307,7 +326,7 @@ public class Tetris extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				switch(gameConfig.getGameStatus()){
+				switch (gameConfig.getGameStatus()) {
 				case STATUS_PLAYING:
 					gameService.move_right_block();
 					gameView.invalidate();
@@ -366,14 +385,15 @@ public class Tetris extends Activity {
 		}, 0, gameService.getGameConfig().getMsecond());
 	}
 
-	/*结束游戏*/
-	public void overGame(){
+	/* 结束游戏 */
+	public void overGame() {
 		stopTimer(blockDropTimer);
-		//gameService.over();
-		pauseContinueButton.setBackgroundResource(R.drawable.continue_normal);pauseContinueButton.invalidate();
+		// gameService.over();
+		pauseContinueButton.setBackgroundResource(R.drawable.continue_normal);
+		pauseContinueButton.invalidate();
 		gameView.invalidate();
 	}
-	
+
 	private void stopTimer(Timer timer) {
 		if (null == timer) {
 			return;

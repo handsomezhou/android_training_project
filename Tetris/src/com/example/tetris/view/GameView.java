@@ -174,7 +174,11 @@ public class GameView extends ImageView implements OnGestureListener,
 		super.onDraw(canvas);
 		if ((null == this.gameService) || (null == this.block_color))
 			return;
-
+		int n=999;
+		while(n>0){
+		System.out.printf("h=%d,w=%d\n",this.getHeight(),this.getWidth() );
+		n--;
+		}
 		switch (gameService.getGameConfig().getGameStatus()) {
 		case STATUS_PLAYING:
 			showGameView(canvas);

@@ -4,7 +4,7 @@
     <integer name="tetris_hight">17</integer>
     <integer name="tetris_widht">13</integer>
     <integer name="begin_image_y">16</integer>
-    <integer name="begin_image_x">13</integer>
+    <integer name="begin_image_x">12</integer>
     <integer name="image_height">36</integer>
     <integer name="image_width">36</integer>
 
