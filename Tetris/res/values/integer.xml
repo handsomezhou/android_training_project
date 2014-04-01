@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <integer name="tetris_hight">17</integer>
-    <integer name="tetris_widht">13</integer>
-    <integer name="begin_image_y">6</integer>
-    <integer name="begin_image_x">6</integer>
+    <integer name="tetris_hight">17</integer>		<!-- 俄罗斯方块行数 -->
+    <integer name="tetris_widht">13</integer>		<!-- 俄罗斯方块列数 -->
+    
+    <integer name="game_view_height">626</integer>		<!-- 俄罗斯方块显示区域的高 -->
+    <integer name="game_view_width">480</integer>		<!-- 俄罗斯方块显示区域的宽 -->
+    
+    <integer name="begin_image_y">6</integer>		<!-- 俄罗斯方块画图区域x方向边距 -->
+    <integer name="begin_image_x">6</integer>		<!-- 俄罗斯方块画图区域y方向边距 -->
     <integer name="grid_image_height">36</integer>	<!-- 单个的格子高度 -->
     <integer name="grid_image_width">36</integer>	<!-- 单个的格子宽度 -->
 

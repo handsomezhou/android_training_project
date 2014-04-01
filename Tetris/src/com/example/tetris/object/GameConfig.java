@@ -287,7 +287,7 @@ public class GameConfig {
 	private int gameScore;
 	/* 方块下落一格延迟 */
 	private int gameMsecond;
-	/*是否升级标志*/
+	/* 是否升级标志 */
 	private boolean isLevelUp;
 	// Block[y][x]数组第一二维的长度
 	private int xSize;
@@ -295,6 +295,14 @@ public class GameConfig {
 	// Board中第一张图片出现的x座标与y座标
 	private int beginImageX;
 	private int beginImageY;
+
+	/* 俄罗斯方块显示区域宽和高 */
+	private int gameViewWidth;
+	private int gameViewHeight;
+	/* 俄罗斯方块显示区域宽高缩放比(如没变默认为1.0,没有) */
+	private float gameViewScaleWidth;
+	private float gameViewScaleHeight;
+
 	// Block 小方块图片的宽和高
 	private int gridImageWidth;
 	private int gridImageHeight;
@@ -305,13 +313,17 @@ public class GameConfig {
 
 	private Context context;
 
-	public GameConfig(int beginImageY, int beginImageX, int gridImageHeight,
-			int gridImageWidth, Context context) {
+	public GameConfig(int gameViewHeight, int gameViewWidth, int beginImageY,
+			int beginImageX, int gridImageHeight, int gridImageWidth,
+			Context context) {
 		this.ySize = TETRIS_HEIGHT;
 		this.xSize = TETRIS_WIDTH;
 		this.gameLevel = 1;
 		this.gameScore = 0;
 		this.isLevelUp = false;
+		this.gameViewHeight = gameViewHeight;
+		this.gameViewWidth = gameViewWidth;
+		initGameViewScale();
 		this.beginImageY = beginImageY;
 		this.beginImageX = beginImageX;
 		this.gridImageHeight = gridImageHeight;
@@ -331,6 +343,10 @@ public class GameConfig {
 	 *            俄罗斯方块的高(行)
 	 * @param tetrisWidth
 	 *            俄罗斯方块的宽度(列)
+	 * @param gameViewHeight
+	 *            俄罗斯方块显示区域的高
+	 * @param gameViewWidth
+	 *            俄罗斯方块显示区域的宽
 	 * @param beginImageY
 	 *            最左上角显示的小方块,相对于方块显示区域的Y偏移量
 	 * @param beginImageX
@@ -341,14 +357,18 @@ public class GameConfig {
 	 *            小方块的宽
 	 * @param context
 	 */
-	public GameConfig(int tetrisHeight, int tetrisWidth, int beginImageY,
-			int beginImageX, int gridImageHeight, int gridImageWidth, Context context) {
+	public GameConfig(int tetrisHeight, int tetrisWidth, int gameViewHeight,
+			int gameViewWidth, int beginImageY, int beginImageX,
+			int gridImageHeight, int gridImageWidth, Context context) {
 		this.gameStatus = GameStatus.STATUS_INIT;
 		this.gameLevel = 1;
 		this.gameScore = 0;
 		this.isLevelUp = false;
 		this.ySize = tetrisHeight;
 		this.xSize = tetrisWidth;
+		this.gameViewHeight = gameViewHeight;
+		this.gameViewWidth = gameViewWidth;
+		initGameViewScale();
 		this.beginImageY = beginImageY;
 		this.beginImageX = beginImageX;
 		this.gridImageHeight = gridImageHeight;
@@ -360,6 +380,14 @@ public class GameConfig {
 		initConfigInfo();
 	}
 
+	/*
+	 * 初始化游戏显示区域缩放比(默认1.0没有缩放)
+	 */
+	private void initGameViewScale() {
+		this.gameViewScaleHeight = (float) 1.0;
+		this.gameViewScaleWidth = (float) 1.0;
+	}
+
 	private void initConfigInfo() {
 		configInfo = (ConfigInfo[]) new ConfigInfo[GAME_MAX_LEVEL];
 		/*
@@ -368,9 +396,9 @@ public class GameConfig {
 		 * T_U16_MAX , 5}
 		 */
 		configInfo[0] = new ConfigInfo(1, 0, 1000);
-		configInfo[1] = new ConfigInfo(2, 200/10, 600);
-		configInfo[2] = new ConfigInfo(3, 500/10, 400);
-		configInfo[3] = new ConfigInfo(4, 1000/10, 250);
+		configInfo[1] = new ConfigInfo(2, 200 / 10, 600);
+		configInfo[2] = new ConfigInfo(3, 500 / 10, 400);
+		configInfo[3] = new ConfigInfo(4, 1000 / 10, 250);
 		configInfo[4] = new ConfigInfo(5, 2000, 150);
 		configInfo[5] = new ConfigInfo(6, 4000, 100);
 		configInfo[6] = new ConfigInfo(7, 8000, 50);
@@ -380,12 +408,12 @@ public class GameConfig {
 		setGameMsecond(configInfo[0].getMsecond());
 	}
 
-	public void reinitConfigInfo(){
+	public void reinitConfigInfo() {
 		setGameLevel(configInfo[0].getLevel());
 		setGameScore(configInfo[0].getScore());
 		setGameMsecond(configInfo[0].getMsecond());
 	}
-	
+
 	public ConfigInfo getConfigInfoByLevel(int level) {
 		int lvl = ((level - 1) >= 0) ? (level - 1) : (0);
 		return configInfo[lvl % GAME_MAX_LEVEL];
@@ -412,8 +440,6 @@ public class GameConfig {
 		this.gameScore = gameScore;
 	}
 
-	
-
 	public int getGameScore() {
 		return this.gameScore;
 	}
@@ -437,14 +463,15 @@ public class GameConfig {
 	public int getMsecond() {
 		return this.gameMsecond;
 	}
-	
-	public void setIsLevelUp(boolean isLevelUp){
-		this.isLevelUp=isLevelUp;
+
+	public void setIsLevelUp(boolean isLevelUp) {
+		this.isLevelUp = isLevelUp;
 	}
-	
-	public boolean getIsLevelUp(){
+
+	public boolean getIsLevelUp() {
 		return this.isLevelUp;
 	}
+
 	public int getBlockTypeNUM() {
 		return BLOCK_TYPE_NUM;
 	}
@@ -511,6 +538,38 @@ public class GameConfig {
 
 	public int getBeginImageX() {
 		return this.beginImageX;
+	}
+
+	public void setGameViewWidth(int gameViewWidth) {
+		this.gameViewWidth = gameViewWidth;
+	}
+
+	public int getGameViewWidth() {
+		return this.gameViewWidth;
+	}
+
+	public void setGameViewHeight(int gameViewHeight) {
+		this.gameViewHeight = gameViewHeight;
+	}
+
+	public int getGameViewHeight() {
+		return this.gameViewHeight;
+	}
+
+	public void setGameViewScaleWidth(float gameViewScaleWidth) {
+		this.gameViewScaleWidth = gameViewScaleWidth;
+	}
+
+	public float getGameViewScaleWidth() {
+		return this.gameViewScaleWidth;
+	}
+
+	public void setGameViewScaleHeight(float gameViewScaleHeight) {
+		this.gameViewScaleHeight = gameViewScaleHeight;
+	}
+
+	public float getGameViewScaleHeight() {
+		return this.gameViewScaleHeight;
 	}
 
 	public void setGridImageWidth(int gridImageWidth) {

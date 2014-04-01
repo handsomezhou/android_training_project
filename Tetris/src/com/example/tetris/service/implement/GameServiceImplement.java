@@ -2,6 +2,7 @@ package com.example.tetris.service.implement;
 
 import java.util.Random;
 
+import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.widget.Toast;
@@ -14,10 +15,11 @@ import com.example.tetris.object.Grid;
 import com.example.tetris.service.GameService;
 
 public class GameServiceImplement implements GameService, Cloneable {
-	
 
 	/* 定义一个Grid数组保存游戏区域的方块信息 */
 	private Grid[][] board = null;
+	/* 保存方块各个颜色资源图片 */
+	public Bitmap[] block_color;
 
 	/* 游戏配置对象 */
 	private GameConfig gameConfig = null;
@@ -40,6 +42,7 @@ public class GameServiceImplement implements GameService, Cloneable {
 		// TODO Auto-generated constructor stub
 		this.gameConfig = gameConfig;
 		this.board = init_board(this.gameConfig);
+		this.block_color = null;
 		this.curBlock = new Block(0, 0);
 		this.nextBlock = new Block(0, 0);
 		/*
@@ -278,6 +281,18 @@ public class GameServiceImplement implements GameService, Cloneable {
 	public Block getNextBlock() {
 		// TODO Auto-generated method stub
 		return this.nextBlock;
+	}
+
+	@Override
+	public Bitmap[] getBlockColor() {
+		// TODO Auto-generated method stub
+		return this.block_color;
+	}
+
+	@Override
+	public void setBlockColor(Bitmap[] blockColor) {
+		// TODO Auto-generated method stub
+		this.block_color = blockColor;
 	}
 
 	public void playBkgrdSound() {

@@ -33,12 +33,13 @@
         android:layout_weight="4"
         android:orientation="horizontal" >
 
+        <!-- android:maxWidth="@integer/game_view_width"
+        	android:maxHeight="@integer/game_view_height" -->
         <com.example.tetris.view.GameView
             android:id="@+id/game_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxWidth="480dp"
-        	android:maxHeight="626dp"
+            
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
             android:src="@drawable/tetris_board" />

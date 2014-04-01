@@ -80,13 +80,27 @@ public final class R {
         public static final int up_button=0x7f0b0008;
     }
     public static final class integer {
-        public static final int begin_image_x=0x7f070003;
-        public static final int begin_image_y=0x7f070002;
-        public static final int grid_image_height=0x7f070004;
+        /**  俄罗斯方块画图区域x方向边距 
+         */
+        public static final int begin_image_x=0x7f070005;
+        /**  俄罗斯方块显示区域的宽 
+         */
+        public static final int begin_image_y=0x7f070004;
+        /**  俄罗斯方块列数 
+         */
+        public static final int game_view_height=0x7f070002;
+        /**  俄罗斯方块显示区域的高 
+         */
+        public static final int game_view_width=0x7f070003;
+        /**  俄罗斯方块画图区域y方向边距 
+         */
+        public static final int grid_image_height=0x7f070006;
         /**  单个的格子高度 
          */
-        public static final int grid_image_width=0x7f070005;
+        public static final int grid_image_width=0x7f070007;
         public static final int tetris_hight=0x7f070000;
+        /**  俄罗斯方块行数 
+         */
         public static final int tetris_widht=0x7f070001;
     }
     public static final class layout {

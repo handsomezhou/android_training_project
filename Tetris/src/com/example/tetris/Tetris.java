@@ -34,6 +34,8 @@ public class Tetris extends Activity {
 	private static final int BLOCK_TYPE_NUM = 7;// 7种类型的方块
 	private int tetrisHeight;
 	private int tetrisWidth;
+	private int gameViewHeight;
+	private int gameViewWidth;
 	private int beginImageY;
 	private int beginImageX;
 	private int gridImageHeight;
@@ -114,6 +116,8 @@ public class Tetris extends Activity {
 		Resources resources = getResources();
 		tetrisHeight = resources.getInteger(R.integer.tetris_hight);
 		tetrisWidth = resources.getInteger(R.integer.tetris_widht);
+		gameViewHeight = resources.getInteger(R.integer.game_view_height);
+		gameViewWidth = resources.getInteger(R.integer.game_view_width);
 		beginImageY = resources.getInteger(R.integer.begin_image_y);
 		beginImageX = resources.getInteger(R.integer.begin_image_x);
 		gridImageHeight = resources.getInteger(R.integer.grid_image_height);
@@ -148,36 +152,27 @@ public class Tetris extends Activity {
 	public void initGame() {
 		init_grid_color();
 		gameConfig = new GameConfig(this.tetrisHeight, this.tetrisWidth,
-				this.beginImageY, this.beginImageX, this.gridImageHeight,
-				this.gridImageWidth, this);
+				this.gameViewHeight, this.gameViewWidth, this.beginImageY,
+				this.beginImageX, this.gridImageHeight, this.gridImageWidth,
+				this);
 		System.out.printf("y=%d, x=%d+++++++++++\n", gameConfig.getYSize(),
 				gameConfig.getXSize());
 		gameService = new GameServiceImplement(gameConfig);
 		gameView = (GameView) findViewById(R.id.game_view);
-		gameView.setGameService(gameService);
-		gameView.setGridColor(this.grid_color);
+		// gameView.setGridColor(this.grid_color);
+		gameView.setGameService(gameService, this.grid_color);
 
-		//根据GameView区域动态设置小方块大小
+		// 根据GameView区域动态设置小方块大小
 		int w = View.MeasureSpec.makeMeasureSpec(0,
 				View.MeasureSpec.UNSPECIFIED);
 		int h = View.MeasureSpec.makeMeasureSpec(0,
 				View.MeasureSpec.UNSPECIFIED);
 		gameView.measure(w, h);
-		int gridImageHeight = (gameView.getMeasuredHeight()-2*gameService.getGameConfig().getBeginImageY())
-				/ gameService.getGameConfig().getYSize();
-		int gridImageWidth = (gameView.getMeasuredWidth()-2*gameService.getGameConfig().getBeginImageY())
-				/ gameService.getGameConfig().getXSize();
 		gameService.getGameConfig().setGridImageHeight(gridImageHeight);
 		gameService.getGameConfig().setGridImageWidth(gridImageWidth);
-		
-//		int n=999;
-//		while(n>0){
-//		System.out.printf("h=%d,w=%d\n",gameView.getHeight(),gameView.getWidth() );
-//		n--;
-//		}
+
 		nextBlock = (NextBlockView) findViewById(R.id.next_block);
 		nextBlock.setGameService(gameService);
-		nextBlock.setGridColor(this.grid_color);
 
 		gameScore = (TextView) findViewById(R.id.game_score);
 		gameScore.setText(getString(R.string.score_prompt)

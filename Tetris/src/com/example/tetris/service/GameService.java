@@ -1,13 +1,16 @@
 package com.example.tetris.service;
 
+import android.graphics.Bitmap;
+
 import com.example.tetris.object.Block;
 import com.example.tetris.object.GameConfig;
 import com.example.tetris.object.Grid;
 
 public interface GameService {
 	public enum Direction {
-		DIR_LEFT, DIR_RIGHT, DIR_DOWN,DIR_UP,
+		DIR_LEFT, DIR_RIGHT, DIR_DOWN, DIR_UP,
 	}
+
 	// Block [][]board=null;
 	/*
 	 * 游戏开始
@@ -18,12 +21,12 @@ public interface GameService {
 	 * 游戏暂停
 	 */
 	public void pause();
-	
+
 	/*
 	 * 游戏继续
-	 * */
+	 */
 	public void resume_playing();
-	
+
 	/*
 	 * 游戏结束
 	 */
@@ -43,8 +46,8 @@ public interface GameService {
 	 * 方块右移
 	 */
 	public Block move_right_block();
-	
-	/*方块下移*/
+
+	/* 方块下移 */
 	public Block move_down_block();
 
 	/*
@@ -77,5 +80,15 @@ public interface GameService {
 	 * 获取下一个方块
 	 */
 	public Block getNextBlock();
+
+	/*
+	 * 设置方块各个颜色资源图片
+	 */
+	public void setBlockColor(Bitmap[] blockColor);
+
+	/*
+	 * 获取方块各个颜色资源图片
+	 */
+	public Bitmap[] getBlockColor();
 
 }

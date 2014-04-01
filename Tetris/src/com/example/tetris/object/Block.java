@@ -5,7 +5,7 @@ package com.example.tetris.object;
  * 
  * @author Administrator
  */
-public class Block implements Cloneable{
+public class Block implements Cloneable {
 	public static final int BLOCK_HEIGHT = 4;
 	public static final int BLOCK_WIDTH = 4;
 
@@ -26,14 +26,14 @@ public class Block implements Cloneable{
 		this.indexX = indexX;
 	}
 
-	public void setIndexY(int indexY){
-		this.indexY=indexY;
+	public void setIndexY(int indexY) {
+		this.indexY = indexY;
 	}
-	
-	public void setIndexX(int indexX){
-		this.indexX=indexX;
+
+	public void setIndexX(int indexX) {
+		this.indexX = indexX;
 	}
-	
+
 	public int getIndexY() {
 		return this.indexY;
 	}
