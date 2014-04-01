@@ -54,12 +54,12 @@ public class GameView extends ImageView implements OnGestureListener,
 		int y_move_steps = 0;
 		Direction direction = getDirection(x1, y1, x2, y2);
 		x_move_steps = (int) (Math.abs(distance_x) / gameService
-				.getGameConfig().getImageWidth());
+				.getGameConfig().getGridImageWidth());
 		y_move_steps = (int) (Math.abs(distance_y) / gameService
-				.getGameConfig().getImageHeight());
+				.getGameConfig().getGridImageHeight());
 		System.out.printf("============(%f,%f)---(%d,%d)\n", distance_y,
-				distance_x, gameService.getGameConfig().getImageHeight(),
-				gameService.getGameConfig().getImageWidth());
+				distance_x, gameService.getGameConfig().getGridImageHeight(),
+				gameService.getGameConfig().getGridImageWidth());
 		switch (direction) {
 		case DIR_LEFT:
 			while (0 < x_move_steps) {
@@ -250,13 +250,13 @@ public class GameView extends ImageView implements OnGestureListener,
 												.getBeginImageX()
 										+ ((curBlock.getIndexX() - 1) + j)
 										* gameService.getGameConfig()
-												.getImageWidth(),
+												.getGridImageWidth(),
 								this.getTop()
 										+ gameService.getGameConfig()
 												.getBeginImageY()
 										+ ((curBlock.getIndexY() - 1) + i)
 										* gameService.getGameConfig()
-												.getImageHeight(), null);
+												.getGridImageHeight(), null);
 				}
 			}
 
@@ -274,13 +274,13 @@ public class GameView extends ImageView implements OnGestureListener,
 												.getBeginImageX()
 										+ board[i][j].getIndexX()
 										* gameService.getGameConfig()
-												.getImageWidth(),
+												.getGridImageWidth(),
 								this.getTop()
 										+ gameService.getGameConfig()
 												.getBeginImageY()
 										+ board[i][j].getIndexY()
 										* gameService.getGameConfig()
-												.getImageHeight(), null);
+												.getGridImageHeight(), null);
 					}
 				}
 

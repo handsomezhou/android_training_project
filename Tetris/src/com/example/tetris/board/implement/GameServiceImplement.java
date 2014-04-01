@@ -1,8 +1,6 @@
 package com.example.tetris.board.implement;
 
 import android.widget.Toast;
-
-import com.example.tetris.Tetris;
 import com.example.tetris.board.GameService;
 import com.example.tetris.object.Block;
 import com.example.tetris.object.GameConfig;
@@ -23,12 +21,11 @@ public class GameServiceImplement implements GameService {
 	};
 
 	private Grid[][] init_board(GameConfig gameConfig) {
-		Grid[][] board = new Grid[gameConfig.getYSize()][gameConfig
-				.getXSize()];
+		Grid[][] board = new Grid[gameConfig.getYSize()][gameConfig.getXSize()];
 		for (int y = 0; y < gameConfig.getYSize(); y++) {
 			for (int x = 0; x < gameConfig.getXSize(); x++) {
 				Grid block = new Grid(y, x);
-				
+
 				board[y][x] = block;
 			}
 		}
@@ -98,6 +95,6 @@ public class GameServiceImplement implements GameService {
 
 	@Override
 	public GameConfig getGameConfig() {
-			return this.gameConfig;
+		return this.gameConfig;
 	}
 }

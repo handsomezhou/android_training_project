@@ -65,24 +65,27 @@ public final class R {
         public static final int up_sel=0x7f020024;
     }
     public static final class id {
-        public static final int action_settings=0x7f0b000b;
-        public static final int back_button=0x7f0b0000;
-        public static final int down_button=0x7f0b0009;
-        public static final int game_level=0x7f0b0004;
-        public static final int game_score=0x7f0b0003;
-        public static final int game_view=0x7f0b0001;
-        public static final int left_button=0x7f0b0008;
-        public static final int level_increases_button=0x7f0b0005;
-        public static final int next_block=0x7f0b0002;
-        public static final int pause_continue_button=0x7f0b0006;
-        public static final int right_button=0x7f0b000a;
-        public static final int up_button=0x7f0b0007;
+        public static final int action_settings=0x7f0b000c;
+        public static final int back=0x7f0b0000;
+        public static final int back_button=0x7f0b0001;
+        public static final int down_button=0x7f0b000a;
+        public static final int game_level=0x7f0b0005;
+        public static final int game_score=0x7f0b0004;
+        public static final int game_view=0x7f0b0002;
+        public static final int left_button=0x7f0b0009;
+        public static final int level_increases_button=0x7f0b0006;
+        public static final int next_block=0x7f0b0003;
+        public static final int pause_continue_button=0x7f0b0007;
+        public static final int right_button=0x7f0b000b;
+        public static final int up_button=0x7f0b0008;
     }
     public static final class integer {
         public static final int begin_image_x=0x7f070003;
         public static final int begin_image_y=0x7f070002;
-        public static final int image_height=0x7f070004;
-        public static final int image_width=0x7f070005;
+        public static final int grid_image_height=0x7f070004;
+        /**  单个的格子高度 
+         */
+        public static final int grid_image_width=0x7f070005;
         public static final int tetris_hight=0x7f070000;
         public static final int tetris_widht=0x7f070001;
     }

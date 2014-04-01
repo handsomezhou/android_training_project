@@ -296,8 +296,8 @@ public class GameConfig {
 	private int beginImageX;
 	private int beginImageY;
 	// Block 小方块图片的宽和高
-	private int imageWidth;
-	private int imageHeight;
+	private int gridImageWidth;
+	private int gridImageHeight;
 
 	// CurBlock 第一次出现的位置
 	private int curBlockInitY;
@@ -305,8 +305,8 @@ public class GameConfig {
 
 	private Context context;
 
-	public GameConfig(int beginImageY, int beginImageX, int imageHeight,
-			int imageWidth, Context context) {
+	public GameConfig(int beginImageY, int beginImageX, int gridImageHeight,
+			int gridImageWidth, Context context) {
 		this.ySize = TETRIS_HEIGHT;
 		this.xSize = TETRIS_WIDTH;
 		this.gameLevel = 1;
@@ -314,8 +314,8 @@ public class GameConfig {
 		this.isLevelUp = false;
 		this.beginImageY = beginImageY;
 		this.beginImageX = beginImageX;
-		this.imageHeight = imageHeight;
-		this.imageWidth = imageWidth;
+		this.gridImageHeight = gridImageHeight;
+		this.gridImageWidth = gridImageWidth;
 		this.curBlockInitY = CUR_BLOCK_INIT_Y;
 		this.curBlockInitX = (this.xSize % 2 == 0) ? (((this.xSize - BLOCK_WIDTH) / 2 + 1))
 				: (((this.xSize - BLOCK_WIDTH) / 2 + 2));// ((this.xSize -
@@ -335,14 +335,14 @@ public class GameConfig {
 	 *            最左上角显示的小方块,相对于方块显示区域的Y偏移量
 	 * @param beginImageX
 	 *            最左上角显示的小方块,相对于方块显示区域的X偏移量
-	 * @param imageHeight
+	 * @param gridImageHeight
 	 *            小方块的高
-	 * @param imageWidth
+	 * @param gridImageWidth
 	 *            小方块的宽
 	 * @param context
 	 */
 	public GameConfig(int tetrisHeight, int tetrisWidth, int beginImageY,
-			int beginImageX, int imageHeight, int imageWidth, Context context) {
+			int beginImageX, int gridImageHeight, int gridImageWidth, Context context) {
 		this.gameStatus = GameStatus.STATUS_INIT;
 		this.gameLevel = 1;
 		this.gameScore = 0;
@@ -351,8 +351,8 @@ public class GameConfig {
 		this.xSize = tetrisWidth;
 		this.beginImageY = beginImageY;
 		this.beginImageX = beginImageX;
-		this.imageHeight = imageHeight;
-		this.imageWidth = imageWidth;
+		this.gridImageHeight = gridImageHeight;
+		this.gridImageWidth = gridImageWidth;
 		this.curBlockInitY = CUR_BLOCK_INIT_Y;
 		this.curBlockInitX = (this.xSize % 2 == 0) ? (((this.xSize - BLOCK_WIDTH) / 2 + 1))
 				: (((this.xSize - BLOCK_WIDTH) / 2 + 2));
@@ -513,20 +513,20 @@ public class GameConfig {
 		return this.beginImageX;
 	}
 
-	public void setImageWidth(int imageWidth) {
-		this.imageWidth = imageWidth;
+	public void setGridImageWidth(int gridImageWidth) {
+		this.gridImageWidth = gridImageWidth;
 	}
 
-	public int getImageWidth() {
-		return this.imageWidth;
+	public int getGridImageWidth() {
+		return this.gridImageWidth;
 	}
 
-	public void setImageHeight(int imageHeight) {
-		this.imageHeight = imageHeight;
+	public void setGridImageHeight(int gridImageHeight) {
+		this.gridImageHeight = gridImageHeight;
 	}
 
-	public int getImageHeight() {
-		return this.imageHeight;
+	public int getGridImageHeight() {
+		return this.gridImageHeight;
 	}
 
 	public void setCurBlockInitY(int curBlockInitY) {

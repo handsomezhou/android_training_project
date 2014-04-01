@@ -3,9 +3,9 @@
 
     <integer name="tetris_hight">17</integer>
     <integer name="tetris_widht">13</integer>
-    <integer name="begin_image_y">16</integer>
-    <integer name="begin_image_x">12</integer>
-    <integer name="image_height">36</integer>
-    <integer name="image_width">36</integer>
+    <integer name="begin_image_y">6</integer>
+    <integer name="begin_image_x">6</integer>
+    <integer name="grid_image_height">36</integer>	<!-- 单个的格子高度 -->
+    <integer name="grid_image_width">36</integer>	<!-- 单个的格子宽度 -->
 
 </resources>

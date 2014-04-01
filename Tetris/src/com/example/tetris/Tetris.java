@@ -36,8 +36,8 @@ public class Tetris extends Activity {
 	private int tetrisWidth;
 	private int beginImageY;
 	private int beginImageX;
-	private int imageHeight;
-	private int imageWidth;
+	private int gridImageHeight;
+	private int gridImageWidth;
 	/* 游戏配置 */
 	private GameConfig gameConfig;
 	/* 游戏业务逻辑接口 */
@@ -116,8 +116,8 @@ public class Tetris extends Activity {
 		tetrisWidth = resources.getInteger(R.integer.tetris_widht);
 		beginImageY = resources.getInteger(R.integer.begin_image_y);
 		beginImageX = resources.getInteger(R.integer.begin_image_x);
-		imageHeight = resources.getInteger(R.integer.image_height);
-		imageWidth = resources.getInteger(R.integer.image_width);
+		gridImageHeight = resources.getInteger(R.integer.grid_image_height);
+		gridImageWidth = resources.getInteger(R.integer.grid_image_width);
 
 		initGame();
 		startGame();
@@ -148,8 +148,8 @@ public class Tetris extends Activity {
 	public void initGame() {
 		init_grid_color();
 		gameConfig = new GameConfig(this.tetrisHeight, this.tetrisWidth,
-				this.beginImageY, this.beginImageX, this.imageHeight,
-				this.imageWidth, this);
+				this.beginImageY, this.beginImageX, this.gridImageHeight,
+				this.gridImageWidth, this);
 		System.out.printf("y=%d, x=%d+++++++++++\n", gameConfig.getYSize(),
 				gameConfig.getXSize());
 		gameService = new GameServiceImplement(gameConfig);
@@ -163,12 +163,12 @@ public class Tetris extends Activity {
 		int h = View.MeasureSpec.makeMeasureSpec(0,
 				View.MeasureSpec.UNSPECIFIED);
 		gameView.measure(w, h);
-		int imageHeight = (gameView.getMeasuredHeight()-2*gameService.getGameConfig().getBeginImageY())
+		int gridImageHeight = (gameView.getMeasuredHeight()-2*gameService.getGameConfig().getBeginImageY())
 				/ gameService.getGameConfig().getYSize();
-		int imageWidth = (gameView.getMeasuredWidth()-2*gameService.getGameConfig().getBeginImageY())
+		int gridImageWidth = (gameView.getMeasuredWidth()-2*gameService.getGameConfig().getBeginImageY())
 				/ gameService.getGameConfig().getXSize();
-		gameService.getGameConfig().setImageHeight(imageHeight);
-		gameService.getGameConfig().setImageWidth(imageWidth);
+		gameService.getGameConfig().setGridImageHeight(gridImageHeight);
+		gameService.getGameConfig().setGridImageWidth(gridImageWidth);
 		
 //		int n=999;
 //		while(n>0){
