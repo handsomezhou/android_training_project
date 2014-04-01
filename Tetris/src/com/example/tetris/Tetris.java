@@ -57,8 +57,6 @@ public class Tetris extends Activity {
 	// 等级显示区域
 	private TextView gameLevel;
 
-	// 等级升级设置按钮
-	private Button levelIncreasesButton;
 	// 暂停继续按钮
 	private Button pauseContinueButton;
 	// 上下左右按钮
@@ -180,7 +178,6 @@ public class Tetris extends Activity {
 		gameLevel = (TextView) findViewById(R.id.game_level);
 		gameLevel.setText(getString(R.string.level_prompt)
 				+ String.valueOf(gameConfig.getGameLevel()));
-		levelIncreasesButton = (Button) findViewById(R.id.level_increases_button);
 		pauseContinueButton = (Button) findViewById(R.id.pause_continue_button);
 		upButton = (Button) findViewById(R.id.up_button);
 		leftButton = (Button) findViewById(R.id.left_button);
@@ -205,17 +202,6 @@ public class Tetris extends Activity {
 				}
 
 				return true;
-			}
-		});
-
-		// 为等级升级设置按钮的单击事件绑定监听器
-		levelIncreasesButton.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				// 建议取消级别设置功能
-				gameService.set_level(1);
 			}
 		});
 
