@@ -396,9 +396,9 @@ public class GameConfig {
 		 * T_U16_MAX , 5}
 		 */
 		configInfo[0] = new ConfigInfo(1, 0, 1000);
-		configInfo[1] = new ConfigInfo(2, 200 / 10, 600);
-		configInfo[2] = new ConfigInfo(3, 500 / 10, 400);
-		configInfo[3] = new ConfigInfo(4, 1000 / 10, 250);
+		configInfo[1] = new ConfigInfo(2, 200, 600);
+		configInfo[2] = new ConfigInfo(3, 500, 400);
+		configInfo[3] = new ConfigInfo(4, 1000, 250);
 		configInfo[4] = new ConfigInfo(5, 2000, 150);
 		configInfo[5] = new ConfigInfo(6, 4000, 100);
 		configInfo[6] = new ConfigInfo(7, 8000, 50);
