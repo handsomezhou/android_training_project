@@ -2,8 +2,10 @@ package com.example.tetris.object;
 
 /**
  * Description:俄罗斯方块中的方块对象
- * 
- * @author Administrator
+ 
+ * @author ZJQ
+ * @Date: 2014-03-7
+ * @version 1.0
  */
 public class Block implements Cloneable {
 	public static final int BLOCK_HEIGHT = 4;

@@ -188,17 +188,17 @@ public class GameView extends ImageView implements OnGestureListener,
 			loadScaleGridColor();
 			isLoadScaleGrid = false;
 		}
-		int n = 999;
-		while (n > 0) {
-			System.out.printf("h=%d,w=%d  ========%d,%d", this.getHeight(),
-					this.getWidth(), gameService.getGameConfig()
-							.getGridImageHeight(), gameService.getGameConfig()
-							.getGridImageWidth());
-			System.out.printf("hhh=%f,wwww=%f\n", gameService.getGameConfig()
-					.getGameViewScaleHeight(), gameService.getGameConfig()
-					.getGameViewScaleWidth());
-			n--;
-		}
+//		int n = 999;
+//		while (n > 0) {
+//			System.out.printf("h=%d,w=%d  ========%d,%d", this.getHeight(),
+//					this.getWidth(), gameService.getGameConfig()
+//							.getGridImageHeight(), gameService.getGameConfig()
+//							.getGridImageWidth());
+//			System.out.printf("hhh=%f,wwww=%f\n", gameService.getGameConfig()
+//					.getGameViewScaleHeight(), gameService.getGameConfig()
+//					.getGameViewScaleWidth());
+//			n--;
+//		}
 		switch (gameService.getGameConfig().getGameStatus()) {
 		case STATUS_PLAYING:
 			showGameView(canvas);
