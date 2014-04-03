@@ -5,7 +5,7 @@ import java.util.Random;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.widget.Toast;
+//import android.widget.Toast;
 
 import com.example.tetris.R;
 import com.example.tetris.object.Block;
@@ -147,8 +147,8 @@ public class GameServiceImplement implements GameService, Cloneable {
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-		Toast.makeText(gameConfig.getContext(), "I'm pauseContinueButton!",
-				Toast.LENGTH_SHORT).show();
+//		Toast.makeText(gameConfig.getContext(), "I'm pauseContinueButton!",
+//				Toast.LENGTH_SHORT).show();
 		gameConfig.setGameStatus(GameStatus.STATUS_PAUSE);
 		soundPool.play(gamePauseSound, 1, 1, 0, 0, 1);
 	}
@@ -170,15 +170,15 @@ public class GameServiceImplement implements GameService, Cloneable {
 	@Override
 	public void set_level(int level) {
 		// TODO Auto-generated method stub
-		Toast.makeText(gameConfig.getContext(), "I'm levelIncreasesButton!",
-				Toast.LENGTH_SHORT).show();
+//		Toast.makeText(gameConfig.getContext(), "I'm levelIncreasesButton!",
+//				Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
 	public Block move_left_block() {
 		// TODO Auto-generated method stub
-		Toast.makeText(gameConfig.getContext(), "I'm leftButton!",
-				Toast.LENGTH_SHORT).show();
+//		Toast.makeText(gameConfig.getContext(), "I'm leftButton!",
+//				Toast.LENGTH_SHORT).show();
 
 		return moveBlock(Direction.DIR_LEFT);
 	}
@@ -186,8 +186,8 @@ public class GameServiceImplement implements GameService, Cloneable {
 	@Override
 	public Block move_right_block() {
 		// TODO Auto-generated method stub
-		Toast.makeText(gameConfig.getContext(), "I'm rightButton...!",
-				Toast.LENGTH_SHORT).show();
+//		Toast.makeText(gameConfig.getContext(), "I'm rightButton...!",
+//				Toast.LENGTH_SHORT).show();
 		System.out.printf("I'm move_right_block()\n");
 		return moveBlock(Direction.DIR_RIGHT);
 	}
@@ -223,8 +223,8 @@ public class GameServiceImplement implements GameService, Cloneable {
 	@Override
 	public Block fast_down_block() {
 		// TODO Auto-generated method stub
-		Toast.makeText(gameConfig.getContext(), "I'm downButton!",
-				Toast.LENGTH_SHORT).show();
+//		Toast.makeText(gameConfig.getContext(), "I'm downButton!",
+//				Toast.LENGTH_SHORT).show();
 		Block block = null;
 		do {
 			block = move_down_block();
@@ -238,8 +238,8 @@ public class GameServiceImplement implements GameService, Cloneable {
 	public Block rotate_block() {
 		// TODO Auto-generated method stub
 
-		Toast.makeText(gameConfig.getContext(), "I'm upButton!",
-				Toast.LENGTH_SHORT).show();
+//		Toast.makeText(gameConfig.getContext(), "I'm upButton!",
+//				Toast.LENGTH_SHORT).show();
 		Block block = null;
 		block = getNextRotateBlock();
 		if (null == block) {

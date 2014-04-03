@@ -18,7 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.ImageView;
-import android.widget.Toast;
+//import android.widget.Toast;
 
 public class GameView extends ImageView implements OnGestureListener,
 		OnTouchListener {
@@ -76,24 +76,22 @@ public class GameView extends ImageView implements OnGestureListener,
 				x_move_steps--;
 				if (null == gameService.move_left_block()) {
 					x_move_steps = 0;
-					Toast.makeText(getContext(),
-							"I'm onScroll===DIR_LEFT  null!",
-							Toast.LENGTH_SHORT).show();
+//					Toast.makeText(getContext(),
+//							"I'm onScroll===DIR_LEFT  null!",
+//							Toast.LENGTH_SHORT).show();
 				}
 				this.invalidate();
 			}
-			// Toast.makeText(getContext(), "I'm onScroll===DIR_LEFT!",
-			// Toast.LENGTH_SHORT)
-			// .show();
+			
 			break;
 		case DIR_RIGHT:
 			while (0 < x_move_steps) {
 				x_move_steps--;
 				if (null == gameService.move_right_block()) {
 					x_move_steps = 0;
-					Toast.makeText(getContext(),
-							"I'm onScroll===DIR_RIGHT  null!",
-							Toast.LENGTH_SHORT).show();
+//					Toast.makeText(getContext(),
+//							"I'm onScroll===DIR_RIGHT  null!",
+//							Toast.LENGTH_SHORT).show();
 				}
 				this.invalidate();
 			}
@@ -106,9 +104,9 @@ public class GameView extends ImageView implements OnGestureListener,
 				y_move_steps--;
 				if (null == gameService.move_down_block()) {
 					y_move_steps = 0;
-					Toast.makeText(getContext(),
-							"I'm onScroll===DIR_DOWN  null!",
-							Toast.LENGTH_SHORT).show();
+//					Toast.makeText(getContext(),
+//							"I'm onScroll===DIR_DOWN  null!",
+//							Toast.LENGTH_SHORT).show();
 				}
 				this.invalidate();
 			}
@@ -117,8 +115,8 @@ public class GameView extends ImageView implements OnGestureListener,
 			// .show();
 			break;
 		default:
-			Toast.makeText(getContext(), "I'm onScroll===DIR_UP!",
-					Toast.LENGTH_SHORT).show();
+//			Toast.makeText(getContext(), "I'm onScroll===DIR_UP!",
+//					Toast.LENGTH_SHORT).show();
 			break;
 		}
 		return true;
@@ -135,8 +133,8 @@ public class GameView extends ImageView implements OnGestureListener,
 	@Override
 	public void onLongPress(MotionEvent e) {
 		// TODO Auto-generated method stub
-		Toast.makeText(getContext(), "I'm onLongPress!", Toast.LENGTH_SHORT)
-				.show();
+//		Toast.makeText(getContext(), "I'm onLongPress!", Toast.LENGTH_SHORT)
+//				.show();
 	}
 
 	@Override
@@ -156,8 +154,8 @@ public class GameView extends ImageView implements OnGestureListener,
 	@Override
 	public boolean onSingleTapUp(MotionEvent e) {
 		// TODO Auto-generated method stub
-		Toast.makeText(getContext(), "I'm onSingleTapUp!", Toast.LENGTH_SHORT)
-				.show();
+//		Toast.makeText(getContext(), "I'm onSingleTapUp!", Toast.LENGTH_SHORT)
+//				.show();
 		gameService.rotate_block();
 		this.invalidate();
 		return true;

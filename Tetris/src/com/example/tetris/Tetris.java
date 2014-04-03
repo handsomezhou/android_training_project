@@ -31,7 +31,9 @@ import com.example.tetris.view.NextBlockView;
  */
 public class Tetris extends Activity {
 	private static final int HANDLE_MSG_BLOCK_DROP = 0x01;
+	private static final int HANDLE_MSG_DISPLAY_REFRESH=0x02;
 	private static final int BLOCK_TYPE_NUM = 7;// 7种类型的方块
+	private static final int TIME_DISPLAY_REFRESH_MSECOND=40;//界面刷新时间毫秒
 	private int tetrisHeight;
 	private int tetrisWidth;
 	private int gameViewHeight;
@@ -46,6 +48,8 @@ public class Tetris extends Activity {
 	private GameService gameService;
 	// /* 方块下落定时器 */
 	private Timer blockDropTimer = new Timer();
+	//俄罗斯方块显示刷新定时器
+	private Timer displayRefreshTimer=new Timer(); 
 	// 游戏界面
 	private GameView gameView;
 
@@ -99,6 +103,10 @@ public class Tetris extends Activity {
 				default:
 					break;
 				}
+				break;
+			case HANDLE_MSG_DISPLAY_REFRESH:
+				gameView.invalidate();
+				nextBlock.invalidate();
 				break;
 			default:
 				break;
@@ -332,6 +340,7 @@ public class Tetris extends Activity {
 	/* 开始游戏 */
 	public void startGame() {
 		stopTimer(blockDropTimer);
+		stopTimer(displayRefreshTimer);
 		gameService.start();
 		this.blockDropTimer = new Timer();
 		this.blockDropTimer.schedule(new TimerTask() {
@@ -342,18 +351,30 @@ public class Tetris extends Activity {
 				hander.sendEmptyMessage(HANDLE_MSG_BLOCK_DROP);
 			}
 		}, 0, gameService.getGameConfig().getMsecond());
+		
+		this.displayRefreshTimer=new Timer();
+		this.displayRefreshTimer.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				hander.sendEmptyMessage(HANDLE_MSG_DISPLAY_REFRESH);
+			}
+		}, 0, TIME_DISPLAY_REFRESH_MSECOND);
 
 	}
 
 	/* 暂停游戏 */
 	public void pauseGame() {
 		stopTimer(blockDropTimer);
+		stopTimer(displayRefreshTimer);
 		gameService.pause();
 	}
 
 	/* 继续游戏 */
 	public void continueGame() {
 		stopTimer(blockDropTimer);
+		stopTimer(displayRefreshTimer);
 		gameService.resume_playing();
 		this.blockDropTimer = new Timer();
 		this.blockDropTimer.schedule(new TimerTask() {
@@ -364,11 +385,22 @@ public class Tetris extends Activity {
 				hander.sendEmptyMessage(HANDLE_MSG_BLOCK_DROP);
 			}
 		}, 0, gameService.getGameConfig().getMsecond());
+		
+		this.displayRefreshTimer=new Timer();
+		this.displayRefreshTimer.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				hander.sendEmptyMessage(HANDLE_MSG_DISPLAY_REFRESH);
+			}
+		}, 0, TIME_DISPLAY_REFRESH_MSECOND);
 	}
 
 	/* 结束游戏 */
 	public void overGame() {
 		stopTimer(blockDropTimer);
+		stopTimer(displayRefreshTimer);
 		// gameService.over();
 		pauseContinueButton.setBackgroundResource(R.drawable.continue_normal);
 		pauseContinueButton.invalidate();

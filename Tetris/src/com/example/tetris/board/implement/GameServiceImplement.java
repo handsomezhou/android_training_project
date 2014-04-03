@@ -1,6 +1,6 @@
 package com.example.tetris.board.implement;
 
-import android.widget.Toast;
+//import android.widget.Toast;
 import com.example.tetris.board.GameService;
 import com.example.tetris.object.Block;
 import com.example.tetris.object.GameConfig;
@@ -41,23 +41,23 @@ public class GameServiceImplement implements GameService {
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-		Toast.makeText(gameConfig.getContext(), "I'm pauseContinueButton!",
-				Toast.LENGTH_SHORT).show();
+//		Toast.makeText(gameConfig.getContext(), "I'm pauseContinueButton!",
+//				Toast.LENGTH_SHORT).show();
 
 	}
 
 	@Override
 	public void set_level(int level) {
 		// TODO Auto-generated method stub
-		Toast.makeText(gameConfig.getContext(), "I'm levelIncreasesButton!",
-				Toast.LENGTH_SHORT).show();
+//		Toast.makeText(gameConfig.getContext(), "I'm levelIncreasesButton!",
+//				Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
 	public Block move_left_block() {
 		// TODO Auto-generated method stub
-		Toast.makeText(gameConfig.getContext(), "I'm leftButton!",
-				Toast.LENGTH_SHORT).show();
+//		Toast.makeText(gameConfig.getContext(), "I'm leftButton!",
+//				Toast.LENGTH_SHORT).show();
 
 		return null;
 	}
@@ -65,16 +65,16 @@ public class GameServiceImplement implements GameService {
 	@Override
 	public Block move_right_block() {
 		// TODO Auto-generated method stub
-		Toast.makeText(gameConfig.getContext(), "I'm rightButton!",
-				Toast.LENGTH_SHORT).show();
+//		Toast.makeText(gameConfig.getContext(), "I'm rightButton!",
+//				Toast.LENGTH_SHORT).show();
 		return null;
 	}
 
 	@Override
 	public Block fast_down_block() {
 		// TODO Auto-generated method stub
-		Toast.makeText(gameConfig.getContext(), "I'm downButton!",
-				Toast.LENGTH_SHORT).show();
+//		Toast.makeText(gameConfig.getContext(), "I'm downButton!",
+//				Toast.LENGTH_SHORT).show();
 		return null;
 	}
 
@@ -82,8 +82,8 @@ public class GameServiceImplement implements GameService {
 	public Block rotate_block() {
 		// TODO Auto-generated method stub
 
-		Toast.makeText(gameConfig.getContext(), "I'm upButton!",
-				Toast.LENGTH_SHORT).show();
+//		Toast.makeText(gameConfig.getContext(), "I'm upButton!",
+//				Toast.LENGTH_SHORT).show();
 		return null;
 	}
 
