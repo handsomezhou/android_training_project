@@ -348,7 +348,7 @@ public class GameServiceImplement implements GameService, Cloneable {
 			if (true == canMoveBlock(curBlock, curBlock.getIndexY() + 1,
 					curBlock.getIndexX())) {
 				curBlock.setIndexY(curBlock.getIndexY() + 1);
-				System.out.printf("DIR_DOWN====y==%d\n", curBlock.getIndexY());
+		//		System.out.printf("DIR_DOWN====y==%d\n", curBlock.getIndexY());
 				return curBlock;
 			}
 			break;

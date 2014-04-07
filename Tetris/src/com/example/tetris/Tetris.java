@@ -96,6 +96,7 @@ public class Tetris extends Activity {
 					}
 					gameView.invalidate();
 					nextBlock.invalidate();
+					//System.out.printf("________HANDLE_MSG_BLOCK_DROP_____________________%s\n", new Exception().getStackTrace()[0].getMethodName() );
 					break;
 				case STATUS_OVER:
 					overGame();
@@ -107,6 +108,7 @@ public class Tetris extends Activity {
 			case HANDLE_MSG_DISPLAY_REFRESH:
 				gameView.invalidate();
 				nextBlock.invalidate();
+				//System.out.printf("__________HANDLE_MSG_DISPLAY_REFRESH___________________%s\n", new Exception().getStackTrace()[0].getMethodName() );
 				break;
 			default:
 				break;
@@ -131,7 +133,68 @@ public class Tetris extends Activity {
 
 		initGame();
 		startGame();
+		
+		System.out.printf("_____________________________%s\n", new Exception().getStackTrace()[0].getMethodName() );
 	}
+
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		System.out.printf("_____________________________%s\n", new Exception().getStackTrace()[0].getMethodName() );
+
+	}
+
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		System.out.printf("_____________________________%s\n", new Exception().getStackTrace()[0].getMethodName() );
+		stopTimer(blockDropTimer);
+		stopTimer(displayRefreshTimer);
+
+	}
+
+
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+		super.onRestart();
+		System.out.printf("_____________________________%s\n", new Exception().getStackTrace()[0].getMethodName() );
+
+	}
+
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		System.out.printf("_____________________________%s\n", new Exception().getStackTrace()[0].getMethodName() );
+		blockDropTimer=startTimer(blockDropTimer, HANDLE_MSG_BLOCK_DROP, gameService.getGameConfig().getMsecond());
+		displayRefreshTimer=startTimer(displayRefreshTimer, HANDLE_MSG_DISPLAY_REFRESH, TIME_DISPLAY_REFRESH_MSECOND);
+
+	}
+
+
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		System.out.printf("_____________________________%s\n", new Exception().getStackTrace()[0].getMethodName() );
+
+	}
+
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		System.out.printf("_____________________________%s\n", new Exception().getStackTrace()[0].getMethodName() );
+
+	}
+
 
 	/*
 	 * 初始化俄罗斯方块小方块颜色
@@ -339,28 +402,11 @@ public class Tetris extends Activity {
 
 	/* 开始游戏 */
 	public void startGame() {
-		stopTimer(blockDropTimer);
-		stopTimer(displayRefreshTimer);
+//		stopTimer(blockDropTimer);
+//		stopTimer(displayRefreshTimer);
 		gameService.start();
-		this.blockDropTimer = new Timer();
-		this.blockDropTimer.schedule(new TimerTask() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				hander.sendEmptyMessage(HANDLE_MSG_BLOCK_DROP);
-			}
-		}, 0, gameService.getGameConfig().getMsecond());
-		
-		this.displayRefreshTimer=new Timer();
-		this.displayRefreshTimer.schedule(new TimerTask() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				hander.sendEmptyMessage(HANDLE_MSG_DISPLAY_REFRESH);
-			}
-		}, 0, TIME_DISPLAY_REFRESH_MSECOND);
+		blockDropTimer=startTimer(blockDropTimer, HANDLE_MSG_BLOCK_DROP, gameService.getGameConfig().getMsecond());
+		displayRefreshTimer=startTimer(displayRefreshTimer, HANDLE_MSG_DISPLAY_REFRESH, TIME_DISPLAY_REFRESH_MSECOND);
 
 	}
 
@@ -373,28 +419,11 @@ public class Tetris extends Activity {
 
 	/* 继续游戏 */
 	public void continueGame() {
-		stopTimer(blockDropTimer);
-		stopTimer(displayRefreshTimer);
+//		stopTimer(blockDropTimer);
+//		stopTimer(displayRefreshTimer);
 		gameService.resume_playing();
-		this.blockDropTimer = new Timer();
-		this.blockDropTimer.schedule(new TimerTask() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				hander.sendEmptyMessage(HANDLE_MSG_BLOCK_DROP);
-			}
-		}, 0, gameService.getGameConfig().getMsecond());
-		
-		this.displayRefreshTimer=new Timer();
-		this.displayRefreshTimer.schedule(new TimerTask() {
-
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				hander.sendEmptyMessage(HANDLE_MSG_DISPLAY_REFRESH);
-			}
-		}, 0, TIME_DISPLAY_REFRESH_MSECOND);
+		blockDropTimer=startTimer(blockDropTimer, HANDLE_MSG_BLOCK_DROP, gameService.getGameConfig().getMsecond());
+		displayRefreshTimer=startTimer(displayRefreshTimer, HANDLE_MSG_DISPLAY_REFRESH, TIME_DISPLAY_REFRESH_MSECOND);
 	}
 
 	/* 结束游戏 */
@@ -413,5 +442,20 @@ public class Tetris extends Activity {
 		}
 		timer.cancel();
 		timer = null;
+	}
+	
+	private Timer startTimer(Timer timer, final int  handle_msg,long period ){
+		stopTimer(timer);
+		timer=new Timer();
+		timer.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				hander.sendEmptyMessage(handle_msg);
+			}
+		}, 0, period);
+	
+		return timer;
 	}
 }

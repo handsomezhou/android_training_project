@@ -67,9 +67,9 @@ public class GameView extends ImageView implements OnGestureListener,
 		y_move_steps = (int) (Math.abs(distance_y) / (gameService
 				.getGameConfig().getGridImageHeight() * gameService
 				.getGameConfig().getGameViewScaleHeight()));
-		System.out.printf("============(%f,%f)---(%d,%d)\n", distance_y,
+		System.out.printf("============(%f,%f)---(%d,%d)======(x_steps,y_steps)=(%d,%d)\n", distance_y,
 				distance_x, gameService.getGameConfig().getGridImageHeight(),
-				gameService.getGameConfig().getGridImageWidth());
+				gameService.getGameConfig().getGridImageWidth(),x_move_steps,y_move_steps);
 		switch (direction) {
 		case DIR_LEFT:
 			while (0 < x_move_steps) {
@@ -141,7 +141,8 @@ public class GameView extends ImageView implements OnGestureListener,
 	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
 			float distanceY) {
 		// TODO Auto-generated method stub
-
+		System.out.printf("____________________________%s____________________________\n", new Exception().getStackTrace()[0].getMethodName() );
+		
 		return true;
 	}
 
@@ -215,7 +216,7 @@ public class GameView extends ImageView implements OnGestureListener,
 		}
 
 		this.invalidate();
-		System.out.printf("on Draw++++++++++++++++++++++++++++");
+	//	System.out.printf("on Draw++++++++++++++++++++++++++++");
 	}
 
 	public void setGameService(GameService gameService, Bitmap[] bitbmp) {
@@ -291,8 +292,8 @@ public class GameView extends ImageView implements OnGestureListener,
 		Grid[][] board = gameService.getGrid();
 
 		if (null != curBlock) {
-			System.out.printf("\ncurBlock======onDraw (y,x)===(%d,%d)\n",
-					curBlock.getIndexY(), curBlock.getIndexX());
+//			System.out.printf("\ncurBlock======onDraw (y,x)===(%d,%d)\n",
+//					curBlock.getIndexY(), curBlock.getIndexX());
 			for (int i = 0; i < gameService.getGameConfig().getBlockHeight(); i++) {
 				for (int j = 0; j < gameService.getGameConfig().getBlockWidth(); j++) {
 					if (curBlock.getBlockData()[i
